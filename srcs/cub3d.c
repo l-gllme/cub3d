@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 17:30:43 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/14 18:54:41 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,10 +318,12 @@ int	ft_move(t_g *g)
 	{
 
 		//printf("acti = %f\n", g->DistButton);
+		g->affCheck = 1;
 		g->activateButton = 1;
 	}
 	else if (g->key_E && g->DistButton < 8.0 && g->activateButton == 1)
 	{
+		g->affCheck = 1;
 		g->activateButton = 0;
 		//printf("acti = %f\n", g->DistButton);
 	}
@@ -565,18 +567,23 @@ int	checkSideCase(t_g *g)
 	return (0);
 		
 }
-int    create_nord(t_g * g, int x, int y)
+int    create_nord(t_g * g, double x, double y, double j)
 {
 
-        int     pos = 0;
-	pos = x * 4 + g->nord.line_length * y;
-	return (create_trgb(g->nord.addr[pos+3], g->nord.addr[pos], g->nord.addr[pos + 1], g->nord.addr[pos + 2]));
+	double tmp = j;
+	x *= 32;
+	y /= 32;
+        //int     pos = 0;
+	//pos = (int)x * 4 + g->nord.line_length * (int)y;
+	g->img.addr[(int)(x * g->img.line_length / 4 + y)] = g->nord.addr[(int)(y  / 32 * g->nord.line_length / 4 + tmp / 32)];
+	return (0);
+	//return (create_trgb(g->nord.addr[pos+3], g->nord.addr[pos], g->nord.addr[pos + 1], g->nord.addr[pos + 2]));
 }
 
 void	draw_row(t_g *g, t_data *img, double y, double height)
 {
 
-	//int	a =  (int)y % SIZE;
+	//float	a = g->dirX - floor(g->dirX);
 	//int	b;
 	double j = -1;
 	double	ciel;
@@ -608,19 +615,22 @@ void	draw_row(t_g *g, t_data *img, double y, double height)
 				my_mlx_pixel_put(img, y, j, 0xcaaa57);
 			else if (g->dir == 1)
 			{
-				//printf ("test = %f\n", g->dirX);
 				//printf ("a = %d, j = %d\n", a, (int)j % SIZE);
-				my_mlx_pixel_put(img, y, j, create_nord(g, (int)j % SIZE, height / SIZE));
+				my_mlx_pixel_put(img, y, j, 0xcaaa57);
 			}
 			else if (g->dir == 2)
-				my_mlx_pixel_put(img, y, j, 0xfaf18e);
+				my_mlx_pixel_put(img, y, j, 0xFcddcec);
 			else if (g->dir == 3)
 			{
+				my_mlx_pixel_put(img, y, j, 0xfaf18e);
 				//printf("x = %f, y = %f\n", g->dirX / SIZE, g->dirY / SIZE);
-				my_mlx_pixel_put(img, y, j, COLOR);
 			}
 			else if (g->dir == 4)
-				my_mlx_pixel_put(img, y, j, 0xFcddcec);
+			{
+				//create_nord(g, a, j, y);
+				//my_mlx_pixel_put(img, y, j, create_nord(g, a, j));
+				my_mlx_pixel_put(img, y, j, COLOR);
+			}
 
 		//	printf("j-wall = %f\n", j);
 		}
@@ -899,10 +909,16 @@ void    draw_map(t_g *g)
 		i += height;
 	}
 	mlx_put_image_to_window(g->mlx, g->win, img->img, 0, 0);*/
-	//if (g->activateButton)
-	//mlx_string_put(g->mlx, g->win, W_W - 50, 25, 0x444444, "Porte ouvertes");
-	//else
-	//	mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x000000, "Portes fermees");
+	if (g->activateButton && g->affCheck)
+	{
+		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x444444, "Porte ouvertes");
+		g->affCheck = 0;
+	}
+	if (!g->activateButton && !g->affCheck)
+	{
+		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x000000, "Portes fermees");
+		g->affCheck = 0;
+	}
 	draw_minimap(g);
 	if (g->key_LC == 0)
 		create_hand_img(g->img, g->hand_1);
@@ -1052,7 +1068,10 @@ void	draw_minimap(t_g *g)
 		while (g->m.map[i][++j])
 		{
 			//if (j == (int)g->c.x / SIZE && i == (int)g->c.y / SIZE)
-			//	drawMiniPlayer(g, x, y , 10, 10);
+			//{
+			//	printf ("x = %f, y = %f\n", x, y);
+			//	drawMiniPlayer(g, (int)x, (int)y , 10, 10);
+			//}
 			if (g->m.map[i][j] == '1')
 				drawMiniWall(g, y, x, width, height);
 			else if (g->m.map[i][j] == 'P' && !g->activateButton)
@@ -1111,12 +1130,9 @@ int	createRGBsol(t_g *g)
 
 void	test_draw(t_g *g, t_data *img, t_data *player)
 {
-	int	color = 0xABCDEF;
-	
+	(void)player;
 	g->cielcolor = createRGB(g);
 	g->solcolor = createRGBsol(g);
-	if (player->bits_per_pixel != 32)
-	    color = mlx_get_color_value(g->mlx, color);
 	
 	int	y = 0;	
 	int	x = 0;
@@ -1134,12 +1150,6 @@ void	test_draw(t_g *g, t_data *img, t_data *player)
 		}
 		x++;
 	}
-	x = 0;
-	while (x < W_W)
-	{
-		my_mlx_pixel_put(img, x, W_H / 2, color);
-		x++;
-	}	
 	//draw_map(g, img);
 }
 

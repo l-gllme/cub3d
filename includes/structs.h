@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 16:34:06 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:38:51 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_global
 	int	key_LC;
 	int	mouseR;
 	int	mouseL;
+	int	affCheck;
 	double	startTime;
 	double	oldTime;
 }	t_g;
