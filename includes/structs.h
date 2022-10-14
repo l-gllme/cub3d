@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 14:26:06 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:34:06 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_global
 	t_data	hand_2;
 	t_data	hand_3;
 	t_data	cross;
+	t_data	nord;
 	void	*mlx;
 	void	*win;
 	int	ac;
