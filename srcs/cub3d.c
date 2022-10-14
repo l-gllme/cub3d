@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 14:12:18 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:34:54 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,6 +396,8 @@ int	ft_keyPress(int key, t_g *g)
 		g->key_O = 1;
 	if (key == RC)
 		g->key_RC = 1;
+	if (key == LC)
+		g->key_LC = 1;
 	return (0);
 }
 
@@ -419,6 +421,8 @@ int	ft_keyRelease(int key, t_g *g)
 		g->key_O = 0;
 	if (key == RC)
 		g->key_RC = 0;
+	if (key == LC)
+		g->key_LC = 0;
 	return (0);
 }
 
@@ -866,9 +870,11 @@ void    draw_map(t_g *g)
 	//else
 	//	mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x000000, "Portes fermees");
 	draw_minimap(g);
-	if (g->key_RC == 0)
+	if (g->key_LC == 0)
 		create_hand_img(g->img, g->hand_1);
-	else
+	else if (g->key_LC == 1 && g->key_RC == 0)
+		create_hand_img(g->img, g->hand_3);
+	else if (g->key_LC == 1 && g->key_RC == 1)
 		create_hand_img(g->img, g->hand_2);
 	create_crosshair(g->img, g->cross);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
@@ -1144,6 +1150,7 @@ int	main(int ac, char **av)
 	t_data	player;
 	t_data	hand_1;
 	t_data	hand_2;
+	t_data	hand_3;
 	t_data	cross;
 	int	i_h;
 	int	i_w;
@@ -1178,8 +1185,10 @@ int	main(int ac, char **av)
 	g.win = mlx_new_window(g.mlx, W_W, W_H, "cub3d");
 	img.img = mlx_new_image(g.mlx, W_W, W_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	hand_1.img = mlx_xpm_file_to_image(g.mlx, "hand_3.xpm", &i_w, &i_h);
+	hand_1.img = mlx_xpm_file_to_image(g.mlx, "hand_1.xpm", &i_w, &i_h);
 	hand_1.addr = mlx_get_data_addr(hand_1.img, &hand_1.bits_per_pixel, &hand_1.line_length, &hand_1.endian);
+	hand_3.img = mlx_xpm_file_to_image(g.mlx, "hand_3.xpm", &i_w, &i_h);
+	hand_3.addr = mlx_get_data_addr(hand_3.img, &hand_3.bits_per_pixel, &hand_3.line_length, &hand_3.endian);
 	hand_2.img = mlx_xpm_file_to_image(g.mlx, "hand_2.xpm", &i_w, &i_h);
 	hand_2.addr = mlx_get_data_addr(hand_2.img, &hand_2.bits_per_pixel, &hand_2.line_length, &hand_2.endian);
 	cross.img = mlx_xpm_file_to_image(g.mlx, "crosshair.xpm", &i_w, &i_h);
@@ -1191,6 +1200,7 @@ int	main(int ac, char **av)
 	g.img = img;
 	g.hand_1 = hand_1;
 	g.hand_2 = hand_2;
+	g.hand_3 = hand_3;
 	g.cross = cross;
 	g.player = player;
 	test_draw(&g, &img, &player);

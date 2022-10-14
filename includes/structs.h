@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 14:10:07 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:26:06 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_global
 	t_data	player;
 	t_data	hand_1;
 	t_data	hand_2;
+	t_data	hand_3;
 	t_data	cross;
 	void	*mlx;
 	void	*win;
@@ -99,6 +100,7 @@ typedef struct s_global
 	int	key_E;
 	int	key_O;
 	int	key_RC;
+	int	key_LC;
 	int	mouseR;
 	int	mouseL;
 	double	startTime;

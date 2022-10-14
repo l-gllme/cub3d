@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 14:11:56 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:33:11 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 # define D 100
 # define E 101
 # define O 111
-# define RC 102
+# define LC 65362
+# define RC 65364
 # define COLOR 0xFF00FF
 
 # define R 65363
