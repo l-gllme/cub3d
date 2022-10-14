@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 14:34:54 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:39:05 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -712,6 +712,7 @@ void	create_crosshair(t_data img, t_data h)
 	int	color;
 	int	pos = 0;
 
+	(void)color;
 	i_w = (h.line_length / 4);
 	while (++j < i_w)
 	{
