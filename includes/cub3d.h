@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 14:33:11 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:37:15 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@
 
 # define ESC 65307
 
-# define SIZE 32
-# define SIZEF 32.0
+# define SIZE 64
+# define SIZEF 64.0
 
 # define FRAME
 # define RAD_90 1.5708
@@ -53,9 +53,9 @@
 # define RAD_360 6.28319
 # define PI 3.14159265358979311600
 # define FOV 50.0
-# define SPEED 2.0
+# define SPEED 4.0
 # define C_SPEED 8.0
-# define R_SPEED 2.0
+# define R_SPEED 4.0
 # define INF 10000000
 
 /* ************************************************************************** */
