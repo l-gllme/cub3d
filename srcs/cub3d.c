@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/17 22:24:49 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 00:58:34 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ int	check_next_pos_W(t_g *g, double angle)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE])
+			{
 			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE - 1] == '1'))
 				return (0);
+			}
 		}
 		else if (angle > 90 * PI / 180 && angle <= 180 * PI * 180)
 		{
@@ -413,14 +416,14 @@ int	ft_move(t_g *g)
 		first = 1;
 	}
 	//g->angle = angle;
-	if (g->key_E && g->DistButton < 8.0 && g->activateButton == 0)
+	if (g->key_E && g->DistButton < 25.0 && g->activateButton == 0)
 	{
 
 		//printf("acti = %f\n", g->DistButton);
 		g->affCheck = 1;
 		g->activateButton = 1;
 	}
-	else if (g->key_E && g->DistButton < 8.0 && g->activateButton == 1)
+	else if (g->key_E && g->DistButton < 25.0 && g->activateButton == 1)
 	{
 		g->affCheck = 1;
 		g->activateButton = 0;
@@ -1346,7 +1349,7 @@ int	main(int ac, char **av)
 	est.addr = mlx_get_data_addr(est.img, &est.bits_per_pixel, &est.line_length, &est.endian);
 	d.img = mlx_xpm_file_to_image(g.mlx, "D.xpm", &i_w, &i_h);
 	d.addr = mlx_get_data_addr(d.img, &d.bits_per_pixel, &d.line_length, &d.endian);
-	b.img = mlx_xpm_file_to_image(g.mlx, "B.xpm", &i_w, &i_h);
+	b.img = mlx_xpm_file_to_image(g.mlx, "test.xpm", &i_w, &i_h);
 	b.addr = mlx_get_data_addr(b.img, &b.bits_per_pixel, &b.line_length, &b.endian);
 	bc.img = mlx_xpm_file_to_image(g.mlx, "BC.xpm", &i_w, &i_h);
 	bc.addr = mlx_get_data_addr(bc.img, &bc.bits_per_pixel, &bc.line_length, &bc.endian);
