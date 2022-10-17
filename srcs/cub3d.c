@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 18:54:41 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/17 13:27:15 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,32 @@ int	ft_key_cross(t_g *g)
 	exit(0);
 }
 
+void	free_all(t_g *g)
+{
+	mlx_destroy_window(g->mlx, g->win);
+	mlx_destroy_display(g->mlx);
+	free(g->mlx);
+}
+
 int	check_next_pos_W(t_g *g, double angle)
 {
+	if ((int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE != g->c.x)
+	{
+		if (angle >= 45 * PI / 180 && angle < 135 * PI / 180)
+		{
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+				return (0);
+		}
+	}
+			/*x = xOld;
+		else if (angle >= 135 * PI / 180 && angle < 225 * PI * 180)
+			y = yOld;
+		else if (angle >= 225 * PI / 180 && angle < 315 * PI / 180)
+			x = xOld;
+		else if (angle >= 315 * PI / 180 && angle < 360 * PI / 180)
+			y = yOld;
+		else if (angle >= 0 * PI / 180 && angle < 45 * PI / 180)
+			y = yOld;*/
 	if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == 'P' && !g->activateButton)
@@ -391,6 +415,7 @@ int	ft_keyPress(int key, t_g *g)
 {
 	if (key == ESC)
 	{
+		free_all(g);
 		printf("ESC PRESSED");
 		exit(0);
 	}
@@ -567,23 +592,20 @@ int	checkSideCase(t_g *g)
 	return (0);
 		
 }
-int    create_nord(t_g * g, double x, double y, double j)
+int    create_nord(t_g * g, double x, double y)
 {
 
-	double tmp = j;
-	x *= 32;
+	x = (int)x % 32;
 	y /= 32;
-        //int     pos = 0;
-	//pos = (int)x * 4 + g->nord.line_length * (int)y;
-	g->img.addr[(int)(x * g->img.line_length / 4 + y)] = g->nord.addr[(int)(y  / 32 * g->nord.line_length / 4 + tmp / 32)];
-	return (0);
-	//return (create_trgb(g->nord.addr[pos+3], g->nord.addr[pos], g->nord.addr[pos + 1], g->nord.addr[pos + 2]));
+        int     pos = 0;
+	pos = (int)x * 4 + g->nord.line_length * (int)y;
+	return (create_trgb(g->nord.addr[pos+3], g->nord.addr[pos], g->nord.addr[pos + 1], g->nord.addr[pos + 2]));
 }
 
 void	draw_row(t_g *g, t_data *img, double y, double height)
 {
 
-	//float	a = g->dirX - floor(g->dirX);
+	float	a = g->dirX - floor(g->dirX);
 	//int	b;
 	double j = -1;
 	double	ciel;
@@ -609,6 +631,8 @@ void	draw_row(t_g *g, t_data *img, double y, double height)
 		//display_sol(g, img, j, height, y);
 		else
 		{
+			//if (g->m.map[(int)g->dirX / SIZE][(int)g->dirY / SIZE] != g->m.map[(int)g->oldX / SIZE][(int)g->oldY / SIZE])
+			//	my_mlx_pixel_put(img, y, j, 0x000000);
 			if (g->door == 1 && !g->activateButton)
 				my_mlx_pixel_put(img, y, j, 0x4c5057);
 			else if (g->button == 1)
@@ -616,7 +640,7 @@ void	draw_row(t_g *g, t_data *img, double y, double height)
 			else if (g->dir == 1)
 			{
 				//printf ("a = %d, j = %d\n", a, (int)j % SIZE);
-				my_mlx_pixel_put(img, y, j, 0xcaaa57);
+				my_mlx_pixel_put(img, y, j, 0x1bb957);
 			}
 			else if (g->dir == 2)
 				my_mlx_pixel_put(img, y, j, 0xFcddcec);
@@ -627,9 +651,9 @@ void	draw_row(t_g *g, t_data *img, double y, double height)
 			}
 			else if (g->dir == 4)
 			{
-				//create_nord(g, a, j, y);
-				//my_mlx_pixel_put(img, y, j, create_nord(g, a, j));
-				my_mlx_pixel_put(img, y, j, COLOR);
+				//printf("test = %d\n", (int)(a * (W_W - y)) % 32);
+				my_mlx_pixel_put(img, y, j, create_nord(g, a * (W_W - y), j));
+				//my_mlx_pixel_put(img, y, j, COLOR);
 			}
 
 		//	printf("j-wall = %f\n", j);
@@ -654,6 +678,8 @@ void	drawRow1(t_g *g, t_data *img, double x, double y)
 	while (i < W_W)
 	{
 		//printf ("salope = %f\n", i);
+		g->oldX = g->dirX;
+		g->oldY = g->dirY;
 		d = (double)((g->FOVP / (W_W - 1) * i) + (double)((double)g->angle - (double)g->FOVD2));
 		if (d < 0)
 			d+= 360 * PI / 180;
@@ -798,20 +824,10 @@ void	create_hand_img(t_data img, t_data h)
 
 void    draw_map(t_g *g)
 {
-	int	i;
-	int	j;
-	int	x;
-	int	y;
-	int	width;
-	int	height;
 
 	//test_draw(g, img, &g->player);
-	i = -1;
-	y = 0;
 	//width = W_W / (get_longest_line_map(g->m.map, 1)+1);
 	//height = W_H / (get_longest_line_map(g->m.map, 0)+ 1);
-	width = SIZE;
-	height = SIZE;
 	/*int a = 0;
 	while (g->m.map[a])
 	{
@@ -846,6 +862,40 @@ void    draw_map(t_g *g)
 	//	k++;
 	//	y += height;
 //	}
+
+	if (g->activateButton && g->affCheck)
+	{
+		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x444444, "Porte ouvertes");
+		g->affCheck = 0;
+	}
+	if (!g->activateButton && !g->affCheck)
+	{
+		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x000000, "Portes fermees");
+		g->affCheck = 0;
+	}
+	draw_minimap(g);
+	if (g->key_LC == 0)
+		create_hand_img(g->img, g->hand_1);
+	else if (g->key_LC == 1 && g->key_RC == 0)
+		create_hand_img(g->img, g->hand_3);
+	else if (g->key_LC == 1 && g->key_RC == 1)
+		create_hand_img(g->img, g->hand_2);
+	create_crosshair(g->img, g->cross);
+	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
+	//affTime(g);
+}
+
+void	recuStartPos(t_g *g)
+{
+	int	i;
+	int	width;
+	int	height;
+	int	j;
+	int	y;
+	int	x;
+	width = SIZE;
+	height = SIZE;
+
 
 	if (!g->aff1)
 	{
@@ -888,6 +938,7 @@ void    draw_map(t_g *g)
 	}
 	g->aff1 = 1;
 	}
+}
 	/*i = 0;
 	while (i <= W_W)
 	{
@@ -909,27 +960,6 @@ void    draw_map(t_g *g)
 		i += height;
 	}
 	mlx_put_image_to_window(g->mlx, g->win, img->img, 0, 0);*/
-	if (g->activateButton && g->affCheck)
-	{
-		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x444444, "Porte ouvertes");
-		g->affCheck = 0;
-	}
-	if (!g->activateButton && !g->affCheck)
-	{
-		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x000000, "Portes fermees");
-		g->affCheck = 0;
-	}
-	draw_minimap(g);
-	if (g->key_LC == 0)
-		create_hand_img(g->img, g->hand_1);
-	else if (g->key_LC == 1 && g->key_RC == 0)
-		create_hand_img(g->img, g->hand_3);
-	else if (g->key_LC == 1 && g->key_RC == 1)
-		create_hand_img(g->img, g->hand_2);
-	create_crosshair(g->img, g->cross);
-	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
-	//affTime(g);
-}
 
 void	drawMinisol(t_g *g, int x, int y, int width, int height)
 {
@@ -1205,6 +1235,7 @@ int	main(int ac, char **av)
 	//g.s_x = 100;
 	//g.s_y = 100;
 	g.activateButton = 0;
+	g.affCheck = 0;
 	g.mouseHide = 1;
 	g.key_W = 0;
 	g.key_A = 0;
@@ -1213,9 +1244,14 @@ int	main(int ac, char **av)
 	g.key_O = 0;
 	g.key_R = 0;
 	g.key_L = 0;
-
+	g.key_E = 0;
+	g.key_LC = 0;
+	g.key_RC = 0;
+	g.DistButton = 999;
 	g.startTime = 0;
 	g.oldTime = 0;
+	g.mouseR = 0;
+	g.mouseL = 0;
 	//g.m = m;
 	g.FOVP = FOV * PI / 180;
 	g.FOVD2 = (FOV / 2) * PI / 180;
@@ -1251,8 +1287,9 @@ int	main(int ac, char **av)
 	g.nord = nord;
 	g.cross = cross;
 	g.player = player;
-	//test_draw(&g, &img, &player);
 	g.aff1 = 0;
+	recuStartPos(&g);
+	test_draw(&g, &img, &player);
 	draw_map(&g);
 	//mlx_put_image_to_window(g.mlx, g.win, img.img, 0, 0);
 	g.c.xmini = g.c.x;

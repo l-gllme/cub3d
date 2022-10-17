@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/14 17:38:51 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/17 12:54:22 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ typedef struct s_global
 	double	dir;
 	double	dirX;
 	double	dirY;
+	double	oldX;
+	double	oldY;
 	int	solcolor;
 	int	cielcolor;
 	int	aff1;

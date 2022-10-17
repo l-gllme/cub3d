@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:17:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/12 13:44:41 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:58:18 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	init_struct_rgb(t_rgb *rgb, char **recup_gnl, int i, int j)
 	c = recup_malloc(recup_gnl, i, j + c + 1);
 	rgb->recup_G = malloc(sizeof(char) * (c + 1));
 	c = recup_malloc(recup_gnl, i, j + c + 1);
-	rgb->recup_B = malloc(sizeof(char) * (c + 2));
+	rgb->recup_B = malloc(sizeof(char) * (c + 5));
 }
 
 void	ft_free_struct_rgb(t_rgb *rgb)
