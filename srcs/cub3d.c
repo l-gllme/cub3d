@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/17 20:19:20 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/17 22:24:49 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	free_all(t_g *g)
 
 int	check_next_pos_W(t_g *g, double angle)
 {
-	if ((int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE != g->c.x)
+	/*if ((int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE != g->c.x)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
@@ -67,7 +67,7 @@ int	check_next_pos_W(t_g *g, double angle)
 			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
-	}
+	}*/
 	if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == 'P' && !g->activateButton)
@@ -79,7 +79,7 @@ int	check_next_pos_W(t_g *g, double angle)
 
 int	check_next_pos_A(t_g *g, double angle)
 {
-	if ((int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE != g->c.x)
+	/*if ((int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE != g->c.x)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
@@ -101,7 +101,7 @@ int	check_next_pos_A(t_g *g, double angle)
 			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
-	}
+	}*/
 	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
@@ -113,7 +113,7 @@ int	check_next_pos_A(t_g *g, double angle)
 
 int	check_next_pos_S(t_g *g, double angle)
 {
-	if ((int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE != g->c.x)
+	/*if ((int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE != g->c.x)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
@@ -135,7 +135,7 @@ int	check_next_pos_S(t_g *g, double angle)
 			if (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
-	}
+	}*/
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
@@ -147,7 +147,7 @@ int	check_next_pos_S(t_g *g, double angle)
 
 int	check_next_pos_D(t_g *g, double angle)
 {
-	if ((int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE != g->c.x)
+	/*if ((int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE != g->c.x)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
@@ -169,7 +169,7 @@ int	check_next_pos_D(t_g *g, double angle)
 			if (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
-	}
+	}*/
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
@@ -1121,12 +1121,23 @@ void	drawMiniPlayer(t_g *g, double x, double y, double width, double height)
 		j = x;
 		while (j < to_go)
 		{
-			my_mlx_pixel_put(&g->player, j, i, 0x000000);
+			//printf ("x = %f, y = %f\n", i, j);
+			my_mlx_pixel_put(&g->img, i, j, 0x000000);
 			j++;
 		}
 		i++;
 	}
 	//mlx_put_image_to_window(g->mlx, g->mlx, &g->player.img, 0, 0);
+}
+
+int	tablen(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 void	draw_minimap(t_g *g)
@@ -1138,33 +1149,29 @@ void	draw_minimap(t_g *g)
 	double	x;
 	double	y;
 
-	height = SIZE / 3;
-	width = SIZE / 3;
-	i = -1;
+	int	len = tablen(g->m.map) - 1;
+	height = (len);
+	width = (len);
 	y = 0;
+	i = -1;
 	while (g->m.map[++i])
 	{
 		j = -1;
 		x = 0;
 		while (g->m.map[i][++j])
 		{
-			//if (j == (int)g->c.x / SIZE && i == (int)g->c.y / SIZE)
-			//{
-			//	printf ("x = %f, y = %f\n", x, y);
-			//	drawMiniPlayer(g, (int)x, (int)y , 10, 10);
-			//}
-			if (g->m.map[i][j] == '1')
-				drawMiniWall(g, y, x, width, height);
+			if (j == (int)g->c.x / SIZE && i == (int)g->c.y / SIZE)
+				drawMiniPlayer(g, (int)y, (int)x , width, height);
+			else if (g->m.map[i][j] == '1')
+				drawMiniWall(g, x, y, width, height);
 			else if (g->m.map[i][j] == 'P' && !g->activateButton)
-				drawMiniPorte(g, y, x, width, height);
+				drawMiniPorte(g, x, y, width, height);
 			else if (g->m.map[i][j] == 'B')
-			{
-				drawMiniButton(g, y, x, width, height);
-			}
+				drawMiniButton(g, x, y, width, height);
 			else if (g->m.map[i][j] == '0' || g->m.map[i][j] == 'N' || g->m.map[i][j] == 'S'
 				|| g->m.map[i][j] == 'E' || g->m.map[i][j] == 'W'
 				|| (g->m.map[i][j]== 'P' && g->activateButton))
-				drawMinisol(g, y, x, width, height);
+				drawMinisol(g, x, y, width, height);
 			//printf("gX = %d, gY = %d\n", (int)g->c.x / (SIZE / 3), (int)g->c.y / (SIZE / 3));
 			//printf("x = %f, y = %f\n", x , y);
 			//printf("i = %d, j = %d\n", i, j);
