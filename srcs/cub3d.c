@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/17 13:27:15 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:08:34 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -592,114 +592,109 @@ int	checkSideCase(t_g *g)
 	return (0);
 		
 }
-int    create_nord(t_g * g, double x, double y)
+int    create_nord(t_g * g, int x, int y)
 {
+	char	*ret;
 
-	x = (int)x % 32;
-	y /= 32;
-        int     pos = 0;
-	pos = (int)x * 4 + g->nord.line_length * (int)y;
-	return (create_trgb(g->nord.addr[pos+3], g->nord.addr[pos], g->nord.addr[pos + 1], g->nord.addr[pos + 2]));
+	x = fmod(g->dirX, SIZEF);
+	ret = g->nord.addr + (y * g->nord.line_length + x * (g->nord.bits_per_pixel / 8));
+	return (*(unsigned int *)ret);
 }
 
-void	draw_row(t_g *g, t_data *img, double y, double height)
+void	drawLineTEST(t_g *g, t_data *img, double x, double y);
+
+void	draw_row(t_g *g, t_data *img, double y, double height, int width, int q)
 {
 
-	float	a = g->dirX - floor(g->dirX);
-	//int	b;
+	//float	a = g->dirX - floor(g->dirX);
 	double j = -1;
 	double	ciel;
 	double floor1;
 	static int count;
+	(void)width;
 	ciel =  (W_H / 2) - (height / 2);
 	floor1 = (W_H / 2) + (height / 2);
-//	printf("CIEL = %f\n", ciel);
-//	printf("FLOOR = %f\n", floor);
 	while (++j < W_H)
 	{
 		if (j < ciel)
-		{
-		//	printf("j-ciel = %f\n", j);
 			my_mlx_pixel_put(img, y, j, g->cielcolor);
-		}
-		//display_ciel(g, img, j, height, y);
 		else if (j > floor1)
-		{
-		//	printf("j-sol = %f\n", j);
 			my_mlx_pixel_put(img, y, j, g->solcolor);
-		}
-		//display_sol(g, img, j, height, y);
 		else
 		{
-			//if (g->m.map[(int)g->dirX / SIZE][(int)g->dirY / SIZE] != g->m.map[(int)g->oldX / SIZE][(int)g->oldY / SIZE])
-			//	my_mlx_pixel_put(img, y, j, 0x000000);
 			if (g->door == 1 && !g->activateButton)
 				my_mlx_pixel_put(img, y, j, 0x4c5057);
 			else if (g->button == 1)
 				my_mlx_pixel_put(img, y, j, 0xcaaa57);
 			else if (g->dir == 1)
-			{
-				//printf ("a = %d, j = %d\n", a, (int)j % SIZE);
 				my_mlx_pixel_put(img, y, j, 0x1bb957);
-			}
 			else if (g->dir == 2)
 				my_mlx_pixel_put(img, y, j, 0xFcddcec);
 			else if (g->dir == 3)
-			{
 				my_mlx_pixel_put(img, y, j, 0xfaf18e);
-				//printf("x = %f, y = %f\n", g->dirX / SIZE, g->dirY / SIZE);
-			}
 			else if (g->dir == 4)
-			{
-				//printf("test = %d\n", (int)(a * (W_W - y)) % 32);
-				my_mlx_pixel_put(img, y, j, create_nord(g, a * (W_W - y), j));
-				//my_mlx_pixel_put(img, y, j, COLOR);
-			}
+				my_mlx_pixel_put(img, y, j, create_nord(g, q, (j - ciel) * (SIZEF / height)));
 
-		//	printf("j-wall = %f\n", j);
 		}
 	}
 	count++;
 }
 
-void	drawLineTEST(t_g *g, t_data *img, double x, double y);
-
 void	drawRow1(t_g *g, t_data *img, double x, double y)
 {
 	double	d;
 	double	wallDist;
-	//double	iDist;
 	double	height = 0.0;
 	double	fix;
 	(void)y;
 	(void)x;
 	double i = 0;
 	double Pi = 2 * PI;
+	int	oldi = 0;
+	int	end = 0;
+	int	width = 0;
+
 	while (i < W_W)
 	{
-		//printf ("salope = %f\n", i);
-		g->oldX = g->dirX;
-		g->oldY = g->dirY;
-		d = (double)((g->FOVP / (W_W - 1) * i) + (double)((double)g->angle - (double)g->FOVD2));
-		if (d < 0)
-			d+= 360 * PI / 180;
-		fix = g->angle - d;
-		if (fix < 0)
-			fix += Pi;
-		else if (fix > Pi)
-			fix -= Pi;
-		//fix *= PI / 180;
-		g->rayAngle = d;
-		wallDist = print_dist_wall_W(g, d) * cos(fix);
-		height = 30000 / wallDist;
-		//iDist = print_dist_wall_W(g, g->angle);
-		//printf("d = %f\n", d);
-		//printf("angle = %f\n", g->angle);
-		//printf(`"cos = %f\n", cos(d));
-		//printf("walldist = %f\n", wallDist);
-		//printf("height = %f\n", height);
-		draw_row(g, img, i, height);
-		i += 1;
+		oldi = i;
+		width = 0;
+		g->oldX = (int)floor(g->dirX) / SIZE;
+		g->oldY = (int)floor(g->dirY) / SIZE;
+		while (g->oldX == (int)floor(g->dirX) / SIZE && g->oldY == (int)floor(g->dirY) / SIZE && i < W_W)
+		{
+			d = (double)((g->FOVP / (W_W - 1) * i) + (double)((double)g->angle - (double)g->FOVD2));
+			if (d < 0)
+				d+= 360 * PI / 180;
+			fix = g->angle - d;
+			if (fix < 0)
+				fix += Pi;
+			else if (fix > Pi)
+				fix -= Pi;
+			g->rayAngle = d;
+			wallDist = print_dist_wall_W(g, d) * cos(fix);
+			end = i;
+			width++;
+			i++;
+		}
+	//	printf ("oldX = %d, dirX = %d\n", g->oldX, (int)floor(g->dirX)/ SIZE);
+	//	printf("%d\n", width);
+		i = oldi;
+		while (i <= end)
+		{
+			d = (double)((g->FOVP / (W_W - 1) * i) + (double)((double)g->angle - (double)g->FOVD2));
+			if (d < 0)
+				d+= 360 * PI / 180;
+			fix = g->angle - d;
+			if (fix < 0)
+				fix += Pi;
+			else if (fix > Pi)
+				fix -= Pi;
+			g->rayAngle = d;
+			wallDist = print_dist_wall_W(g, d) * cos(fix);
+			height = 30000 / wallDist;
+			draw_row(g, img, i, height, width, i - oldi);
+			i++;
+		}
 	}
 }
 
