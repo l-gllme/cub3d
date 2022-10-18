@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 12:56:48 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:46:55 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1064,11 +1064,11 @@ void	initBonusTextures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g)
 	int	i_h;
 	int	i_w;
 
-	hand_1.img = mlx_xpm_file_to_image(g->mlx, "hand_1.xpm", &i_w, &i_h);
+	hand_1.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_1.xpm", &i_w, &i_h);
 	hand_1.addr = mlx_get_data_addr(hand_1.img, &hand_1.bits_per_pixel, &hand_1.line_length, &hand_1.endian);
-	hand_3.img = mlx_xpm_file_to_image(g->mlx, "hand_3.xpm", &i_w, &i_h);
+	hand_3.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_3.xpm", &i_w, &i_h);
 	hand_3.addr = mlx_get_data_addr(hand_3.img, &hand_3.bits_per_pixel, &hand_3.line_length, &hand_3.endian);
-	hand_2.img = mlx_xpm_file_to_image(g->mlx, "hand_2.xpm", &i_w, &i_h);
+	hand_2.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_2.xpm", &i_w, &i_h);
 	hand_2.addr = mlx_get_data_addr(hand_2.img, &hand_2.bits_per_pixel, &hand_2.line_length, &hand_2.endian);
 	g->hand_1 = hand_1;
 	g->hand_2 = hand_2;
@@ -1080,11 +1080,11 @@ void	initBonusTextures_2(t_data b, t_data bc, t_data d, t_g *g)
 	int	i_h;
 	int	i_w;
 
-	d.img = mlx_xpm_file_to_image(g->mlx, "D.xpm", &i_w, &i_h);
+	d.img = mlx_xpm_file_to_image(g->mlx, "imgs/D.xpm", &i_w, &i_h);
 	d.addr = mlx_get_data_addr(d.img, &d.bits_per_pixel, &d.line_length, &d.endian);
-	b.img = mlx_xpm_file_to_image(g->mlx, "B.xpm", &i_w, &i_h);
+	b.img = mlx_xpm_file_to_image(g->mlx, "imgs/B.xpm", &i_w, &i_h);
 	b.addr = mlx_get_data_addr(b.img, &b.bits_per_pixel, &b.line_length, &b.endian);
-	bc.img = mlx_xpm_file_to_image(g->mlx, "BC.xpm", &i_w, &i_h);
+	bc.img = mlx_xpm_file_to_image(g->mlx, "imgs/BC.xpm", &i_w, &i_h);
 	bc.addr = mlx_get_data_addr(bc.img, &bc.bits_per_pixel, &bc.line_length, &bc.endian);
 	g->b = b;
 	g->bc = bc;
@@ -1096,7 +1096,7 @@ void	initBonusTextures_3(t_data cross, t_data img, t_g *g)
 	int	i_h;
 	int	i_w;
 
-	cross.img = mlx_xpm_file_to_image(g->mlx, "crosshair.xpm", &i_w, &i_h);
+	cross.img = mlx_xpm_file_to_image(g->mlx, "imgs/crosshair.xpm", &i_w, &i_h);
 	cross.addr = mlx_get_data_addr(cross.img, &cross.bits_per_pixel, &cross.line_length, &cross.endian);
 	img.img = mlx_new_image(g->mlx, W_W, W_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
