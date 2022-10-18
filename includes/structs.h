@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 12:44:35 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:26:24 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_global
 	t_data	hand_1;
 	t_data	hand_2;
 	t_data	hand_3;
+	t_data	hand_4;
+	t_data	hand_5;
 	t_data	cross;
 	t_data	nord;
 	t_data	sud;

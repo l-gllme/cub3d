@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 14:07:12 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:32:10 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,12 +411,12 @@ int	ft_move(t_g *g)
 		g->angle = rotate(g, 'p');
 		first = 1;
 	}
-	if (g->key_E && g->DistButton < 25.0 && g->activateButton == 0)
+	if (g->key_E && g->DistButton < 60.0 && g->activateButton == 0)
 	{
 		g->affCheck = 1;
 		g->activateButton = 1;
 	}
-	else if (g->key_E && g->DistButton < 25.0 && g->activateButton == 1)
+	else if (g->key_E && g->DistButton < 60.0 && g->activateButton == 1)
 	{
 		g->affCheck = 1;
 		g->activateButton = 0;
@@ -539,7 +539,9 @@ void	DisplayPix_2(t_g *g, double y, double j, double ciel)
 	double	height;
 	
 	height = g->ActuHeight;
-	if (g->button == 1 && (g->dir == 3 || g->dir == 4) && g->activateButton)
+	if (g->button == 1 && g->dir == 3 && g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
+	else if (g->button == 1 && g->dir == 4 && g->activateButton)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
 	else if (g->dir == 1)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->est));
@@ -556,16 +558,26 @@ void	DisplayPix(t_g *g, double y, double j, double ciel)
 	double	height;
 
 	height = g->ActuHeight;
-	if (g->door == 1 && !g->activateButton && (g->dir == 3 || g->dir == 4))
+	if (g->door == 1 && !g->activateButton && g->dir == 3)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->d));
-	else if (g->door == 1 && !g->activateButton && (g->dir == 1 || g->dir == 2))
+	else if (g->door == 1 && !g->activateButton && g->dir == 4)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->d));
+	else if (g->door == 1 && !g->activateButton && g->dir == 1)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->d));
-	else if (g->button == 1 && (g->dir == 1 || g->dir == 2) && !g->activateButton)
+	else if (g->door == 1 && !g->activateButton && g->dir == 2)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->d));
+	else if (g->button == 1 && g->dir == 1 && !g->activateButton)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->b));
-	else if (g->button == 1 && (g->dir == 3 || g->dir == 4) && !g->activateButton)
+	else if (g->button == 1 && g->dir == 2 && !g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->b));
+	else if (g->button == 1 && g->dir == 3 && !g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->b));
+	else if (g->button == 1 && g->dir == 4 && !g->activateButton)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->b));
-	else if (g->button == 1 && (g->dir == 1 || g->dir == 2) && g->activateButton)
+	else if (g->button == 1 && g->dir == 1 && g->activateButton)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
+	else if (g->button == 1 && g->dir == 2 && g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE -(int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
 	else
 		DisplayPix_2(g, y, j, ciel);
 }
@@ -1061,16 +1073,24 @@ void	initBonusTextures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g)
 {
 	int	i_h;
 	int	i_w;
+	t_data	hand_4;
+	t_data	hand_5;
 
 	hand_1.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_1.xpm", &i_w, &i_h);
 	hand_1.addr = mlx_get_data_addr(hand_1.img, &hand_1.bits_per_pixel, &hand_1.line_length, &hand_1.endian);
-	hand_3.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_3.xpm", &i_w, &i_h);
-	hand_3.addr = mlx_get_data_addr(hand_3.img, &hand_3.bits_per_pixel, &hand_3.line_length, &hand_3.endian);
 	hand_2.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_2.xpm", &i_w, &i_h);
 	hand_2.addr = mlx_get_data_addr(hand_2.img, &hand_2.bits_per_pixel, &hand_2.line_length, &hand_2.endian);
+	hand_3.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_3.xpm", &i_w, &i_h);
+	hand_3.addr = mlx_get_data_addr(hand_3.img, &hand_3.bits_per_pixel, &hand_3.line_length, &hand_3.endian);
+	hand_4.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_4.xpm", &i_w, &i_h);
+	hand_4.addr = mlx_get_data_addr(hand_4.img, &hand_4.bits_per_pixel, &hand_4.line_length, &hand_4.endian);
+	hand_5.img = mlx_xpm_file_to_image(g->mlx, "imgs/hand_5.xpm", &i_w, &i_h);
+	hand_5.addr = mlx_get_data_addr(hand_5.img, &hand_5.bits_per_pixel, &hand_5.line_length, &hand_5.endian);
 	g->hand_1 = hand_1;
 	g->hand_2 = hand_2;
 	g->hand_3 = hand_3;
+	g->hand_4 = hand_4;
+	g->hand_5 = hand_5;
 }
 
 void	initBonusTextures_2(t_data b, t_data bc, t_data d, t_g *g)
