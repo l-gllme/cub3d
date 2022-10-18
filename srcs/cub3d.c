@@ -6,11 +6,14 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 14:47:51 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:33:11 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	CheckPosExit(t_g *g);
+
 
 void	init_struct_g(t_g *g, int ac, char **av)
 {
@@ -119,6 +122,10 @@ int	check_next_pos_W(t_g *g, double angle)
 		return (0);
 	if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == 'B')
 		return (0);
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'H')
+		return (0);
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'G')
+		return (0);
 	return (1);
 }
 
@@ -153,6 +160,10 @@ int	check_next_pos_A(t_g *g, double angle)
 		return (0);
 	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'B')
 		return (0);
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'H')
+		return (0);
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'G')
+		return (0);
 	return (1);
 }
 
@@ -181,11 +192,15 @@ int	check_next_pos_S(t_g *g, double angle)
 				return (0);
 		}
 	}
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'H')
+		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'B')
+		return (0);
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'G')
 		return (0);
 	return (1);
 }
@@ -220,6 +235,10 @@ int	check_next_pos_D(t_g *g, double angle)
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == 'B')
+		return (0);
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'H')
+		return (0);
+	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'G')
 		return (0);
 	return (1);
 }
@@ -267,6 +286,8 @@ double	print_dist_wall_W(t_g *g, double angle)
 
 	g->door = 0;
 	g->button = 0;
+	g->mechantcheck = 0;
+	g->mechantdiecheck = 0;
 	cosA = cos(angle);
 	sinA = sin(angle);
 	x = g->c.x;
@@ -310,6 +331,16 @@ double	print_dist_wall_W(t_g *g, double angle)
 			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'B') 
 			{
 				g->button = 1;
+				break;
+			}
+			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'H') 
+			{
+				g->mechantcheck = 1;
+				break;
+			}
+			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'G') 
+			{
+				g->mechantdiecheck = 1;
 				break;
 			}
 		}
@@ -549,9 +580,14 @@ void	DisplayPix_2(t_g *g, double y, double j, double ciel)
 	else if (g->dir == 2)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->ouest));
 	else if (g->dir == 3)
-		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF) ,(j - ciel) * (SIZEF / height), g->sud));		
-	else if (g->dir == 4)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF) ,(j - ciel) * (SIZEF / height), g->sud));
+	else if (g->dir == 4 && !g->mechantcheck && !g->mechantdiecheck)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->nord));
+	else if (g->mechantcheck == 1)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->mechant));
+	else if (g->mechantdiecheck == 1)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->mechantdie));
+
 }
 
 void	DisplayPix(t_g *g, double y, double j, double ciel)
@@ -774,7 +810,14 @@ void    draw_map(t_g *g)
 	if (g->key_RC == 0 && g->anim == 0)
 		create_hand_img(g->img, g->hand_1);
 	else if (g->key_RC == 1 && (g->anim == 0 || g->anim == 20))
+	{
+		if (print_dist_wall_W(g, 0))
+		{
+			if (g->mechantcheck)
+				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = 'G';
+		}
 		g->anim += 1;
+	}
 	if (g->anim < 4 && g->anim != 0)
 	{
 		create_hand_img(g->img, g->hand_2);
@@ -1059,6 +1102,7 @@ int	mouseTracking(t_g *g)
 
 int	start(t_g *g)
 {
+	CheckPosExit(g);
 	ft_move(g);
 	mouseTracking(g);
 	return (0);
@@ -1143,6 +1187,18 @@ void	initBonusTextures_3(t_data cross, t_data img, t_g *g)
 	g->cross = cross;
 }
 
+void	initBonusTextures_4(t_data mechant, t_data mechantdie, t_g *g)
+{
+	int	i_h;
+	int	i_w;
+
+	mechant.img = mlx_xpm_file_to_image(g->mlx, "imgs/Mechant.xpm", &i_w, &i_h);
+	mechant.addr = mlx_get_data_addr(mechant.img, &mechant.bits_per_pixel, &mechant.line_length, &mechant.endian);
+	mechantdie.img = mlx_xpm_file_to_image(g->mlx, "imgs/MechantMort.xpm", &i_w, &i_h);
+	mechantdie.addr = mlx_get_data_addr(mechantdie.img, &mechantdie.bits_per_pixel, &mechantdie.line_length, &mechantdie.endian);
+	g->mechant = mechant;
+	g->mechantdie = mechantdie;
+}
 
 int	main(int ac, char **av)
 {
@@ -1153,6 +1209,7 @@ int	main(int ac, char **av)
 		return (ft_errors(2), -1);
 	init_struct_g(&g, ac, av);
 	init_struct_m(&m);
+	g.mechantcheck = 0;
 	if(!ft_parsing(&g))
 		return(-1);
 	g.mlx = mlx_init();
@@ -1164,6 +1221,7 @@ int	main(int ac, char **av)
 	initBonusTextures(g.hand_1, g.hand_2, g.hand_3, &g);
 	initBonusTextures_2(g.b, g.bc, g.d, &g);
 	initBonusTextures_3(g.cross, g.img, &g);
+	initBonusTextures_4(g.mechant, g.mechantdie, &g);
 	recuStartPos(&g);
 	recupRGB(&g);
 	draw_map(&g);

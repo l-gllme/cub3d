@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:54:45 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 01:00:19 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:57:51 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ int	check_middle_line(char **map)
 
 int	check_char(char c)
 {
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == '0' || c == 'P' || c == 'B')
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == '0' || c == 'P'
+		|| c == 'B' || c == 'X')
 		return (1);
-	if (c == '1' || c == 'M')
+	if (c == '1' || c == 'M' || c == 'H')
 		return (2);
 	if (c == ' ')
 		return (3);
@@ -93,7 +94,7 @@ int	check_for_invalid_char(char **map)
 				if (count_special_char > 1)
 					return (0);
 			}
-			else if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' ' && map[i][j] != 'P' && map[i][j] != 'B' && map[i][j] == 'M')
+			else if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' ' && map[i][j] != 'P' && map[i][j] != 'B' && map[i][j] == 'M' && map[i][j] == 'X' && map[i][j] == 'H')
 				return (0);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 14:34:27 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:32:39 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@ typedef struct s_global
 	t_data	d;
 	t_data	b;
 	t_data	bc;
+	t_data	mechant;
+	t_data	mechantdie;
 	void	*mlx;
 	void	*win;
 	int	ac;
 	int	i;
+	int	mechantcheck;
+	int	mechantdiecheck;
 	int	s_x;
 	int	s_y;
 	int	count;
