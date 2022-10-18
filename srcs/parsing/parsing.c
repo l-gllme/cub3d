@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:17:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/18 14:15:21 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:34:32 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,6 +473,8 @@ void	completeMAP(t_g *g)
 		while (g->m.map[i][j])
 		{
 			if (g->m.map[i][j] == ' ')
+				g->m.map[i][j] = 'M';
+			if (g->m.map[i][j] == '\n')
 				g->m.map[i][j] = 'M';
 			j++;
 		}
