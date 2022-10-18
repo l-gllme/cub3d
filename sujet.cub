@@ -1,8 +1,7 @@
-NO ./imgs/lil
-SO ./imgs/lel
-EA ./imgs/salut
-WE ./imgs/lol
-
+NO imgs/N.xpm
+SO imgs/S.xpm
+EA imgs/E.xpm
+WE imgs/O.xpm
 
 F 220,100,0
 C 225,30,0

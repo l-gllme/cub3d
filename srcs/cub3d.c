@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 12:14:07 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:56:48 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,51 +372,7 @@ double	print_dist_wall_W(t_g *g, double angle)
 					g->dir = 4;
 			}
 		}
-		/*if (SIZE - Xtest >= SIZE / 2 && SIZE - Ytest >= SIZE / 2 && SIZE - Xtest > SIZE - Ytest)
-			g->dir = 1;
-		else if (SIZE - Xtest <= SIZE / 2 && SIZE - Ytest >= SIZE / 2)// && Xtest - Ytest < SIZE)
-			g->dir = 2;
-		else if (SIZE - Xtest <= SIZE / 2 && SIZE - Ytest <= SIZE / 2 && SIZE - Xtest < SIZE - Ytest)
-			g->dir = 3;
-		else if (SIZE - Xtest >= SIZE / 2 && SIZE - Ytest <= SIZE / 2)
-			g->dir = 4;*/
-
-//	}
-	/*
-	if (angle > RAD_90 && angle <= RAD_180)
-	{
-		while (g->m.map[(int)(y + (cos(angle))) / SIZE][(int)(x + (sin(angle))) / SIZE] != '1')
-		{
-			y += cos(angle);
-			x += sin(angle);
-			d++;
-		}
-	}
-	if (angle > RAD_180 && angle <= RAD_270)
-	{
-		while (g->m.map[(int)(y + (cos(angle))) / SIZE][(int)(x - (sin(angle))) / SIZE] != '1')
-		{
-			y += cos(angle);
-			x -= sin(angle);
-			d++;
-		}
-	}
-	if (angle > RAD_270 && angle <= RAD_360)
-	{	
-		while (g->m.map[(int)(y - (cos(angle))) / SIZE][(int)(x - (sin(angle))) / SIZE] != '1')
-		{
-			y += cos(angle);
-			x -= sin(angle);
-			d++;
-		}
-	}*/
-	/*printf("DISTANCE = %f\n", d);
-	printf("PlayerX = %f\n", g->c.x);
-	printf("PlayerY = %f\n", g->c.y);
-	printf("X = %f\n", x);
-	printf("Y = %f\n", y);*/
 	return (d);
-	//printf("wall dist = %f\n", d);
 }
 
 void    my_mlx_pixel_put(t_data *data, double x, double y, int color);
@@ -441,7 +397,6 @@ void	draw_wallTEST(t_g *g)
 int	ft_keyRelease(int key, t_g *g);
 int	ft_move(t_g *g)
 {
-	//static	double	angle;
 	static	double	first;
 	if (g->key_R)
 	{
@@ -456,11 +411,8 @@ int	ft_move(t_g *g)
 		g->angle = rotate(g, 'p');
 		first = 1;
 	}
-	//g->angle = angle;
 	if (g->key_E && g->DistButton < 25.0 && g->activateButton == 0)
 	{
-
-		//printf("acti = %f\n", g->DistButton);
 		g->affCheck = 1;
 		g->activateButton = 1;
 	}
@@ -468,41 +420,26 @@ int	ft_move(t_g *g)
 	{
 		g->affCheck = 1;
 		g->activateButton = 0;
-		//printf("acti = %f\n", g->DistButton);
 	}
     	if (g->key_W && check_next_pos_W(g, g->angle))
     	{
 		g->c.x = g->c.x + sin(g->angle) * SPEED;
 		g->c.y = g->c.y - cos(g->angle) * SPEED;
-		g->c.xmini = g->c.xmini + sin(g->angle);
-		g->c.ymini = g->c.ymini - cos(g->angle);
-		//draw_player(g, &g->img, &g->player);
     	}
 	else if (g->key_A && check_next_pos_A(g, g->angle))
 	{
-		//printf("x = %f\n", cos(g->angle));
-		//printf("y = %f\n", sin(g->angle));
 		g->c.x = g->c.x - cos(g->angle) * SPEED;
 		g->c.y = g->c.y - sin(g->angle) * SPEED;
-		g->c.xmini = g->c.xmini - sin(g->angle);
-		g->c.ymini = g->c.ymini - cos(g->angle);
-		//draw_player(g, &g->img, &g->player);
     	}
 	else if (g->key_S && check_next_pos_S(g, g->angle))
 	{
 		g->c.x = g->c.x - sin(g->angle) * SPEED;
 		g->c.y = g->c.y + cos(g->angle) * SPEED;
-		g->c.xmini = g->c.xmini - sin(g->angle);
-		g->c.ymini = g->c.ymini + cos(g->angle);
-		//draw_player(g, &g->img, &g->player);
     	}
 	else if (g->key_D && check_next_pos_D(g, g->angle))
 	{
 		g->c.x = g->c.x + cos(g->angle) * SPEED;
 		g->c.y = g->c.y + sin(g->angle) * SPEED;
-		g->c.xmini = g->c.xmini + sin(g->angle);
-		g->c.ymini = g->c.ymini + cos(g->angle);
-		//draw_player(g, &g->img, &g->player);
     	}
 	if (g->mouseR)
 	{
@@ -515,17 +452,11 @@ int	ft_move(t_g *g)
 		g->mouseL = 0;
 	}
 	draw_map(g);
-	if (g->key_O)
+	/*if (g->key_O)
 	{
 		printf("x = %f, y = %f\n", g->c.x / 3 / SIZE, g->c.y / 3 / SIZE);
 		my_mlx_pixel_put(&g->img, g->c.x / 3 / SIZE, g->c.y / 3 / SIZE, 0x000000);
-	}
-	//printf("test = %f\n", g->angle);
-	//printf("start x = %f\n", g->c.x);
-	//printf("start y = %f\n", g->c.y);
-	//draw_wallTEST(g);
-	//draw_player(g, &g->img, &g->player);
-	//print_dist_wall_W(g, angle);
+	}*/
 	first = 2;
 	return (0);
 }
@@ -594,123 +525,6 @@ void	my_mlx_pixel_put(t_data *data, double x, double y, int color)
 	*(unsigned int*)dst = color;
 }
 
-/*int	get_longest_line_map(char **m, int choice)
-{
-	int	i;
-	int	ret;
-
-	i = -1;
-	ret = 0;
-	while (m[++i])
-	{
-		if (ft_strlen(m[i]) > ret && choice)
-			ret = ft_strlen(m[i]);
-	}
-	if (choice)
-		return (ret);
-	return (i);
-}
-
-void	draw_1(t_g *g, t_data *img, double x, double y, double width, double height)
-{
-	double	to_go;
-	double	to_g;
-	double	i;
-	double	value;
-	(void)g;
-
-	value = print_dist_wall_W(g, g->angle);
-	if (value < 0)
-		value *= -1;
-	i = x;
-	if (value)
-		height = 100 / value;
-	to_go = x + width;
-	to_g = y + height;// - value + height;
-	printf("distance = %f\n", value);
-	printf("height = %f\n", height);
-	double j = y + height;
-	if (y < W_H / 2 && y > 1)
-	{
-		to_g += W_H / 2 - to_g;
-		while (j < to_g)
-		{
-			i = x;
-			while (i < to_go)
-			{
-				my_mlx_pixel_put(img, i, j, 0x4c5057);
-				i++;
-			}
-			j++;
-		}
-	}
-	else
-	{
-		while (j < to_g)
-		{
-			i = x;
-			while (i < to_go)
-			{
-				my_mlx_pixel_put(img, i, j, 0x4c5057);
-				i++;
-			}
-			j++;
-		}
-	}
-}
-
-void	draw_0(t_g *g, t_data *img, int x, int y, int width, int height)
-{
-	int	to_go;
-	int	to_g;
-	int	i;
-	(void)g;
-
-	i = x;
-	to_go = x + width;
-	to_g = y + height;
-	int j = y;
-	while (j < to_g)
-	{
-		i = x;
-		while (i < to_go)
-		{
-			my_mlx_pixel_put(img, i, j, 0x8ebbde);
-			i++;
-		}
-		j++;
-	}
-*/
-
-
-int	create_trgb(int t, int r, int g, int b);
-
-void	draw_start(t_g *g, t_data *img, int x, int y)
-{
-	(void)x;
-	(void)y;
-	my_mlx_pixel_put(img, g->s_x, g->s_y, 0xFF0000);
-}
-void    test_draw(t_g *g, t_data *img, t_data *player);
-
-void	display_sol(t_g *g, t_data *img, double j, double height, double y)
-{
-	while (j++ > W_H / 2 + height / 2)
-		my_mlx_pixel_put(img, j, y, g->solcolor);
-}
-
-void	display_ciel(t_g *g, t_data *img, double j, double height, double y)
-{
-	while (j++ < W_H / 2 - height / 2)
-		my_mlx_pixel_put(img, j, y, g->cielcolor);
-}
-
-int	checkSideCase(t_g *g)
-{
-	(void)g;
-	return (0);
-		
-}
 int    get_pixel(int x, int y, t_data i)
 {
 	char	*ret;
@@ -719,15 +533,55 @@ int    get_pixel(int x, int y, t_data i)
 	return (*(unsigned int *)ret);
 }
 
-void	drawLineTEST(t_g *g, t_data *img, double x, double y);
+
+void	DisplayPix_2(t_g *g, double y, double j, double ciel)
+{
+	double	height;
+	
+	height = g->ActuHeight;
+	if (g->button == 1 && (g->dir == 3 || g->dir == 4) && g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
+	else if (g->dir == 1)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->est));
+	else if (g->dir == 1)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->est));
+	else if (g->dir == 2)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->ouest));
+	else if (g->dir == 3)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF) ,(j - ciel) * (SIZEF / height), g->sud));		
+	else if (g->dir == 4)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->nord));
+}
+
+void	DisplayPix(t_g *g, double y, double j, double ciel)
+{
+	double	height;
+
+	height = g->ActuHeight;
+	if (g->door == 1 && !g->activateButton && (g->dir == 3 || g->dir == 4))
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->d));
+	else if (g->door == 1 && !g->activateButton && (g->dir == 1 || g->dir == 2))
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->d));
+	else if (g->button == 1 && (g->dir == 1 || g->dir == 2) && !g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->b));
+	else if (g->button == 1 && (g->dir == 3 || g->dir == 4) && !g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->b));
+	else if (g->button == 1 && (g->dir == 1 || g->dir == 2) && g->activateButton)
+		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
+	else
+		DisplayPix_2(g, y, j, ciel);
+}
 
 void	draw_row(t_g *g, t_data *img, double y, double height)
 {
-	double j = -1;
+	double j;
 	double	ciel;
 	double floor1;
+
+	g->ActuHeight = height;
 	ciel =  (W_H / 2) - (height / 2);
 	floor1 = (W_H / 2) + (height / 2);
+	j = -1;
 	while (++j < W_H)
 	{
 		if (j < ciel)
@@ -735,31 +589,7 @@ void	draw_row(t_g *g, t_data *img, double y, double height)
 		else if (j > floor1)
 			my_mlx_pixel_put(img, y, j, g->solcolor);
 		else
-		{
-			if (g->door == 1 && !g->activateButton && (g->dir == 3 || g->dir == 4))
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->d));
-			else if (g->door == 1 && !g->activateButton && (g->dir == 1 || g->dir == 2))
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->d));
-			else if (g->button == 1 && (g->dir == 1 || g->dir == 2) && !g->activateButton)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->b));
-			else if (g->button == 1 && (g->dir == 3 || g->dir == 4) && !g->activateButton)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->b));
-			else if (g->button == 1 && (g->dir == 1 || g->dir == 2) && g->activateButton)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
-			else if (g->button == 1 && (g->dir == 3 || g->dir == 4) && g->activateButton)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
-			else if (g->dir == 1)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->est));
-			else if (g->dir == 1)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->est));
-			else if (g->dir == 2)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->ouest));
-			else if (g->dir == 3)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirX, SIZEF) ,(j - ciel) * (SIZEF / height), g->sud));
-			else if (g->dir == 4)
-				my_mlx_pixel_put(img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->nord));
-
-		}
+			DisplayPix(g, y, j, ciel);
 	}
 }
 
@@ -918,44 +748,7 @@ void	create_hand_img(t_data img, t_data h)
 void    draw_map(t_g *g)
 {
 
-	//test_draw(g, img, &g->player);
-	//width = W_W / (get_longest_line_map(g->m.map, 1)+1);
-	//height = W_H / (get_longest_line_map(g->m.map, 0)+ 1);
-	/*int a = 0;
-	while (g->m.map[a])
-	{
-		int b = 0;
-		while (g->m.map[a][b])
-		{
-			printf("%c\n", g->m.map[a][b]);
-			b++;
-		}
-		a++;
-	}*/
-			
-	/*while (g->m.map[++i])
-		;
-	i--;
-	int k = 0;
-	j = 0;
-	while (j < i)
-	{
-		x = 0;
-		k = 0;
-		while (j < i)
-		{
-			if (g->m.map[j][k] == '1')
-			{*/
-				drawRow1(g, &g->img, 0, 0);
-				//drawLineTEST(g, img, x, y);
-		//	}
-	//		x += width;
-	//		j++;
-	//	}
-	//	k++;
-	//	y += height;
-//	}
-
+	drawRow1(g, &g->img, 0, 0);
 	if (g->activateButton && g->affCheck)
 	{
 		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x444444, "Porte ouvertes");
@@ -978,20 +771,41 @@ void    draw_map(t_g *g)
 	affTime(g);
 }
 
+void	recuStartPos_N(t_g *g, int x, int y)
+{
+	g->c.x = x + SIZE / 2;		
+	g->c.y = y + SIZE / 2;
+	g->c.o = 0;
+}
+
+void	recuStartPos_S(t_g *g, int x, int y)
+{
+	g->c.x = x + SIZE / 2;
+	g->c.y = y + SIZE / 2;
+	g->c.o = 180;
+}
+
+void	recuStartPos_W(t_g *g, int x, int y)
+{
+	g->c.x = x + SIZE / 2;
+	g->c.y = y + SIZE / 2;
+	g->c.o = 270;
+}
+
+void	recuStartPos_E(t_g *g, int x, int y)
+{
+	g->c.x = x + SIZE / 2;
+	g->c.y = y + SIZE / 2;
+	g->c.o = 90;
+}
+
 void	recuStartPos(t_g *g)
 {
 	int	i;
-	int	width;
-	int	height;
 	int	j;
 	int	y;
 	int	x;
-	width = SIZE;
-	height = SIZE;
 
-
-	if (!g->aff1)
-	{
 	i = -1;
 	y = 0;
 	while (g->m.map[++i])
@@ -1001,58 +815,18 @@ void	recuStartPos(t_g *g)
 		while (g->m.map[i][++j])
 		{
 			if (g->m.map[i][j] == 'N')
-			{
-				g->c.x = x + SIZE / 2;
-				g->c.y = y + SIZE / 2;
-				g->c.o = 0;
-			}
+				recuStartPos_N(g, x, y);
 			if (g->m.map[i][j] == 'S')
-			{
-				g->c.x = x + SIZE / 2;
-				g->c.y = y + SIZE / 2;
-				g->c.o = 180;
-			}
+				recuStartPos_S(g, x, y);
 			if (g->m.map[i][j] == 'W')
-			{
-				g->c.x = x + SIZE / 2;
-				g->c.y = y + SIZE / 2;
-				g->c.o = 270;
-			}
+				recuStartPos_W(g, x, y);
 			if (g->m.map[i][j] == 'E')
-			{
-				g->c.x = x + SIZE / 2;
-				g->c.y = y + SIZE / 2;
-				g->c.o = 90;
-			}
-			x += width;
-
+				recuStartPos_E(g, x, y);
+			x += SIZE;
 		}
-		y += height;
-	}
-	g->aff1 = 1;
+		y += SIZE;
 	}
 }
-	/*i = 0;
-	while (i <= W_W)
-	{
-		j = -1;
-		while (++j < W_H)
-		{
-			my_mlx_pixel_put(img, i, j, 0x808080);
-		}
-		i += width;
-	}
-	i = 0;
-	while (i <= W_H)
-	{
-		j = -1;
-		while (++j < W_W)
-		{
-			my_mlx_pixel_put(img, j, i, 0x808080);
-		}
-		i += height;
-	}
-	mlx_put_image_to_window(g->mlx, g->win, img->img, 0, 0);*/
 
 void	drawMinisol(t_g *g, int x, int y, int width, int height)
 {
@@ -1153,8 +927,6 @@ void	drawMiniPlayer(t_g *g, double x, double y, double width, double height)
 	double	to_go;
 	double	to_g;
 
-	//printf("X = %f, Y = %f\n", x, y);
-	(void)g;
 	to_go = x + width;
 	to_g = y + height;
 	i = y;
@@ -1163,13 +935,11 @@ void	drawMiniPlayer(t_g *g, double x, double y, double width, double height)
 		j = x;
 		while (j < to_go)
 		{
-			//printf ("x = %f, y = %f\n", i, j);
 			my_mlx_pixel_put(&g->img, i, j, 0x000000);
 			j++;
 		}
 		i++;
 	}
-	//mlx_put_image_to_window(g->mlx, g->mlx, &g->player.img, 0, 0);
 }
 
 int	tablen(char **str)
@@ -1214,38 +984,10 @@ void	draw_minimap(t_g *g)
 				|| g->m.map[i][j] == 'E' || g->m.map[i][j] == 'W'
 				|| (g->m.map[i][j]== 'P' && g->activateButton))
 				drawMinisol(g, x, y, width, height);
-			//printf("gX = %d, gY = %d\n", (int)g->c.x / (SIZE / 3), (int)g->c.y / (SIZE / 3));
-			//printf("x = %f, y = %f\n", x , y);
-			//printf("i = %d, j = %d\n", i, j);
-		//	}
 			x += width;
 		}
 		y += height;
 	}
-	//drawMiniPlayer(g);
-}
-
-
-
-
-
-void	draw_player(t_g *g, t_data *img, t_data *player)
-{
-	//int	i;
-	//int	j;
-
-	(void)player;
-	(void)g;
-	(void)img;
-	/*j = -1;
-	while (++j <= 9)
-	{
-		i = -1;
-		while (++i <= 9)
-			my_mlx_pixel_put(player, j, i, 0xfcdb35);
-	}*/
-	//printf ("player : x = %f, y = %f\n", g->c.x / SIZE, g->c.y / SIZE);
-	//mlx_put_image_to_window(g->mlx, g->win, player->img, g->c.x, g->c.y);// - 4);
 }
 
 int	createRGB(t_g *g)
@@ -1258,63 +1000,39 @@ int	createRGBsol(t_g *g)
 	return (g->m.f_r * 8 << 16 | g->m.f_g * 8 << 8 | g->m.f_b * 8);
 }
 
-void	test_draw(t_g *g, t_data *img, t_data *player)
+void	recupRGB(t_g *g)
 {
-	(void)player;
 	g->cielcolor = createRGB(g);
 	g->solcolor = createRGBsol(g);
-	
-	int	y = 0;	
-	int	x = 0;
-	while (x < W_W)
-	{
-	//	x = y;
-		y = 0;
-		while (y < W_H)
-		{
-			if (y < W_H / 2)
-				my_mlx_pixel_put(img, x, y, g->cielcolor);
-			else
-				my_mlx_pixel_put(img, x, y, g->solcolor);
-			y++;
-		}
-		x++;
-	}
-	//draw_map(g, img);
 }
-
 int	mouseTracking(t_g *g)
 {
 	int	x = 0;
 	int	y = 0;
 
-	//mlx_mouse_move(g->mlx, g->win, W_W / 2, W_H / 2);
-	//if (g->mouseHide)
-	//	mlx_mouse_show(g->mlx, g->win);
-	//if (!g->mouseHide)
-	//{
-		//mlx_mouse_hide(g->mlx, g->win);
-		mlx_mouse_get_pos(g->mlx, g->win, &x, &y);
-		if(x > W_W / 2)
-		{
-			ft_keyPress(R, g);
-			g->mouseR = 1;
-		}
-		if (x < W_W / 2)
-		{
-			ft_keyPress(L, g);
-			g->mouseL = 1;
-		}
-		mlx_mouse_move(g->mlx, g->win, W_W / 2, W_W / 2);
-	//}
+	//mlx_mouse_hide(g->mlx, g->win);
+	mlx_mouse_get_pos(g->mlx, g->win, &x, &y);
+	if(x > W_W / 2)
+	{
+		ft_keyPress(R, g);
+		g->mouseR = 1;
+	}
+	if (x < W_W / 2)
+	{
+		ft_keyPress(L, g);
+		g->mouseL = 1;
+	}
+	mlx_mouse_move(g->mlx, g->win, W_W / 2, W_W / 2);
 	return (0);
 }
+
 int	start(t_g *g)
 {
 	ft_move(g);
 	mouseTracking(g);
 	return (0);
 }
+
 void	initWallTextures_2(t_data ouest, t_g *g)
 {
 	int	i_h;
@@ -1341,26 +1059,61 @@ void	initWallTextures(t_data nord, t_data sud, t_data est, t_g *g)
 	g->est = est;
 }
 
+void	initBonusTextures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g)
+{
+	int	i_h;
+	int	i_w;
+
+	hand_1.img = mlx_xpm_file_to_image(g->mlx, "hand_1.xpm", &i_w, &i_h);
+	hand_1.addr = mlx_get_data_addr(hand_1.img, &hand_1.bits_per_pixel, &hand_1.line_length, &hand_1.endian);
+	hand_3.img = mlx_xpm_file_to_image(g->mlx, "hand_3.xpm", &i_w, &i_h);
+	hand_3.addr = mlx_get_data_addr(hand_3.img, &hand_3.bits_per_pixel, &hand_3.line_length, &hand_3.endian);
+	hand_2.img = mlx_xpm_file_to_image(g->mlx, "hand_2.xpm", &i_w, &i_h);
+	hand_2.addr = mlx_get_data_addr(hand_2.img, &hand_2.bits_per_pixel, &hand_2.line_length, &hand_2.endian);
+	g->hand_1 = hand_1;
+	g->hand_2 = hand_2;
+	g->hand_3 = hand_3;
+}
+
+void	initBonusTextures_2(t_data b, t_data bc, t_data d, t_g *g)
+{
+	int	i_h;
+	int	i_w;
+
+	d.img = mlx_xpm_file_to_image(g->mlx, "D.xpm", &i_w, &i_h);
+	d.addr = mlx_get_data_addr(d.img, &d.bits_per_pixel, &d.line_length, &d.endian);
+	b.img = mlx_xpm_file_to_image(g->mlx, "B.xpm", &i_w, &i_h);
+	b.addr = mlx_get_data_addr(b.img, &b.bits_per_pixel, &b.line_length, &b.endian);
+	bc.img = mlx_xpm_file_to_image(g->mlx, "BC.xpm", &i_w, &i_h);
+	bc.addr = mlx_get_data_addr(bc.img, &bc.bits_per_pixel, &bc.line_length, &bc.endian);
+	g->b = b;
+	g->bc = bc;
+	g->d = d;
+}
+
+void	initBonusTextures_3(t_data cross, t_data img, t_g *g)
+{
+	int	i_h;
+	int	i_w;
+
+	cross.img = mlx_xpm_file_to_image(g->mlx, "crosshair.xpm", &i_w, &i_h);
+	cross.addr = mlx_get_data_addr(cross.img, &cross.bits_per_pixel, &cross.line_length, &cross.endian);
+	img.img = mlx_new_image(g->mlx, W_W, W_H);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	g->img = img;
+	g->cross = cross;
+}
+
+
 int	main(int ac, char **av)
 {
 	t_m	m;
 	t_g	g;
-	t_data	img;
-	t_data	player;
-	t_data	hand_1;
-	t_data	hand_2;
-	t_data	hand_3;
-	t_data	cross;
-	t_data	b;
-	t_data	bc;
-	t_data	d;
-	int	i_h;
-	int	i_w;
 
-	init_struct_g(&g, ac, av);
-	init_struct_m(&m);
 	if (ac != 2)
 		return (ft_errors(2), -1);
+	init_struct_g(&g, ac, av);
+	init_struct_m(&m);
 	if(!ft_parsing(&g))
 		return(-1);
 	g.mlx = mlx_init();
@@ -1369,37 +1122,12 @@ int	main(int ac, char **av)
 	g.win = mlx_new_window(g.mlx, W_W, W_H, "cub3d");
 	initWallTextures(g.nord, g.sud, g.est, &g);
 	initWallTextures_2(g.ouest, &g);
-	hand_1.img = mlx_xpm_file_to_image(g.mlx, "hand_1.xpm", &i_w, &i_h);
-	hand_1.addr = mlx_get_data_addr(hand_1.img, &hand_1.bits_per_pixel, &hand_1.line_length, &hand_1.endian);
-	hand_3.img = mlx_xpm_file_to_image(g.mlx, "hand_3.xpm", &i_w, &i_h);
-	hand_3.addr = mlx_get_data_addr(hand_3.img, &hand_3.bits_per_pixel, &hand_3.line_length, &hand_3.endian);
-	hand_2.img = mlx_xpm_file_to_image(g.mlx, "hand_2.xpm", &i_w, &i_h);
-	hand_2.addr = mlx_get_data_addr(hand_2.img, &hand_2.bits_per_pixel, &hand_2.line_length, &hand_2.endian);
-	d.img = mlx_xpm_file_to_image(g.mlx, "D.xpm", &i_w, &i_h);
-	d.addr = mlx_get_data_addr(d.img, &d.bits_per_pixel, &d.line_length, &d.endian);
-	b.img = mlx_xpm_file_to_image(g.mlx, "B.xpm", &i_w, &i_h);
-	b.addr = mlx_get_data_addr(b.img, &b.bits_per_pixel, &b.line_length, &b.endian);
-	bc.img = mlx_xpm_file_to_image(g.mlx, "BC.xpm", &i_w, &i_h);
-	bc.addr = mlx_get_data_addr(bc.img, &bc.bits_per_pixel, &bc.line_length, &bc.endian);
-	cross.img = mlx_xpm_file_to_image(g.mlx, "crosshair.xpm", &i_w, &i_h);
-	cross.addr = mlx_get_data_addr(cross.img, &cross.bits_per_pixel, &cross.line_length, &cross.endian);
-	img.img = mlx_new_image(g.mlx, W_W, W_H);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	g.img = img;
-	g.hand_1 = hand_1;
-	g.hand_2 = hand_2;
-	g.hand_3 = hand_3;
-	g.b = b;
-	g.bc = bc;
-	g.d = d;
-	g.cross = cross;
-	g.player = player;
-	g.aff1 = 0;
+	initBonusTextures(g.hand_1, g.hand_2, g.hand_3, &g);
+	initBonusTextures_2(g.b, g.bc, g.d, &g);
+	initBonusTextures_3(g.cross, g.img, &g);
 	recuStartPos(&g);
-	test_draw(&g, &img, &player);
+	recupRGB(&g);
 	draw_map(&g);
-	g.c.xmini = g.c.x;
-	g.c.ymini = g.c.y;
 	mlx_mouse_move(g.mlx, g.win, W_W / 2, W_H / 2);
 	mlx_loop_hook(g.mlx, start, &g);
 	mlx_hook(g.win, 2, 1L << 0, ft_keyPress, &g);

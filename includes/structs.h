@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/17 18:41:19 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:44:35 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_global
 	int	s_x;
 	int	s_y;
 	int	count;
+	double	ActuHeight;
 	double	angle;
 	double	angleX;
 	double	angleY;
