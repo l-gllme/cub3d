@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 14:47:51 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:33:16 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -489,7 +489,12 @@ int	ft_keyPress(int key, t_g *g)
 	if (key == RC)
 		g->key_RC = 1;
 	if (key == LC)
-		g->key_LC = 1;
+	{
+		if (g->key_LC == 0)
+			g->key_LC = 1;
+		else
+			g->key_LC = 0;
+	}
 	return (0);
 }
 
@@ -513,8 +518,6 @@ int	ft_keyRelease(int key, t_g *g)
 		g->key_O = 0;
 	if (key == RC)
 		g->key_RC = 0;
-	if (key == LC)
-		g->key_LC = 0;
 	return (0);
 }
 
@@ -734,6 +737,28 @@ void	create_crosshair(t_data img, t_data h)
 }
 
 
+void	create_hand_img_r(t_data img, t_data h)
+{
+	int	i = -1;
+	int	j = -1;
+	int	i_w;
+	int	pos = 0;
+
+	i_w = (h.line_length / 4) * 2;
+	while (++j < i_w)
+	{
+		i = -1;
+		while (++i < 400)
+		{
+			pos = h.line_length - ((i / 2) * 4) + h.line_length * (j / 2);
+			if (h.addr[pos+3] == 0)
+			{
+				my_mlx_pixel_put(&img, i + (W_W / 2 - i_w) , j + (W_H - 400), get_pixel_2(h.line_length - i /2, j /2, &h));
+			}
+		}
+	}
+}
+
 void	create_hand_img(t_data img, t_data h)
 {
 	int	i = -1;
@@ -750,7 +775,7 @@ void	create_hand_img(t_data img, t_data h)
 			pos = (i / 2) * 4 + h.line_length * (j / 2);
 			if (h.addr[pos+3] == 0)
 			{
-				my_mlx_pixel_put(&img, i + (W_W / 2 - i_w / 2) , j + (W_H - 400), get_pixel_2(i /2, j /2, &h));
+				my_mlx_pixel_put(&img, i + (W_W / 2) , j + (W_H - 400), get_pixel_2(i /2, j /2, &h));
 			}
 		}
 	}
@@ -771,26 +796,55 @@ void    draw_map(t_g *g)
 		g->affCheck = 0;
 	}
 	draw_minimap(g);
-	if (g->key_RC == 0 && g->anim == 0)
+	if (g->key_RC == 0 && g->anim == 0 && g->key_LC == 0)
 		create_hand_img(g->img, g->hand_1);
-	else if (g->key_RC == 1 && (g->anim == 0 || g->anim == 20))
+	else if (g->key_RC == 0 && g->anim == 0 && g->key_LC == 1)
+	{
+		create_hand_img(g->img, g->hand_1);
+		create_hand_img_r(g->img, g->hand_1);
+	}
+	else if (g->key_RC == 1 && (g->anim == 0 || g->anim == 16))
 		g->anim += 1;
-	if (g->anim < 4 && g->anim != 0)
+	if (g->anim < 4 && g->anim != 0 && g->key_LC == 1)
+	{
+		create_hand_img(g->img, g->hand_2);
+		create_hand_img_r(g->img, g->hand_2);
+		g->anim++;
+	}
+	else if (g->anim < 8 && g->anim != 0 && g->key_LC == 1)
+	{
+		create_hand_img(g->img, g->hand_3);
+		create_hand_img_r(g->img, g->hand_3);
+		g->anim++;
+	}
+	else if (g->anim < 12 && g->anim != 0 && g->key_LC == 1)
+	{
+		create_hand_img(g->img, g->hand_4);
+		create_hand_img_r(g->img, g->hand_4);
+		g->anim++;
+	}
+	else if (g->anim < 16 && g->anim != 0 && g->key_LC == 1)
+	{
+		create_hand_img(g->img, g->hand_5);
+		create_hand_img_r(g->img, g->hand_5);
+		g->anim++;
+	}
+	else if (g->anim < 4 && g->anim != 0 && g->key_LC == 0)
 	{
 		create_hand_img(g->img, g->hand_2);
 		g->anim++;
 	}
-	else if (g->anim < 8 && g->anim != 0)
+	else if (g->anim < 8 && g->anim != 0 && g->key_LC == 0)
 	{
 		create_hand_img(g->img, g->hand_3);
 		g->anim++;
 	}
-	else if (g->anim < 12 && g->anim != 0)
+	else if (g->anim < 12 && g->anim != 0 && g->key_LC == 0)
 	{
 		create_hand_img(g->img, g->hand_4);
 		g->anim++;
 	}
-	else if (g->anim < 16 && g->anim != 0)
+	else if (g->anim < 16 && g->anim != 0 && g->key_LC == 0)
 	{
 		create_hand_img(g->img, g->hand_5);
 		g->anim++;
