@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 14:26:24 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:34:27 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_global
 	int	affCheck;
 	double	startTime;
 	double	oldTime;
+	int	anim;
 }	t_g;
 
 #endif

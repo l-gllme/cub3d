@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 14:32:10 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:47:51 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_struct_g(t_g *g, int ac, char **av)
 	g->av = av;
 	g->count = 0;
 	g->i = 0;
+	g->anim = 0;
 	g->activateButton = 0;
 	g->affCheck = 0;
 	g->mouseHide = 1;
@@ -770,12 +771,32 @@ void    draw_map(t_g *g)
 		g->affCheck = 0;
 	}
 	draw_minimap(g);
-	if (g->key_LC == 0)
+	if (g->key_RC == 0 && g->anim == 0)
 		create_hand_img(g->img, g->hand_1);
-	else if (g->key_LC == 1 && g->key_RC == 0)
-		create_hand_img(g->img, g->hand_3);
-	else if (g->key_LC == 1 && g->key_RC == 1)
+	else if (g->key_RC == 1 && (g->anim == 0 || g->anim == 20))
+		g->anim += 1;
+	if (g->anim < 4 && g->anim != 0)
+	{
 		create_hand_img(g->img, g->hand_2);
+		g->anim++;
+	}
+	else if (g->anim < 8 && g->anim != 0)
+	{
+		create_hand_img(g->img, g->hand_3);
+		g->anim++;
+	}
+	else if (g->anim < 12 && g->anim != 0)
+	{
+		create_hand_img(g->img, g->hand_4);
+		g->anim++;
+	}
+	else if (g->anim < 16 && g->anim != 0)
+	{
+		create_hand_img(g->img, g->hand_5);
+		g->anim++;
+	}
+	if (g->anim == 16)
+		g->anim = 0;
 	create_crosshair(g->img, g->cross);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
 	affTime(g);
