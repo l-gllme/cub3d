@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 00:58:34 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:14:07 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,27 @@ void	init_struct_g(t_g *g, int ac, char **av)
 	g->av = av;
 	g->count = 0;
 	g->i = 0;
+	g->activateButton = 0;
+	g->affCheck = 0;
+	g->mouseHide = 1;
+	g->key_W = 0;
+	g->key_A = 0;
+	g->key_S = 0;
+	g->key_D = 0;
+	g->key_O = 0;
+	g->key_R = 0;
+	g->key_L = 0;
+	g->key_E = 0;
+	g->key_LC = 0;
+	g->key_RC = 0;
+	g->DistButton = 999;
+	g->startTime = 0;
+	g->oldTime = 0;
+	g->mouseR = 0;
+	g->mouseL = 0;
+	g->FOVP = FOV * PI / 180;
+	g->FOVD2 = (FOV / 2) * PI / 180;
+	g->angle = 0;
 }
 
 void	init_struct_m(t_m *m)
@@ -38,39 +59,59 @@ int	ft_key_cross(t_g *g)
 
 void	free_all(t_g *g)
 {
+	mlx_destroy_image(g->mlx, g->ouest.img);
+	mlx_destroy_image(g->mlx, g->nord.img);
+	mlx_destroy_image(g->mlx, g->sud.img);
+	mlx_destroy_image(g->mlx, g->est.img);
+	mlx_destroy_image(g->mlx, g->bc.img);
+	mlx_destroy_image(g->mlx, g->b.img);
+	mlx_destroy_image(g->mlx, g->d.img);
+	mlx_destroy_image(g->mlx, g->hand_1.img);
+	mlx_destroy_image(g->mlx, g->hand_2.img);
+	mlx_destroy_image(g->mlx, g->hand_3.img);
+	mlx_destroy_image(g->mlx, g->cross.img);
+	mlx_destroy_image(g->mlx, g->img.img);
 	mlx_destroy_window(g->mlx, g->win);
 	mlx_destroy_display(g->mlx);
 	free(g->mlx);
+	int	i = -1;
+	while (g->m.map[++i])
+		free(g->m.map[i]);
+	free(g->m.map);
+	free(g->m.no_texture);
+	free(g->m.so_texture);
+	free(g->m.ea_texture);
+	free(g->m.we_texture);
 }
 
 int	check_next_pos_W(t_g *g, double angle)
 {
-	/*if ((int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE != g->c.x)
+	if ((int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE != (int)g->c.y / SIZE && (int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE != (int)g->c.x / SIZE)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE])
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE])
 			{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE - 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 			}
 		}
 		else if (angle > 90 * PI / 180 && angle <= 180 * PI * 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 180 * PI / 180 && angle <= 270 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 270 * PI / 180 && angle <= 360 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE - 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (WD_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
-	}*/
+	}
 	if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (sin(angle) * (C_SPEED))) / SIZE] == 'P' && !g->activateButton)
@@ -82,29 +123,29 @@ int	check_next_pos_W(t_g *g, double angle)
 
 int	check_next_pos_A(t_g *g, double angle)
 {
-	/*if ((int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE != g->c.x)
+	if ((int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE != (int)g->c.y / SIZE && (int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE != (int)g->c.x / SIZE)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE - 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
 		else if (angle > 90 * PI / 180 && angle <= 180 * PI * 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 180 * PI / 180 && angle <= 270 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 270 * PI / 180 && angle <= 360 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y - (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (cos(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
-	}*/
+	}
 	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y - (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(cos(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
@@ -116,29 +157,29 @@ int	check_next_pos_A(t_g *g, double angle)
 
 int	check_next_pos_S(t_g *g, double angle)
 {
-	/*if ((int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE != g->c.x)
+	if ((int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE != (int)g->c.y / SIZE && (int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE != (int)g->c.x / SIZE)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE - 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
 		else if (angle > 90 * PI / 180 && angle <= 180 * PI * 180)
 		{
-			if (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 180 * PI / 180 && angle <= 270 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 270 * PI / 180 && angle <= 360 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (C_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (C_SPEED))) / SIZE - 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (cos(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x - (sin(angle) * (WD_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
-	}*/
+	}
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
@@ -150,29 +191,29 @@ int	check_next_pos_S(t_g *g, double angle)
 
 int	check_next_pos_D(t_g *g, double angle)
 {
-	/*if ((int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE != g->c.y && (int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE != g->c.x)
+	if ((int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE != (int)g->c.y / SIZE && (int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE != (int)g->c.x / SIZE)
 	{
 		if (angle >= 0 * PI / 180 && angle <= 90 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE - 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
 		else if (angle > 90 * PI / 180 && angle <= 180 * PI * 180)
 		{
-			if (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE + 1][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE + 1][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 180 * PI / 180 && angle <= 270 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE + 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE + 1] == '1'))
 				return (0);
 		}
 		else if (angle > 270 * PI / 180 && angle <= 360 * PI / 180)
 		{
-			if (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE - 1][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (C_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (C_SPEED))) / SIZE - 1] == '1'))
+			if (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE - 1][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE] == '1' && (g->m.map[(int)(g->c.y + (sin(angle) * (WD_SPEED))) / SIZE][(int)(g->c.x + (cos(angle) * (WD_SPEED))) / SIZE - 1] == '1'))
 				return (0);
 		}
-	}*/
+	}
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
@@ -789,10 +830,8 @@ void	affTime(t_g *g)
 	frame = (time - g->oldTime) / 1000.0;
 	temp = ft_itoa((int)(1 / frame));
 	g->oldTime = time;
-	mlx_string_put(g->mlx, g->win, W_W - 50, 25, \
-		0x444444, temp);
-	mlx_string_put(g->mlx, g->win, W_W - 20, 25, \
-		0x444444, "FPS");
+	mlx_string_put(g->mlx, g->win, W_W - 50, 25, 0x444444, temp);
+	mlx_string_put(g->mlx, g->win, W_W - 35, 25, 0x444444, "FPS");
 	free(temp);
 }
 
@@ -936,7 +975,7 @@ void    draw_map(t_g *g)
 		create_hand_img(g->img, g->hand_2);
 	create_crosshair(g->img, g->cross);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
-	//affTime(g);
+	affTime(g);
 }
 
 void	recuStartPos(t_g *g)
@@ -1157,7 +1196,7 @@ void	draw_minimap(t_g *g)
 	width = (len);
 	y = 0;
 	i = -1;
-	while (g->m.map[++i])
+	while (g->m.map[++i + 1])
 	{
 		j = -1;
 		x = 0;
@@ -1254,7 +1293,7 @@ int	mouseTracking(t_g *g)
 	//	mlx_mouse_show(g->mlx, g->win);
 	//if (!g->mouseHide)
 	//{
-		mlx_mouse_hide(g->mlx, g->win);
+		//mlx_mouse_hide(g->mlx, g->win);
 		mlx_mouse_get_pos(g->mlx, g->win, &x, &y);
 		if(x > W_W / 2)
 		{
@@ -1276,6 +1315,31 @@ int	start(t_g *g)
 	mouseTracking(g);
 	return (0);
 }
+void	initWallTextures_2(t_data ouest, t_g *g)
+{
+	int	i_h;
+	int	i_w;
+
+	ouest.img = mlx_xpm_file_to_image(g->mlx, g->m.we_texture + 1, &i_w, &i_h);
+	ouest.addr = mlx_get_data_addr(ouest.img, &ouest.bits_per_pixel, &ouest.line_length, &ouest.endian);
+	g->ouest = ouest;
+}
+
+void	initWallTextures(t_data nord, t_data sud, t_data est, t_g *g)
+{
+	int	i_h;
+	int	i_w;
+
+	nord.img = mlx_xpm_file_to_image(g->mlx, g->m.no_texture + 1, &i_w, &i_h);
+	nord.addr = mlx_get_data_addr(nord.img, &nord.bits_per_pixel, &nord.line_length, &nord.endian);
+	sud.img = mlx_xpm_file_to_image(g->mlx, g->m.so_texture + 1, &i_w, &i_h);
+	sud.addr = mlx_get_data_addr(sud.img, &sud.bits_per_pixel, &sud.line_length, &sud.endian);
+	est.img = mlx_xpm_file_to_image(g->mlx, g->m.ea_texture + 1, &i_w, &i_h);
+	est.addr = mlx_get_data_addr(est.img, &est.bits_per_pixel, &est.line_length, &est.endian);
+	g->nord = nord;
+	g->sud = sud;
+	g->est = est;
+}
 
 int	main(int ac, char **av)
 {
@@ -1287,42 +1351,14 @@ int	main(int ac, char **av)
 	t_data	hand_2;
 	t_data	hand_3;
 	t_data	cross;
-	t_data	nord;
-	t_data	sud;
-	t_data	est;
 	t_data	b;
 	t_data	bc;
 	t_data	d;
-	t_data	ouest;
 	int	i_h;
 	int	i_w;
 
 	init_struct_g(&g, ac, av);
 	init_struct_m(&m);
-	//g.s_x = 100;
-	//g.s_y = 100;
-	g.activateButton = 0;
-	g.affCheck = 0;
-	g.mouseHide = 1;
-	g.key_W = 0;
-	g.key_A = 0;
-	g.key_S = 0;
-	g.key_D = 0;
-	g.key_O = 0;
-	g.key_R = 0;
-	g.key_L = 0;
-	g.key_E = 0;
-	g.key_LC = 0;
-	g.key_RC = 0;
-	g.DistButton = 999;
-	g.startTime = 0;
-	g.oldTime = 0;
-	g.mouseR = 0;
-	g.mouseL = 0;
-	//g.m = m;
-	g.FOVP = FOV * PI / 180;
-	g.FOVD2 = (FOV / 2) * PI / 180;
-	g.angle = 0;
 	if (ac != 2)
 		return (ft_errors(2), -1);
 	if(!ft_parsing(&g))
@@ -1331,54 +1367,37 @@ int	main(int ac, char **av)
 	if (!g.mlx)
 		return (free_m(&g), ft_errors(3), -1);
 	g.win = mlx_new_window(g.mlx, W_W, W_H, "cub3d");
-	img.img = mlx_new_image(g.mlx, W_W, W_H);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	initWallTextures(g.nord, g.sud, g.est, &g);
+	initWallTextures_2(g.ouest, &g);
 	hand_1.img = mlx_xpm_file_to_image(g.mlx, "hand_1.xpm", &i_w, &i_h);
 	hand_1.addr = mlx_get_data_addr(hand_1.img, &hand_1.bits_per_pixel, &hand_1.line_length, &hand_1.endian);
 	hand_3.img = mlx_xpm_file_to_image(g.mlx, "hand_3.xpm", &i_w, &i_h);
 	hand_3.addr = mlx_get_data_addr(hand_3.img, &hand_3.bits_per_pixel, &hand_3.line_length, &hand_3.endian);
 	hand_2.img = mlx_xpm_file_to_image(g.mlx, "hand_2.xpm", &i_w, &i_h);
 	hand_2.addr = mlx_get_data_addr(hand_2.img, &hand_2.bits_per_pixel, &hand_2.line_length, &hand_2.endian);
-	nord.img = mlx_xpm_file_to_image(g.mlx, "N.xpm", &i_w, &i_h);
-	nord.addr = mlx_get_data_addr(nord.img, &nord.bits_per_pixel, &nord.line_length, &nord.endian);
-	sud.img = mlx_xpm_file_to_image(g.mlx, "S.xpm", &i_w, &i_h);
-	sud.addr = mlx_get_data_addr(sud.img, &sud.bits_per_pixel, &sud.line_length, &sud.endian);
-	ouest.img = mlx_xpm_file_to_image(g.mlx, "O.xpm", &i_w, &i_h);
-	ouest.addr = mlx_get_data_addr(ouest.img, &ouest.bits_per_pixel, &ouest.line_length, &ouest.endian);
-	est.img = mlx_xpm_file_to_image(g.mlx, "E.xpm", &i_w, &i_h);
-	est.addr = mlx_get_data_addr(est.img, &est.bits_per_pixel, &est.line_length, &est.endian);
 	d.img = mlx_xpm_file_to_image(g.mlx, "D.xpm", &i_w, &i_h);
 	d.addr = mlx_get_data_addr(d.img, &d.bits_per_pixel, &d.line_length, &d.endian);
-	b.img = mlx_xpm_file_to_image(g.mlx, "test.xpm", &i_w, &i_h);
+	b.img = mlx_xpm_file_to_image(g.mlx, "B.xpm", &i_w, &i_h);
 	b.addr = mlx_get_data_addr(b.img, &b.bits_per_pixel, &b.line_length, &b.endian);
 	bc.img = mlx_xpm_file_to_image(g.mlx, "BC.xpm", &i_w, &i_h);
 	bc.addr = mlx_get_data_addr(bc.img, &bc.bits_per_pixel, &bc.line_length, &bc.endian);
-	est.img = mlx_xpm_file_to_image(g.mlx, "E.xpm", &i_w, &i_h);
-	est.addr = mlx_get_data_addr(est.img, &est.bits_per_pixel, &est.line_length, &est.endian);
 	cross.img = mlx_xpm_file_to_image(g.mlx, "crosshair.xpm", &i_w, &i_h);
 	cross.addr = mlx_get_data_addr(cross.img, &cross.bits_per_pixel, &cross.line_length, &cross.endian);
 	img.img = mlx_new_image(g.mlx, W_W, W_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	player.img = mlx_new_image(g.mlx, 9, 9);
-	player.addr = mlx_get_data_addr(player.img, &player.bits_per_pixel, &player.line_length, &player.endian);
 	g.img = img;
 	g.hand_1 = hand_1;
 	g.hand_2 = hand_2;
 	g.hand_3 = hand_3;
-	g.nord = nord;
 	g.b = b;
 	g.bc = bc;
 	g.d = d;
-	g.sud = sud;
-	g.ouest = ouest;
-	g.est = est;
 	g.cross = cross;
 	g.player = player;
 	g.aff1 = 0;
 	recuStartPos(&g);
 	test_draw(&g, &img, &player);
 	draw_map(&g);
-	//mlx_put_image_to_window(g.mlx, g.win, img.img, 0, 0);
 	g.c.xmini = g.c.x;
 	g.c.ymini = g.c.y;
 	mlx_mouse_move(g.mlx, g.win, W_W / 2, W_H / 2);
@@ -1386,8 +1405,6 @@ int	main(int ac, char **av)
 	mlx_hook(g.win, 2, 1L << 0, ft_keyPress, &g);
 	mlx_hook(g.win, 3, 1L << 1, ft_keyRelease, &g);
 	mlx_hook(g.win, 17, 1L << 0, ft_key_cross, &g);
-	//mlx_hook(g.win, 6, 1L << 6, mouseTracking, &g);
 	mlx_loop(g.mlx);
-	free_m(&g);
 	return (0);
 }

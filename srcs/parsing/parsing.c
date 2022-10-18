@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:17:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/17 21:02:10 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 11:20:05 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -478,6 +478,8 @@ void	completeMAP(t_g *g)
 		}
 		i++;
 	}
+	g->m.map[i] = ft_strdup(g->m.map[i - 1]);
+	g->m.map[i + 1] = 0;
 }
 
 
@@ -490,7 +492,7 @@ int	recup_map(char **recup_gnl, t_g *g)
 	k = g->i;
 	while (recup_gnl[++k])
 		c++;
-	g->m.map = malloc(sizeof(char *) * (c + 1));
+	g->m.map = malloc(sizeof(char *) * (c + 2));
 	if (!g->m.map)
 		return (0);
 	k = g->i;

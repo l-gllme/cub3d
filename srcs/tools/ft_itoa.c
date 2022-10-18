@@ -6,7 +6,7 @@
 /*   By: jtaravel <jtaravel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 22:08:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/06/15 14:50:33 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 10:35:10 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ char	*ft_itoa(int n)
 		nb = nb / 10;
 	}
 	tab[i] = nb;
-	res = malloc(sizeof(char) * (i + 1));
+	res = malloc(sizeof(char) * (i + 2));
 	if (!res)
 		return (NULL);
+	res[i + 1] = 0;
 	res = ft_fill(res, tab, i, n);
 	return (res);
 }
