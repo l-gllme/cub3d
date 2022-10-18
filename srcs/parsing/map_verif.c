@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:54:45 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 14:57:51 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:06:05 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	check_middle_line(char **map)
 int	check_char(char c)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == '0' || c == 'P'
-		|| c == 'B' || c == 'X')
+		|| c == 'B' || c == 'X' || c == 'H')
 		return (1);
-	if (c == '1' || c == 'M' || c == 'H')
+	if (c == '1' || c == 'M')
 		return (2);
 	if (c == ' ')
 		return (3);
