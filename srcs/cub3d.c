@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 17:30:34 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:35:33 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -861,6 +861,8 @@ void    draw_map(t_g *g)
 		{
 			if (g->w_1check)
 				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = 'G';
+			if (g->w_2check)
+				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = '0';
 		}
 		g->anim += 1;
 	}
