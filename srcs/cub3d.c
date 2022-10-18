@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 16:42:30 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:21:01 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -845,7 +845,7 @@ void    draw_map(t_g *g)
 	}
 	else if (g->key_RC == 1 && (g->anim == 0 || g->anim == 16))
 	{
-		if (print_dist_wall_W(g, 0))
+		if (print_dist_wall_W(g, g->angle))
 		{
 			if (g->w_1check)
 				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = 'G';
@@ -1124,12 +1124,12 @@ void	draw_minimap(t_g *g)
 
 int	createRGB(t_g *g)
 {
-	return (g->m.c_r * 8 << 16 | g->m.c_g * 8 << 8 | g->m.c_b * 8);
+	return ((g->m.c_r << 16) + (g->m.c_g << 8) + g->m.c_b );
 }
 
 int	createRGBsol(t_g *g)
 {
-	return (g->m.f_r * 8 << 16 | g->m.f_g * 8 << 8 | g->m.f_b * 8);
+	return ((g->m.f_r << 16) + (g->m.f_g << 8) + g->m.f_b);
 }
 
 void	recupRGB(t_g *g)

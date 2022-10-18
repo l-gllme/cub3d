@@ -3,8 +3,8 @@ SO imgs/S.xpm
 EA imgs/E.xpm
 WE imgs/O.xpm
 
-F 2,5,5
-C 25,188,219
+C 122,206,255
+F 57,82,89
 
 11111111111
 101H0H00001
