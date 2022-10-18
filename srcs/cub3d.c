@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 17:21:01 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:30:34 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -580,10 +580,22 @@ void	DisplayPix_2(t_g *g, double y, double j, double ciel)
 		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF), t, g->bc));
 	else if (g->button == 1 && g->dir == 4 && g->activateButton)
 		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF), t, g->bc));
-	else if (g->w_1check == 1)
+	else if (g->w_1check == 1 && g->dir == 1)
+		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF), t, g->w_1));
+	else if (g->w_1check == 1 && g->dir == 2)
+		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirY, SIZEF), t, g->w_1));
+	else if (g->w_1check == 1 && g->dir == 3)
 		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF), t, g->w_1));
-	else if (g->w_2check == 1)
+	else if (g->w_1check == 1 && g->dir == 4)
+		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF), t, g->w_1));
+	else if (g->w_2check == 1 && g->dir == 1)
+		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF), t, g->w_2));
+	else if (g->w_2check == 1 && g->dir == 2)
+		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirY, SIZEF), t, g->w_2));
+	else if (g->w_2check == 1 && g->dir == 3)
 		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF), t, g->w_2));
+	else if (g->w_2check == 1 && g->dir == 4)
+		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF), t, g->w_2));
 	else if (g->dir == 1)
 		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF), t, g->est));
 	else if (g->dir == 2)
