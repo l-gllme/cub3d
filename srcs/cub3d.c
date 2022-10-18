@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 17:35:33 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:47:14 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1020,6 +1020,29 @@ void	drawMiniWall(t_g *g, double x, double y, double width, double height)
 	}
 }
 
+void	drawMinibreak(t_g *g, double x, double y, double width, double height)
+{
+	double	to_go;
+	double	to_g;
+	double	i;
+	(void)g;
+
+	i = x;
+	to_go = x + width;
+	to_g = y + height;
+	double	j = y;
+	while (j < to_g)
+	{
+		i = x;
+		while (i < to_go)
+		{
+			 pp(&g->img, i, j, 0x61063);
+			i++;
+		}
+		j++;
+	}
+}
+
 void	drawMiniPorte(t_g *g, double x, double y, double width, double height)
 {
 	double	to_go;
@@ -1124,11 +1147,13 @@ void	draw_minimap(t_g *g)
 				drawMiniWall(g, x, y, width, height);
 			else if (g->m.map[i][j] == 'P' && !g->activateButton)
 				drawMiniPorte(g, x, y, width, height);
+			else if (g->m.map[i][j] == 'H')
+				drawMinibreak(g, x, y, width, height);
 			else if (g->m.map[i][j] == 'B')
 				drawMiniButton(g, x, y, width, height);
 			else if (g->m.map[i][j] == '0' || g->m.map[i][j] == 'N' || g->m.map[i][j] == 'S'
 				|| g->m.map[i][j] == 'E' || g->m.map[i][j] == 'W'
-				|| (g->m.map[i][j]== 'P' && g->activateButton))
+				|| (g->m.map[i][j]== 'P' && g->activateButton) || g->m.map[i][j] == 'X')
 				drawMinisol(g, x, y, width, height);
 			x += width;
 		}
