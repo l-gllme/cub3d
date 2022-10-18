@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 13:46:55 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:07:12 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -543,12 +543,10 @@ void	DisplayPix_2(t_g *g, double y, double j, double ciel)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->bc));
 	else if (g->dir == 1)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->est));
-	else if (g->dir == 1)
-		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->est));
 	else if (g->dir == 2)
-		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->ouest));
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirY, SIZEF),(j - ciel) * (SIZEF / height), g->ouest));
 	else if (g->dir == 3)
-		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF) ,(j - ciel) * (SIZEF / height), g->sud));		
+		my_mlx_pixel_put(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF) ,(j - ciel) * (SIZEF / height), g->sud));		
 	else if (g->dir == 4)
 		my_mlx_pixel_put(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF),(j - ciel) * (SIZEF / height), g->nord));
 }
