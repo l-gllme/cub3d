@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 15:32:39 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:08:51 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_global
 	t_data	bc;
 	t_data	w_1;
 	t_data	w_2;
+	t_data	exit;
 	void	*mlx;
 	void	*win;
 	int	ac;
@@ -117,8 +118,11 @@ typedef struct s_global
 	int	key_O;
 	int	key_RC;
 	int	key_LC;
+	int	button_left;
+	int	button_right;
 	int	mouseR;
 	int	mouseL;
+	int	exitcheck;
 	int	affCheck;
 	double	startTime;
 	double	oldTime;

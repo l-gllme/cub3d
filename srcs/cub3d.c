@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 22:41:38 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:38:10 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int	check_next_pos_S(t_g *g, double angle)
 	}
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
-	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'P')
+	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE][(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'B')
 		return (0);
@@ -235,7 +235,7 @@ int	check_next_pos_D(t_g *g, double angle)
 	}
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == '1')
 		return (0);
-	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == 'P')
+	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == 'P' && !g->activateButton)
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(sin(angle) * C_SPEED)) / SIZE][(int)(g->c.x + (int)(cos(angle) * C_SPEED)) / SIZE] == 'H')
 		return (0);
@@ -293,6 +293,7 @@ double	print_dist_wall_W(t_g *g, double angle)
 	g->button = 0;
 	g->w_1check = 0;
 	g->w_2check = 0;
+	g->exitcheck = 0;
 	cosA = cos(angle);
 	sinA = sin(angle);
 	x = g->c.x;
@@ -300,116 +301,118 @@ double	print_dist_wall_W(t_g *g, double angle)
 	xOld = x;
 	yOld = y;
 	d = 0;
-	//printf("angle = %f\n", angle);
-//	if (angle >= 0 && angle <= RAD_90)
-	//{
-		while (1)
+	while (1)
+	{
+		xOld = x;
+		yOld = y;
+		y -= cosA;
+		x += sinA;
+		d += 1;
+		//printf("x = %f\n", x);
+		//printf("y = %f\n", y);
+		if ((int)x / SIZE != (int)xOld / SIZE && (int)y / SIZE != (int)yOld / SIZE)
 		{
-			xOld = x;
-			yOld = y;
-			y -= cosA;
-			x += sinA;
-			d += 1;
-			//printf("x = %f\n", x);
-			//printf("y = %f\n", y);
-			if ((int)x / SIZE != (int)xOld / SIZE && (int)y / SIZE != (int)yOld / SIZE)
-			{
-				if (angle >= 45 * PI / 180 && angle < 135 * PI / 180)
-					x = xOld;
-				else if (angle >= 135 * PI / 180 && angle < 225 * PI * 180)
-					y = yOld;
-				else if (angle >= 225 * PI / 180 && angle < 315 * PI / 180)
-					x = xOld;
-				else if (angle >= 315 * PI / 180 && angle < 360 * PI / 180)
-					y = yOld;
-				else if (angle >= 0 * PI / 180 && angle < 45 * PI / 180)
-					y = yOld;
-			}
-			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == '1') 
-				break;
-			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'M') 
-				break;
-			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'P' && !g->activateButton) 
-			{
-				g->door = 1;
-				break;
-			}
-			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'B') 
-			{
-				g->button = 1;
-				break;
-			}
-			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'H') 
-			{
-				g->w_1check = 1;
-				break;
-			}
-			if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'G') 
-			{
-				g->w_2check = 1;
-				break;
-			}
+			if (angle >= 45 * PI / 180 && angle < 135 * PI / 180)
+				x = xOld;
+			else if (angle >= 135 * PI / 180 && angle < 225 * PI * 180)
+				y = yOld;
+			else if (angle >= 225 * PI / 180 && angle < 315 * PI / 180)
+				x = xOld;
+			else if (angle >= 315 * PI / 180 && angle < 360 * PI / 180)
+				y = yOld;
+			else if (angle >= 0 * PI / 180 && angle < 45 * PI / 180)
+				y = yOld;
 		}
-		int i = 0;
-		double	newX;
-		double	newY;
-		while (i < 10)
+		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == '1') 
+			break;
+		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'M') 
+			break;
+		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'P' && !g->activateButton) 
 		{
-			newX = (x + xOld) / 2;
-			newY = (y + yOld) / 2;
-			if (g->m.map[(int)newY / SIZE][(int)newX / SIZE] == '1' || (g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'P' && !g->activateButton) || g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'B' || g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'M')
-			{
-				x = newX;
-				y = newY;
-			}
-			else
-			{
-				yOld = newY;
-				xOld = newX;
-			}
-			i++;
+			g->door = 1;
+			break;
 		}
-		d = sqrt(pow((x - g->c.x), 2) + pow((y - g->c.y), 2));
-		if (g->button)
-			g->DistButton = d;
-		g->dirX = x;
-		g->dirY = y;
-		double Xtest = fmod(x, SIZEF);
-		double Ytest = fmod(y, SIZEF);
-		if (Xtest <= SIZE / 2)
+		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'B') 
 		{
-			if (Ytest <= SIZE / 2)
-			{
-				if (Xtest < Ytest)
-					g->dir = 1;
-				else
-					g->dir = 3;
-			}
-			else
-			{
-				if (Xtest < SIZE - Ytest)
-					g->dir = 1;
-				else
-					g->dir = 4;
-			}
+			g->button = 1;
+			break;
+		}
+		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'H') 
+		{
+			g->w_1check = 1;
+			break;
+		}
+		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'G') 
+		{
+			g->w_2check = 1;
+			break;
+		}
+		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'X') 
+		{
+			g->exitcheck = 1;
+			break;
+		}
+	}
+	int i = 0;
+	double	newX;
+	double	newY;
+	while (i < 10)
+	{
+		newX = (x + xOld) / 2;
+		newY = (y + yOld) / 2;
+		if (g->m.map[(int)newY / SIZE][(int)newX / SIZE] == '1' || (g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'P' && !g->activateButton) || g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'B' || g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'M')
+		{
+			x = newX;
+			y = newY;
 		}
 		else
 		{
-			if (Ytest <= SIZE / 2)
-			{
-				if (SIZE - Xtest < Ytest)
-					g->dir = 2;
-				else
-					g->dir = 3;
-			}
-			else
-			{
-				if (Xtest > Ytest)
-					g->dir = 2;
-				else
-					g->dir = 4;
-			}
+			yOld = newY;
+			xOld = newX;
 		}
+		i++;
+	}
+	d = sqrt(pow((x - g->c.x), 2) + pow((y - g->c.y), 2));
+	if (g->button)
+		g->DistButton = d;
+	g->dirX = x;
+	g->dirY = y;
+	double Xtest = fmod(x, SIZEF);
+	double Ytest = fmod(y, SIZEF);
+	if (Xtest <= SIZE / 2)
+	{
+		if (Ytest <= SIZE / 2)
+		{
+			if (Xtest < Ytest)
+				g->dir = 1;
+			else
+				g->dir = 3;
+		}
+		else
+		{
+			if (Xtest < SIZE - Ytest)
+				g->dir = 1;
+			else
+				g->dir = 4;
+		}
+	}
+	else
+	{
+		if (Ytest <= SIZE / 2)
+		{
+			if (SIZE - Xtest < Ytest)
+				g->dir = 2;
+			else
+				g->dir = 3;
+		}
+		else
+		{
+			if (Xtest > Ytest)
+				g->dir = 2;
+			else
+				g->dir = 4;
+		}
+	}
 	return (d);
 }
 
@@ -453,11 +456,13 @@ int	ft_move(t_g *g)
 	{
 		g->affCheck = 1;
 		g->activateButton = 1;
+		g->key_E = 0;
 	}
 	else if (g->key_E && g->DistButton < 60.0 && g->activateButton == 1)
 	{
 		g->affCheck = 1;
 		g->activateButton = 0;
+		g->key_E = 0;
 	}
     	if (g->key_W && check_next_pos_W(g, g->angle))
     	{
@@ -490,11 +495,6 @@ int	ft_move(t_g *g)
 		g->mouseL = 0;
 	}
 	draw_map(g);
-	/*if (g->key_O)
-	{
-		printf("x = %f, y = %f\n", g->c.x / 3 / SIZE, g->c.y / 3 / SIZE);
-		 pp(&g->img, g->c.x / 3 / SIZE, g->c.y / 3 / SIZE, 0x000000);
-	}*/
 	first = 2;
 	return (0);
 }
@@ -545,8 +545,6 @@ int	ft_keyRelease(int key, t_g *g)
 		g->key_S = 0;
 	if (key == D)
 		g->key_D = 0;
-	if (key == E)
-		g->key_E = 0;
 	if (key == R)
 		g->key_R = 0;
 	if (key == L)
@@ -602,6 +600,14 @@ void	DisplayPix_2(t_g *g, double y, double j, double ciel)
 		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF), t, g->w_2));
 	else if (g->w_2check == 1 && g->dir == 4)
 		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF), t, g->w_2));
+	else if (g->dir == 1 && g->exitcheck)
+		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF), t, g->exit));
+	else if (g->dir == 2 && g->exitcheck)
+		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirY, SIZEF), t, g->exit));
+	else if (g->dir == 3 && g->exitcheck)
+		 pp(&g->img, y, j, get_pixel(SIZE - (int)fmod(g->dirX, SIZEF) , t, g->exit));
+	else if (g->dir == 4 && g->exitcheck)
+		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirX, SIZEF), t, g->exit));
 	else if (g->dir == 1)
 		 pp(&g->img, y, j, get_pixel((int)fmod(g->dirY, SIZEF), t, g->est));
 	else if (g->dir == 2)
@@ -861,7 +867,7 @@ void    draw_map(t_g *g)
 		create_hand_img(g->img, g->hand_1);
 		create_hand_img_r(g->img, g->hand_1);
 	}
-	else if (g->key_RC == 1 && (g->anim == 0 || g->anim == 16))
+	else if ((g->key_RC == 1 || g->button_left == 1) && (g->anim == 0 || g->anim == 16))
 	{
 		if (print_dist_wall_W(g, g->angle))
 		{
@@ -1290,7 +1296,7 @@ void	initBonusTextures_3(t_data cross, t_data img, t_g *g)
 	g->cross = cross;
 }
 
-void	initBonusTextures_4(t_data w_1, t_data w_2, t_g *g)
+void	initBonusTextures_4(t_data w_1, t_data w_2, t_data exit, t_g *g)
 {
 	int	i_h;
 	int	i_w;
@@ -1299,8 +1305,20 @@ void	initBonusTextures_4(t_data w_1, t_data w_2, t_g *g)
 	w_1.addr = mlx_get_data_addr(w_1.img, &w_1.bits_per_pixel, &w_1.line_length, &w_1.endian);
 	w_2.img = mlx_xpm_file_to_image(g->mlx, "imgs/w_2.xpm", &i_w, &i_h);
 	w_2.addr = mlx_get_data_addr(w_2.img, &w_2.bits_per_pixel, &w_2.line_length, &w_2.endian);
+	exit.img = mlx_xpm_file_to_image(g->mlx, "imgs/Exit.xpm", &i_w, &i_h);
+	exit.addr = mlx_get_data_addr(exit.img, &exit.bits_per_pixel, &exit.line_length, &exit.endian);
 	g->w_1 = w_1;
 	g->w_2 = w_2;
+	g->exit = exit;
+}
+
+int	ft_buttonPress(int button, t_g *g)
+{
+	if (button == 1)
+		g->button_left = 1;
+	if (button == 1 && g->button_left == 1)
+		g->button_left = 0;
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -1313,6 +1331,8 @@ int	main(int ac, char **av)
 	init_struct_g(&g, ac, av);
 	init_struct_m(&m);
 	g.w_1check = 0;
+	g.button_left = 0;
+	g.button_right = 0;
 	if(!ft_parsing(&g))
 		return(-1);
 	g.mlx = mlx_init();
@@ -1324,7 +1344,7 @@ int	main(int ac, char **av)
 	initBonusTextures(g.hand_1, g.hand_2, g.hand_3, &g);
 	initBonusTextures_2(g.b, g.bc, g.d, &g);
 	initBonusTextures_3(g.cross, g.img, &g);
-	initBonusTextures_4(g.w_1, g.w_2, &g);
+	initBonusTextures_4(g.w_1, g.w_2, g.exit, &g);
 	recuStartPos(&g);
 	recupRGB(&g);
 	draw_map(&g);
@@ -1333,6 +1353,7 @@ int	main(int ac, char **av)
 	mlx_hook(g.win, 2, 1L << 0, ft_keyPress, &g);
 	mlx_hook(g.win, 3, 1L << 1, ft_keyRelease, &g);
 	mlx_hook(g.win, 17, 1L << 0, ft_key_cross, &g);
+	//mlx_hook(g.win, 4, 1L << 2, ft_buttonPress, &g);
 	mlx_loop(g.mlx);
 	return (0);
 }
