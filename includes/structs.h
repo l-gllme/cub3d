@@ -72,14 +72,14 @@ typedef struct s_global
 	t_data	d;
 	t_data	b;
 	t_data	bc;
-	t_data	mechant;
-	t_data	mechantdie;
+	t_data	w_1;
+	t_data	w_2;
 	void	*mlx;
 	void	*win;
 	int	ac;
 	int	i;
-	int	mechantcheck;
-	int	mechantdiecheck;
+	int	w_1check;
+	int	w_2check;
 	int	s_x;
 	int	s_y;
 	int	count;

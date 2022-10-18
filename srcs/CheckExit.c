@@ -6,13 +6,13 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:22:24 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/18 14:51:46 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:34:30 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	my_mlx_pixel_put(t_data *data, double x, double y, int color);
+void	pp(t_data *data, double x, double y, int color);
 
 void	displayEnd(t_g *g)
 {
@@ -25,7 +25,7 @@ void	displayEnd(t_g *g)
 		j = 0;
 		while (j < W_H)
 		{
-			my_mlx_pixel_put(&g->img, i, j, 0x000000);
+			pp(&g->img, i, j, 0x000000);
 			j++;
 		}
 		i++;
