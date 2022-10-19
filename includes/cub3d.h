@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 14:32:48 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:35:25 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	check_next_pos_A(t_g *g, double angle);
 int	check_next_pos_S(t_g *g, double angle);
 int	check_next_pos_D(t_g *g, double angle);
 int	ft_move(t_g *g);
-int	ft_keyPress(int key, t_g *g);
-int	ft_keyRelease(int key, t_g *g);
+int	ft_keypress(int key, t_g *g);
+int	ft_keyrelease(int key, t_g *g);
 double	ray_calculator(t_g *g, double angle, double x, double y);
 double	ray_calculator_while(t_g *g, double angle, double d);
 
@@ -119,5 +119,6 @@ void	ft_errors(int choice);
 int	ft_atoi(const char *str);
 char	*ft_itoa(int n);
 void    draw_map(t_g *g);
+void	free_all(t_g *g);
 
 #endif

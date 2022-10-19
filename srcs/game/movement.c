@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:20:46 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 15:12:19 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:34:58 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	ft_move_3(t_g *g)
 		g->angle = rotate(g, 'l');
 	if (g->mouseR)
 	{
-		ft_keyRelease(R, g);
+		ft_keyrelease(R, g);
 		g->mouseR = 0;
 	}
 	if (g->mouseL)
 	{
-		ft_keyRelease(L, g);
+		ft_keyrelease(L, g);
 		g->mouseL = 0;
 	}
 }

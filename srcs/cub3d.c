@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 15:09:07 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:11:29 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,77 +97,6 @@ int	mouseTracking(t_g *g);
 void	drawMiniPlayer(t_g *g, double x, double y, double width, double height);
 
 void     pp(t_data *data, double x, double y, int color);
-
-int	ft_keyPress(int key, t_g *g)
-{
-	if (key == ESC)
-	{
-		free_all(g);
-		printf("ESC PRESSED");
-		exit(0);
-	}
-	if (key == W)
-		g->key_W = 1;
-	if (key == A)
-		g->key_A = 1;
-	if (key == S)
-		g->key_S = 1;
-	if (key == D)
-		g->key_D = 1;
-	if (key == E)
-		g->key_E = 1;
-	if (key == R)
-		g->key_R = 1;
-	if (key == L)
-		g->key_L = 1;
-	if (key == O)
-		g->key_O = 1;
-	if (key == RC)
-		g->key_RC = 1;
-	if (key == LC)
-	{
-		if (g->key_LC == 0)
-			g->key_LC = 1;
-		else
-			g->key_LC = 0;
-	}
-	if (key == CTRL)
-		g->key_CTRL = 1;
-	if (key == SHIFT)
-		g->key_SHIFT = 1;
-	return (0);
-}
-
-int	ft_keyRelease(int key, t_g *g)
-{
-	if (key == W)
-		g->key_W = 0;
-	if (key == A)
-		g->key_A = 0;
-	if (key == S)
-		g->key_S = 0;
-	if (key == D)
-		g->key_D = 0;
-	if (key == R)
-		g->key_R = 0;
-	if (key == L)
-		g->key_L = 0;
-	if (key == O)
-		g->key_O = 0;
-	if (key == RC)
-		g->key_RC = 0;
-	if (key == CTRL)
-	{
-		g->S_M = 6;
-		g->key_CTRL = 0;
-	}
-	if (key == SHIFT)
-	{
-		g->S_M = 2;
-		g->key_SHIFT = 0;
-	}
-	return (0);
-}
 
 void	 pp(t_data *data, double x, double y, int color)
 {
@@ -427,7 +356,7 @@ void    draw_map(t_g *g)
 		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x000000, "Portes fermees");
 		g->affCheck = 0;
 	}
-	draw_minimap(g);
+	draw_minimap(g, 0, 0);
 	pistol_anim(g);
 	create_crosshair(g->img, g->cross);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
@@ -648,6 +577,8 @@ void	draw_minimap(t_g *g)
 	double	y;
 
 	int	len = tablen(g->m.map) - 1;
+	if (len > 15)
+		return ;
 	height = (len);
 	width = (len);
 	y = 0;
@@ -702,12 +633,12 @@ int	mouseTracking(t_g *g)
 	mlx_mouse_get_pos(g->mlx, g->win, &x, &y);
 	if(x > W_W / 2)
 	{
-		ft_keyPress(R, g);
+		ft_keypress(R, g);
 		g->mouseR = 1;
 	}
 	if (x < W_W / 2)
 	{
-		ft_keyPress(L, g);
+		ft_keypress(L, g);
 		g->mouseL = 1;
 	}
 	mlx_mouse_move(g->mlx, g->win, W_W / 2, W_W / 2);
@@ -777,7 +708,8 @@ void	initBonusTextures_2(t_data b, t_data bc, t_data d, t_g *g)
 	int	i_h;
 	int	i_w;
 
-	d.img = mlx_xpm_file_to_image(g->mlx, "imgs/D.xpm", &i_w, &i_h);
+	if (!(d.img = mlx_xpm_file_to_image(g->mlx, "imgs/D.xpm", &i_w, &i_h)))
+		exit(0);
 	d.addr = mlx_get_data_addr(d.img, &d.bits_per_pixel, &d.line_length, &d.endian);
 	b.img = mlx_xpm_file_to_image(g->mlx, "imgs/B.xpm", &i_w, &i_h);
 	b.addr = mlx_get_data_addr(b.img, &b.bits_per_pixel, &b.line_length, &b.endian);
@@ -856,8 +788,8 @@ int	main(int ac, char **av)
 	draw_map(&g);
 	mlx_mouse_move(g.mlx, g.win, W_W / 2, W_H / 2);
 	mlx_loop_hook(g.mlx, start, &g);
-	mlx_hook(g.win, 2, 1L << 0, ft_keyPress, &g);
-	mlx_hook(g.win, 3, 1L << 1, ft_keyRelease, &g);
+	mlx_hook(g.win, 2, 1L << 0, ft_keypress, &g);
+	mlx_hook(g.win, 3, 1L << 1, ft_keyrelease, &g);
 	mlx_hook(g.win, 17, 1L << 0, ft_key_cross, &g);
 	//mlx_hook(g.win, 4, 1L << 2, ft_buttonPress, &g);
 	mlx_loop(g.mlx);
