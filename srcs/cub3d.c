@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 13:16:06 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:33:21 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,143 +95,6 @@ void	free_all(t_g *g)
 void	draw_minimap(t_g *g);
 int	mouseTracking(t_g *g);
 void	drawMiniPlayer(t_g *g, double x, double y, double width, double height);
-
-double	print_dist_wall_W(t_g *g, double angle)
-{
-	double	d;
-	double	x;
-	double	y;
-	double	xOld;
-	double	yOld;
-	double	cosA;
-	double	sinA;
-
-	g->door = 0;
-	g->button = 0;
-	g->w_1check = 0;
-	g->w_2check = 0;
-	g->exitcheck = 0;
-	cosA = cos(angle);
-	sinA = sin(angle);
-	x = g->c.x;
-	y = g->c.y;
-	xOld = x;
-	yOld = y;
-	d = 0;
-	while (1)
-	{
-		xOld = x;
-		yOld = y;
-		y -= cosA;
-		x += sinA;
-		d += 1;
-		//printf("x = %f\n", x);
-		//printf("y = %f\n", y);
-		if ((int)x / SIZE != (int)xOld / SIZE && (int)y / SIZE != (int)yOld / SIZE)
-		{
-			if (angle >= 45 * PI / 180 && angle < 135 * PI / 180)
-				x = xOld;
-			else if (angle >= 135 * PI / 180 && angle < 225 * PI * 180)
-				y = yOld;
-			else if (angle >= 225 * PI / 180 && angle < 315 * PI / 180)
-				x = xOld;
-			else if (angle >= 315 * PI / 180 && angle < 360 * PI / 180)
-				y = yOld;
-			else if (angle >= 0 * PI / 180 && angle < 45 * PI / 180)
-				y = yOld;
-		}
-		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == '1') 
-			break;
-		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'M') 
-			break;
-		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'P' && !g->activateButton) 
-		{
-			g->door = 1;
-			break;
-		}
-		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'B') 
-		{
-			g->button = 1;
-			break;
-		}
-		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'H') 
-		{
-			g->w_1check = 1;
-			break;
-		}
-		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'G') 
-		{
-			g->w_2check = 1;
-			break;
-		}
-		if (g->m.map[(int)y / SIZE][(int)x / SIZE] == 'X') 
-		{
-			g->exitcheck = 1;
-			break;
-		}
-	}
-	int i = 0;
-	double	newX;
-	double	newY;
-	while (i < 10)
-	{
-		newX = (x + xOld) / 2;
-		newY = (y + yOld) / 2;
-		if (g->m.map[(int)newY / SIZE][(int)newX / SIZE] == '1' || (g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'P' && !g->activateButton) || g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'B' || g->m.map[(int)newY / SIZE][(int)newX / SIZE] == 'M')
-		{
-			x = newX;
-			y = newY;
-		}
-		else
-		{
-			yOld = newY;
-			xOld = newX;
-		}
-		i++;
-	}
-	d = sqrt(pow((x - g->c.x), 2) + pow((y - g->c.y), 2));
-	if (g->button)
-		g->DistButton = d;
-	g->dirX = x;
-	g->dirY = y;
-	double Xtest = fmod(x, SIZEF);
-	double Ytest = fmod(y, SIZEF);
-	if (Xtest <= SIZE / 2)
-	{
-		if (Ytest <= SIZE / 2)
-		{
-			if (Xtest < Ytest)
-				g->dir = 1;
-			else
-				g->dir = 3;
-		}
-		else
-		{
-			if (Xtest < SIZE - Ytest)
-				g->dir = 1;
-			else
-				g->dir = 4;
-		}
-	}
-	else
-	{
-		if (Ytest <= SIZE / 2)
-		{
-			if (SIZE - Xtest < Ytest)
-				g->dir = 2;
-			else
-				g->dir = 3;
-		}
-		else
-		{
-			if (Xtest > Ytest)
-				g->dir = 2;
-			else
-				g->dir = 4;
-		}
-	}
-	return (d);
-}
 
 void     pp(t_data *data, double x, double y, int color);
 
@@ -443,7 +306,7 @@ void	drawRow1(t_g *g, t_data *img, double x, double y)
 		else if (fix > Pi)
 			fix -= Pi;
 		g->rayAngle = d;
-		wallDist = RayCalculator(g, d, g->c.x, g->c.y) * cos(fix);
+		wallDist = ray_calculator(g, d, g->c.x, g->c.y) * cos(fix);
 		height = 55000 / wallDist;
 		draw_row(g, img, i, height);
 		i++;
@@ -619,7 +482,7 @@ void    draw_map(t_g *g)
 	}
 	else if ((g->key_RC == 1 || g->button_left == 1) && (g->anim == 0 || g->anim == 16))
 	{
-		if (RayCalculator(g, g->angle, g->c.x, g->c.y))
+		if (ray_calculator(g, g->angle, g->c.x, g->c.y))
 		{
 			if (g->w_1check)
 				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = 'G';

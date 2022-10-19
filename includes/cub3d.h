@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 13:16:53 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:16:23 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int	check_next_pos_D(t_g *g, double angle);
 int	ft_move(t_g *g);
 int	ft_keyPress(int key, t_g *g);
 int	ft_keyRelease(int key, t_g *g);
-double	RayCalculator(t_g *g, double angle, double x, double y);
+double	ray_calculator(t_g *g, double angle, double x, double y);
+double	ray_calculator_while(t_g *g, double angle, double d);
 
 /* ************************************************************************** */
 /*          Drawing                                                           */

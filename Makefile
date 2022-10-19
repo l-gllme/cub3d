@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/19 13:17:19 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/19 14:16:54 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ FILES	=	cub3d.c \
 		game/movementCheck.c \
 		game/movement.c \
 		game/rayCalculator.c \
+		game/rayCalculator_2.c \
 		tools/errors.c \
 		tools/ft_atoi.c \
 		tools/ft_itoa.c \
