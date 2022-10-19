@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 17:33:12 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:46:03 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ void	firstinit(t_g *g, t_m *m, int ac, char **av)
 void	secondinit(t_g *g)
 {
 	g->win = mlx_new_window(g->mlx, W_W, W_H, "cub3d");
-	initWallTextures(g->nord, g->sud, g->est, g);
-	initWallTextures_2(g->ouest, g);
-	initBonusTextures(g->hand_1, g->hand_2, g->hand_3, g);
-	initBonusTextures_2(g->b, g->bc, g->d, g);
-	initBonusTextures_3(g->cross, g->img, g);
-	initBonusTextures_4(g->w_1, g->w_2, g->exit, g);
+	init_wall_textures(g);
+	init_bonus_textures(g->hand_1, g->hand_2, g->hand_3, g);
+	init_bonus_textures_2(g->b, g->bc, g->d, g);
+	init_bonus_textures_3(g->cross, g->img, g);
 	recustartpos(g);
 	recuprgb(g);
 	draw_map(g);

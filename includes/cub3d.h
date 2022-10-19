@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 17:25:25 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:43:17 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,10 @@ void	free_m(t_g *g);
 void	init_struct_g(t_g *g, int ac, char **av);
 void	init_struct_m(t_m *m);
 void	recustartpos(t_g *g);
-void	initWallTextures_2(t_data ouest, t_g *g);
-void	initWallTextures(t_data nord, t_data sud, t_data est, t_g *g);
-void	initBonusTextures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g);
-void	initBonusTextures_2(t_data b, t_data bc, t_data d, t_g *g);
-void	initBonusTextures_3(t_data cross, t_data img, t_g *g);
-void	initBonusTextures_4(t_data w_1, t_data w_2, t_data exit, t_g *g);
+void	init_wall_textures(t_g *g);
+void	init_bonus_textures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g);
+void	init_bonus_textures_2(t_data b, t_data bc, t_data d, t_g *g);
+void	init_bonus_textures_3(t_data cross, t_data img, t_g *g);
 int	creatergb(t_g *g);
 int	creatergbsol(t_g *g);
 void	recuprgb(t_g *g);
