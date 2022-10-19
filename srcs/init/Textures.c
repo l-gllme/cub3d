@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 17:14:37 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 18:49:40 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:57:19 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,6 @@ int	open_img_200(t_g *g, t_data *img, char *path)
 	if (i_h != 200 || i_w != 200)
 		return (0);
 	return (1);
-}
-
-void	init_wall_textures(t_g *g)
-{
-	t_data	n;
-	t_data	s;
-	t_data	e;
-	t_data	o;
-
-	if (!open_img_64(g, &n, g->m.no_texture + 1))
-		exit(0);
-	if (!open_img_64(g, &s, g->m.so_texture + 1))
-		exit(0);
-	if (!open_img_64(g, &e, g->m.ea_texture + 1))
-		exit(0);
-	if (!open_img_64(g, &o, g->m.we_texture + 1))
-		exit(0);
-	g->nord = n;
-	g->sud = s;
-	g->est = e;
-	g->ouest = o;
 }
 
 void	init_bonus_textures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g)
@@ -117,7 +96,7 @@ void	init_bonus_textures_3(t_data cross, t_data img, t_g *g)
 		exit(0);
 	img.img = mlx_new_image(g->mlx, W_W, W_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-		&img.line_length, &img.endian);
+			&img.line_length, &img.endian);
 	g->img = img;
 	g->cross = cross;
 }

@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/19 17:27:04 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/19 18:57:32 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ FILES	=	cub3d.c \
 		tools/gnl/get_next_line_utils.c \
 		init/struct.c \
 		init/Textures.c \
+		init/Textures_2.c \
 
 S_PATH	=	srcs/
 O_PATH	=	objs/

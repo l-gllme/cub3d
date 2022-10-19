@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 18:43:17 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:57:52 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	recup_i_for_map_2(char **recup_gnl, int i, int j, t_g *g);
 int	recup_direction_2(char **recup_gnl, t_g *g);
 int	recup_direction(char **recup_gnl, t_g *g);
 int	recup_lines(char *file, char **recup);
+int	open_img_64(t_g *g, t_data *img, char *path);
 
 /* ************************************************************************** */
 /*          Raycasting                                                        */
