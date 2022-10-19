@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:10:47 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 14:42:33 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:48:01 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,10 @@ void	pistol_anim(t_g *g)
 	{
 		if (ray_calculator(g, g->angle, g->c.x, g->c.y))
 		{
-			if (g->w_1check)
+			if (g->w_1check && !g->key_LC)
 				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = 'G';
+			if (g->w_1check && g->key_LC)
+				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = '0';
 			if (g->w_2check)
 				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = '0';
 		}

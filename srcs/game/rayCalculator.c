@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:58:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 14:16:43 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:09:58 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	restore_struct(t_g *g, double angle, double x, double y)
 	g->w_1check = 0;
 	g->w_2check = 0;
 	g->exitcheck = 0;
+	g->key_E = 0;
 	g->cosA = cos(angle);
 	g->sinA = sin(angle);
 	g->tmpX = g->c.x;
