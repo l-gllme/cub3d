@@ -15,6 +15,12 @@ FILES	=	cub3d.c \
 		parsing/ext_check.c \
 		parsing/parsing.c \
 		parsing/map_verif.c \
+		parsing/recup_path.c \
+		parsing/recup_rgb.c \
+		parsing/recup_rgb_2.c \
+		parsing/p_tool.c \
+		parsing/p_tool_2.c \
+		parsing/recups.c \
 		game/movementCheck.c \
 		game/movement.c \
 		game/rayCalculator.c \

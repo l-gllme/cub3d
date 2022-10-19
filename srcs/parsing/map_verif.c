@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:54:45 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 16:14:07 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:50:08 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,6 @@ int	check_for_invalid_char(char **map, int i, int j)
 	}
 	if (count_special_char == 0)
 		return (0);
-	return (1);
-}
-
-int	check_empty_line(char **map)
-{
-	int	i;
-
-	i = -1;
-	while (map[++i])
-	{
-		if (map[i][0] == '\n')
-			return (0);
-	}
 	return (1);
 }
 

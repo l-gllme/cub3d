@@ -86,11 +86,47 @@ int	ft_check_extension(char *str);
 
 /* map_verif.c */
 int	map_verif(t_m *m);
-int	check_empty_line(char **map);
 int	check_for_invalid_char(char **map, int i, int j);
 int	check_char(char c);
 int	check_middle_line(char **map, int i, int j);
 int	check_first_and_last_line(char **map);
+
+/* recup_path.c */
+int	recup_no(char **recup_gnl, int i, int j, t_g *g);
+int	recup_ea(char **recup_gnl, int i, int j, t_g *g);
+int	recup_we(char **recup_gnl, int i, int j, t_g *g);
+int	recup_so(char **recup_gnl, int i, int j, t_g *g);
+
+/* recup_rgb.c */
+void	init_struct_rgb(t_rgb *rgb, char **recup_gnl, int i, int j);
+void	ft_free_struct_rgb(t_rgb *rgb);
+int	check_rgb_value_2(t_rgb *rgb);
+int	recup_rgb(char **recup_gnl, t_g *g);
+int	check_rgb_value(t_g *g);
+
+/* recup_rgb_2.c */
+int	recup_rgb_ciel(char **recup_gnl, int i, int j, t_g *g);
+int	recup_rgb_floor(char **recup_gnl, int i, int j, t_g *g);
+
+/* p_tool.c */
+int	recup_malloc(char **recup_gnl, int i, int j);
+int	count_lines(char *file);
+void	free_m(t_g *g);
+void	print_info(t_g *g);
+int	check_open_asset(t_m *m);
+
+/* p_tool_2.c */
+int	check_empty_line(char **map);
+void	complete_map(t_g *g);
+char	*ft_strdup(char *s);
+void	free_char_tab(char **s);
+
+/* recups.c */
+void	recup_i_for_map(char **recup_gnl, t_g *g);
+void	recup_i_for_map_2(char **recup_gnl, int i, int j, t_g *g);
+int	recup_direction_2(char **recup_gnl, t_g *g);
+int	recup_direction(char **recup_gnl, t_g *g);
+int	recup_lines(char *file, char **recup);
 
 /* ************************************************************************** */
 /*          Raycasting                                                        */
