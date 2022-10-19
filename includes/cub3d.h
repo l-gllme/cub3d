@@ -75,9 +75,9 @@ int	ft_check_extension(char *str);
 /* map_verif.c */
 int	map_verif(t_m *m);
 int	check_empty_line(char **map);
-int	check_for_invalid_char(char **map);
+int	check_for_invalid_char(char **map, int i, int j);
 int	check_char(char c);
-int	check_middle_line(char **map);
+int	check_middle_line(char **map, int i, int j);
 int	check_first_and_last_line(char **map);
 
 /* ************************************************************************** */

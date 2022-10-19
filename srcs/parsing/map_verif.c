@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:54:45 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 16:06:05 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:14:07 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,26 @@ int	check_first_and_last_line(char **map)
 	return (1);
 }
 
-int	check_middle_line(char **map)
+int	check_middle_line(char **map, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = 0;
 	while (++i < tab_len(map) - 1)
 	{
 		j = ft_strlen(map[i]) - 2;
-		if (map[i][j] != '1' &&  map[i][j] != ' ')
+		if (map[i][j] != '1' && map[i][j] != ' ')
 			return (0);
 		j = 0;
-		if (map[i][j] != '1' &&  map[i][j] != ' ')
+		if (map[i][j] != '1' && map[i][j] != ' ')
 			return (0);
 		j = 0;
 		while (map[i][++j])
 		{
 			if (check_char(map[i][j]) == 1)
 			{
-				if (!map[i - 1][j] || map[i - 1][j] == ' ' || map[i + -1][j] == '\n')
+				if (!map[i - 1][j] || map[i - 1][j] == ' '
+					|| map[i + -1][j] == '\n')
 					return (0);
-				if (!map[i + 1][j] || map[i + 1][j] == ' ' || map[i + 1][j] == '\n')
+				if (!map[i + 1][j] || map[i + 1][j] == ' '
+					|| map[i + 1][j] == '\n')
 					return (0);
 				if (map[i][j + 1] == ' ' || map[i][j - 1] == ' ')
 					return (0);
@@ -74,13 +72,10 @@ int	check_char(char c)
 	return (0);
 }
 
-int	check_for_invalid_char(char **map)
+int	check_for_invalid_char(char **map, int i, int j)
 {
-	int	i;
-	int	j;
 	int	count_special_char;
 
-	i = -1;
 	count_special_char = 0;
 	while (map[++i])
 	{
@@ -94,7 +89,9 @@ int	check_for_invalid_char(char **map)
 				if (count_special_char > 1)
 					return (0);
 			}
-			else if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' ' && map[i][j] != 'P' && map[i][j] != 'B' && map[i][j] == 'M' && map[i][j] == 'X' && map[i][j] == 'H')
+			else if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' '
+				&& map[i][j] != 'P' && map[i][j] != 'B' && map[i][j] == 'M'
+				&& map[i][j] == 'X' && map[i][j] == 'H')
 				return (0);
 		}
 	}
@@ -106,7 +103,7 @@ int	check_for_invalid_char(char **map)
 int	check_empty_line(char **map)
 {
 	int	i;
-	
+
 	i = -1;
 	while (map[++i])
 	{
@@ -121,12 +118,15 @@ int	map_verif(t_m *m)
 	if (tab_len(m->map) < 3)
 		return (ft_errors(0), ft_putstr_fd("cub3d: invalid map\n", 2), 0);
 	if (!check_empty_line(m->map))
-		return (ft_errors(0), ft_putstr_fd("cub3d: invalid map: empty line\n", 2), 0);
-	if (!check_for_invalid_char(m->map))	
+		return (ft_errors(0),
+			ft_putstr_fd("cub3d: invalid map: empty line\n", 2), 0);
+	if (!check_for_invalid_char(m->map, -1, 0))
 		return (ft_errors(5), 0);
 	if (!check_first_and_last_line(m->map))
-		return (ft_errors(0), ft_putstr_fd("cub3d: invalid map (first/last line)\n", 2), 0);
-	if (!check_middle_line(m->map))
-		return (ft_errors(0), ft_putstr_fd("cub3d: invalid map (middle lines)\n", 2), 0);
+		return (ft_errors(0),
+			ft_putstr_fd("cub3d: invalid map (first/last line)\n", 2), 0);
+	if (!check_middle_line(m->map, 0, 0))
+		return (ft_errors(0),
+			ft_putstr_fd("cub3d: invalid map (middle lines)\n", 2), 0);
 	return (1);
 }

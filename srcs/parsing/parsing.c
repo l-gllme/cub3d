@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:17:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/18 22:34:32 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:58:14 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	count_lines(char *file)
 {
-	int	line_count;
 	char	*line;
-	int	fd;
+	int		line_count;
+	int		fd;
 
 	fd = open(file, 0);
 	if (fd == -1)
@@ -68,7 +68,7 @@ int	recup_malloc(char **recup_gnl, int i, int j)
 void	init_struct_rgb(t_rgb *rgb, char **recup_gnl, int i, int j)
 {
 	int	c;
-	
+
 	c = recup_malloc(recup_gnl, i, j);
 	rgb->recup_R = malloc(sizeof(char) * (c + 1));
 	c = recup_malloc(recup_gnl, i, j + c + 1);
@@ -96,9 +96,8 @@ void	ft_free_struct_rgb(t_rgb *rgb)
 	}
 }
 
-int	check_RGB_value_2(t_rgb *rgb)
+int	check_rgb_value_2(t_rgb *rgb)
 {
-
 	if (ft_strlen(rgb->recup_R) > 3)
 		return (0);
 	if (ft_strlen(rgb->recup_G) > 3)
@@ -108,42 +107,67 @@ int	check_RGB_value_2(t_rgb *rgb)
 	return (1);
 }
 
-
-int	recup_RGB_floor(char **recup_gnl, int i, int j, t_g *g)
+static void	cut_rgb_floor(char **recup_gnl, int i, int j, t_rgb *rgb)
 {
-	t_rgb	rgb;
-	int	k;
-	
-	init_struct_rgb(&rgb, recup_gnl, i, j);
+	int		k;
+
 	while (recup_gnl[i][j] == ' ')
 		j++;
 	k = 0;
 	while (recup_gnl[i][j] != ',')
-		rgb.recup_R[k++] = recup_gnl[i][j++];
-	rgb.recup_R[k] = 0;
+		rgb->recup_R[k++] = recup_gnl[i][j++];
+	rgb->recup_R[k] = 0;
 	k = 0;
 	j++;
 	while (recup_gnl[i][j] != ',')
-		rgb.recup_G[k++] = recup_gnl[i][j++];
-	rgb.recup_G[k] = 0;
+		rgb->recup_G[k++] = recup_gnl[i][j++];
+	rgb->recup_G[k] = 0;
 	k = 0;
 	j++;
 	while (recup_gnl[i][j] != '\n')
-		rgb.recup_B[k++] = recup_gnl[i][j++];
-	rgb.recup_B[k] = 0;
+		rgb->recup_B[k++] = recup_gnl[i][j++];
+	rgb->recup_B[k] = 0;
+}
+
+int	recup_rgb_floor(char **recup_gnl, int i, int j, t_g *g)
+{
+	t_rgb	rgb;
+
+	init_struct_rgb(&rgb, recup_gnl, i, j);
+	cut_rgb_floor(recup_gnl, i, j, &rgb);
 	g->m.f_r = ft_atoi(rgb.recup_R);
 	g->m.f_g = ft_atoi(rgb.recup_G);
 	g->m.f_b = ft_atoi(rgb.recup_B);
-	if (!check_RGB_value_2(&rgb))
+	if (!check_rgb_value_2(&rgb))
 		return (ft_free_struct_rgb(&rgb), 0);
 	return (ft_free_struct_rgb(&rgb), 1);
 }
 
-int	recup_RGB_ciel(char **recup_gnl, int i, int j, t_g *g)
+static void	cut_rgb_ciel(char **recup_gnl, int i, int j, t_rgb *rgb)
+{
+	int	k;
+
+	k = 0;
+	while (recup_gnl[i][j] != ',')
+		rgb->recup_R[k++] = recup_gnl[i][j++];
+	rgb->recup_R[k] = 0;
+	k = 0;
+	j++;
+	while (recup_gnl[i][j] != ',')
+		rgb->recup_G[k++] = recup_gnl[i][j++];
+	rgb->recup_G[k] = 0;
+	k = 0;
+	j++;
+	while (recup_gnl[i][j] != '\n')
+		rgb->recup_B[k++] = recup_gnl[i][j++];
+	rgb->recup_B[k] = 0;
+}
+
+int	recup_rgb_ciel(char **recup_gnl, int i, int j, t_g *g)
 {
 	t_rgb	rgb;
-	int	k;
-	
+	int		k;
+
 	k = j;
 	init_struct_rgb(&rgb, recup_gnl, i, j);
 	while (recup_gnl[i][k] == ' ')
@@ -151,31 +175,18 @@ int	recup_RGB_ciel(char **recup_gnl, int i, int j, t_g *g)
 	if (j == k)
 		return (0);
 	j = k;
-	k = 0;
 	if (j < 1)
 		exit(0);
-	while (recup_gnl[i][j] != ',')
-		rgb.recup_R[k++] = recup_gnl[i][j++];
-	rgb.recup_R[k] = 0;
-	k = 0;
-	j++;
-	while (recup_gnl[i][j] != ',')
-		rgb.recup_G[k++] = recup_gnl[i][j++];
-	rgb.recup_G[k] = 0;
-	k = 0;
-	j++;
-	while (recup_gnl[i][j] != '\n')
-		rgb.recup_B[k++] = recup_gnl[i][j++];
-	rgb.recup_B[k] = 0;
+	cut_rgb_ciel(recup_gnl, i, j, &rgb);
 	g->m.c_r = ft_atoi(rgb.recup_R);
 	g->m.c_g = ft_atoi(rgb.recup_G);
 	g->m.c_b = ft_atoi(rgb.recup_B);
-	if (!check_RGB_value_2(&rgb))
+	if (!check_rgb_value_2(&rgb))
 		return (ft_free_struct_rgb(&rgb), 0);
 	return (ft_free_struct_rgb(&rgb), 1);
 }
 
-int	recup_RGB(char **recup_gnl, t_g *g)
+int	recup_rgb(char **recup_gnl, t_g *g)
 {
 	int	i;
 	int	j;
@@ -187,10 +198,10 @@ int	recup_RGB(char **recup_gnl, t_g *g)
 		while (recup_gnl[i][j])
 		{
 			if (recup_gnl[i][j] == 'F')
-				if (!recup_RGB_floor(recup_gnl, i, j + 1, g))
+				if (!recup_rgb_floor(recup_gnl, i, j + 1, g))
 					return (0);
 			if (recup_gnl[i][j] == 'C')
-				if (!recup_RGB_ciel(recup_gnl, i, j + 1, g))
+				if (!recup_rgb_ciel(recup_gnl, i, j + 1, g))
 					return (0);
 			j++;
 		}
@@ -199,7 +210,7 @@ int	recup_RGB(char **recup_gnl, t_g *g)
 	return (1);
 }
 
-int	check_RGB_value(t_g *g)
+int	check_rgb_value(t_g *g)
 {
 	if (g->m.f_r < 0 || g->m.f_r > 255)
 		return (0);
@@ -232,7 +243,7 @@ void	free_char_tab(char **s)
 	free(s);
 }
 
-int	recup_NO(char **recup_gnl, int i, int j, t_g *g)
+int	recup_no(char **recup_gnl, int i, int j, t_g *g)
 {
 	int	k;
 	int	c;
@@ -259,7 +270,7 @@ int	recup_NO(char **recup_gnl, int i, int j, t_g *g)
 	return (1);
 }
 
-int	recup_EA(char **recup_gnl, int i, int j, t_g *g)
+int	recup_ea(char **recup_gnl, int i, int j, t_g *g)
 {
 	int	k;
 	int	c;
@@ -286,7 +297,7 @@ int	recup_EA(char **recup_gnl, int i, int j, t_g *g)
 	return (1);
 }
 
-int	recup_WE(char **recup_gnl, int i, int j, t_g *g)
+int	recup_we(char **recup_gnl, int i, int j, t_g *g)
 {
 	int	k;
 	int	c;
@@ -313,7 +324,7 @@ int	recup_WE(char **recup_gnl, int i, int j, t_g *g)
 	return (1);
 }
 
-int	recup_SO(char **recup_gnl, int i, int j, t_g *g)
+int	recup_so(char **recup_gnl, int i, int j, t_g *g)
 {
 	int	k;
 	int	c;
@@ -352,10 +363,10 @@ int	recup_direction(char **recup_gnl, t_g *g)
 		while (recup_gnl[i][j])
 		{
 			if (recup_gnl[i][j] == 'N' && recup_gnl[i][j + 1] == 'O')
-				if (!recup_NO(recup_gnl, i, j + 2, g))
+				if (!recup_no(recup_gnl, i, j + 2, g))
 					return (0);
 			if (recup_gnl[i][j] == 'S' && recup_gnl[i][j + 1] == 'O')
-				if (!recup_SO(recup_gnl, i, j + 2, g))
+				if (!recup_so(recup_gnl, i, j + 2, g))
 					return (0);
 			j++;
 		}
@@ -376,10 +387,10 @@ int	recup_direction_2(char **recup_gnl, t_g *g)
 		while (recup_gnl[i][j])
 		{
 			if (recup_gnl[i][j] == 'E' && recup_gnl[i][j + 1] == 'A')
-				if (!recup_EA(recup_gnl, i, j + 2, g))
+				if (!recup_ea(recup_gnl, i, j + 2, g))
 					return (0);
 			if (recup_gnl[i][j] == 'W' && recup_gnl[i][j + 1] == 'E')
-				if (!recup_WE(recup_gnl, i, j + 2, g))
+				if (!recup_we(recup_gnl, i, j + 2, g))
 					return (0);
 			j++;
 		}
@@ -461,10 +472,10 @@ char	*ft_strdup(char *s)
 	return (cpy);
 }
 
-void	completeMAP(t_g *g)
+void	complete_map(t_g *g)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (g->m.map[i])
@@ -483,7 +494,6 @@ void	completeMAP(t_g *g)
 	g->m.map[i] = ft_strdup(g->m.map[i - 1]);
 	g->m.map[i + 1] = 0;
 }
-
 
 int	recup_map(char **recup_gnl, t_g *g)
 {
@@ -528,8 +538,9 @@ int	check_open_asset(t_m *m)
 
 void	print_info(t_g *g)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	printf("=== Elements ===\n\n");
 	printf ("NO %s\n", g->m.no_texture);
 	printf ("SO %s\n", g->m.so_texture);
@@ -554,6 +565,22 @@ void	free_m(t_g *g)
 	free(g->m.we_texture);
 }
 
+static int	pars_error(char **recup_gnl, t_g *g)
+{
+	if (!recup_rgb(recup_gnl, g) || !recup_direction(recup_gnl, g)
+		|| !recup_direction_2(recup_gnl, g))
+	{
+		return (free_char_tab(recup_gnl), ft_errors(6),
+			ft_putstr_fd("failed to load elements\n", 2), 0);
+	}
+	if (!check_rgb_value(g))
+	{
+		return (free_char_tab(recup_gnl), ft_errors(6),
+			ft_putstr_fd("bad rgb value\n", 2), 0);
+	}
+	return (1);
+}
+
 int	ft_parsing(t_g *g)
 {
 	char	**recup_gnl;
@@ -564,19 +591,18 @@ int	ft_parsing(t_g *g)
 	if (!recup_gnl)
 		return (ft_errors(0), 0);
 	recup_lines(g->av[1], recup_gnl);
-	if(!recup_RGB(recup_gnl, g) || !recup_direction(recup_gnl, g) || !recup_direction_2(recup_gnl, g))
-		return (free_char_tab(recup_gnl), ft_errors(6), ft_putstr_fd("failed to load elements\n", 2), 0);
-	if (!check_RGB_value(g))
-		return (free_char_tab(recup_gnl), ft_errors(6),ft_putstr_fd("bad rgb value\n", 2), 0);
+	if (!pars_error(recup_gnl, g))
+		return (0);
 	recup_i_for_map(recup_gnl, g);
 	if (g->count > 6 || !check_open_asset(&g->m))
-		return (free_char_tab(recup_gnl), ft_errors(6), ft_putstr_fd("too much elemets/bad assets\n", 2), 0);
+		return (free_char_tab(recup_gnl), ft_errors(6),
+			ft_putstr_fd("too much elemets/bad assets\n", 2), 0);
 	if (!recup_map(recup_gnl, g))
 		return (0);
 	if (!map_verif(&g->m))
 		return (free_m(g), free_char_tab(recup_gnl), 0);
 	print_info(g);
 	free_char_tab(recup_gnl);
-	completeMAP(g);
+	complete_map(g);
 	return (1);
 }
