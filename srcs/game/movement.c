@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:20:46 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 15:34:58 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 23:04:21 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,22 @@ void	ft_move_3(t_g *g)
 
 void	ft_move_2(t_g *g)
 {
-	if (g->key_W && check_next_pos_W(g, g->angle))
+	if (g->key_W && check_next_pos_w(g, g->angle))
 	{
 		g->c.x = g->c.x + sin(g->angle) * g->S_M;
 		g->c.y = g->c.y - cos(g->angle) * g->S_M;
 	}
-	else if (g->key_A && check_next_pos_A(g, g->angle))
+	else if (g->key_A && check_next_pos_a(g, g->angle))
 	{
 		g->c.x = g->c.x - cos(g->angle) * g->S_M;
 		g->c.y = g->c.y - sin(g->angle) * g->S_M;
 	}
-	else if (g->key_S && check_next_pos_S(g, g->angle))
+	else if (g->key_S && check_next_pos_s(g, g->angle))
 	{
 		g->c.x = g->c.x - sin(g->angle) * g->S_M;
 		g->c.y = g->c.y + cos(g->angle) * g->S_M;
 	}
-	else if (g->key_D && check_next_pos_D(g, g->angle))
+	else if (g->key_D && check_next_pos_d(g, g->angle))
 	{
 		g->c.x = g->c.x + cos(g->angle) * g->S_M;
 		g->c.y = g->c.y + sin(g->angle) * g->S_M;

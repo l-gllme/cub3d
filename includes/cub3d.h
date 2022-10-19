@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 18:57:52 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 23:04:48 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ int	open_img_64(t_g *g, t_data *img, char *path);
 /* ************************************************************************** */
 /*          Raycasting                                                        */
 
-int	check_next_pos_W(t_g *g, double angle);
-int	check_next_pos_A(t_g *g, double angle);
-int	check_next_pos_S(t_g *g, double angle);
-int	check_next_pos_D(t_g *g, double angle);
+int	check_next_pos_w(t_g *g, double angle);
+int	check_next_pos_a(t_g *g, double angle);
+int	check_next_pos_s(t_g *g, double angle);
+int	check_next_pos_d(t_g *g, double angle);
 int	ft_move(t_g *g);
 int	ft_keypress(int key, t_g *g);
 int	ft_keyrelease(int key, t_g *g);

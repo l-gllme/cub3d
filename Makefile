@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/19 18:57:32 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/19 23:27:27 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,10 @@ FILES	=	cub3d.c \
 		parsing/p_tool.c \
 		parsing/p_tool_2.c \
 		parsing/recups.c \
-		game/movementCheck.c \
+		game/movementCheck_W.c \
+		game/movementCheck_A.c \
+		game/movementCheck_S.c \
+		game/movementCheck_D.c \
 		game/movement.c \
 		game/rayCalculator.c \
 		game/rayCalculator_2.c \
