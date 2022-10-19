@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:22:24 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/18 23:57:06 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:37:04 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	CheckPosExit(t_g *g)
 		end.addr = mlx_get_data_addr(end.img,
 			&end.bits_per_pixel, &end.line_length, &end.endian);
 		int i = 0;
-		while (++i < 30000)
+		while (++i < 1000)
 			mlx_put_image_to_window(g->mlx, g->win, end.img, 0, 0);
 		mlx_destroy_image(g->mlx, end.img);
 		free_all(g);

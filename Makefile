@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/18 14:27:53 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/19 13:17:19 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,9 @@ FILES	=	cub3d.c \
 		parsing/ext_check.c \
 		parsing/parsing.c \
 		parsing/map_verif.c \
+		game/movementCheck.c \
+		game/movement.c \
+		game/rayCalculator.c \
 		tools/errors.c \
 		tools/ft_atoi.c \
 		tools/ft_itoa.c \

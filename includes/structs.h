@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 23:08:51 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:18:49 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,9 @@ typedef struct s_global
 	int	key_O;
 	int	key_RC;
 	int	key_LC;
+	int	key_CTRL;
+	int	key_SHIFT;
+	int	S_M;
 	int	button_left;
 	int	button_right;
 	int	mouseR;
@@ -126,6 +129,12 @@ typedef struct s_global
 	int	affCheck;
 	double	startTime;
 	double	oldTime;
+	double	xOld;
+	double	yOld;
+	double	tmpX;
+	double	tmpY;
+	double	cosA;
+	double	sinA;
 	int	anim;
 }	t_g;
 

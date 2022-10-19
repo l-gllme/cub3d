@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/18 23:16:05 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:16:53 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define O 111
 # define LC 65362
 # define RC 65364
+# define CTRL 65507
+# define SHIFT 65505
 # define COLOR 0xFF00FF
 
 # define R 65363
@@ -53,10 +55,10 @@
 # define RAD_360 6.28319
 # define PI 3.14159265358979311600
 # define FOV 50.0
-# define SPEED 4.0
+# define SPEED 6.0
 # define C_SPEED 8.0
 # define WD_SPEED 8.0
-# define R_SPEED 2.0
+# define R_SPEED 4.0
 # define INF 10000000
 
 /* ************************************************************************** */
@@ -80,6 +82,15 @@ int	check_first_and_last_line(char **map);
 
 /* ************************************************************************** */
 /*          Raycasting                                                        */
+
+int	check_next_pos_W(t_g *g, double angle);
+int	check_next_pos_A(t_g *g, double angle);
+int	check_next_pos_S(t_g *g, double angle);
+int	check_next_pos_D(t_g *g, double angle);
+int	ft_move(t_g *g);
+int	ft_keyPress(int key, t_g *g);
+int	ft_keyRelease(int key, t_g *g);
+double	RayCalculator(t_g *g, double angle, double x, double y);
 
 /* ************************************************************************** */
 /*          Drawing                                                           */
