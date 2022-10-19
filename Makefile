@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/19 16:31:02 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/19 16:52:09 by lguillau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,12 @@ FILES	=	cub3d.c \
 		parsing/ext_check.c \
 		parsing/parsing.c \
 		parsing/map_verif.c \
+		parsing/recup_path.c \
+		parsing/recup_rgb.c \
+		parsing/recup_rgb_2.c \
+		parsing/p_tool.c \
+		parsing/p_tool_2.c \
+		parsing/recups.c \
 		game/movementCheck.c \
 		game/movement.c \
 		game/rayCalculator.c \
