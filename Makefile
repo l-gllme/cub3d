@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/19 15:34:16 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/19 16:31:02 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ FILES	=	cub3d.c \
 		game/rayCalculator_2.c \
 		game/anim.c \
 		game/keyDetection.c \
+		game/MiniMap.c \
+		game/MiniMap_2.c \
 		tools/errors.c \
 		tools/ft_atoi.c \
 		tools/ft_itoa.c \

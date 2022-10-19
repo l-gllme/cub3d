@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:36:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 13:18:49 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:27:26 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ typedef struct s_global
 	double	tmpY;
 	double	cosA;
 	double	sinA;
+	double	xmap;
+	double	ymap;
 	int	anim;
 }	t_g;
 

@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 16:11:29 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:28:21 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	init_struct_g(t_g *g, int ac, char **av)
 	g->tmpY = 0;
 	g->xOld = 0;
 	g->yOld = 0;
+	g->xmap = 0;
+	g->ymap = 0;
 }
 
 void	init_struct_m(t_m *m)
@@ -92,7 +94,6 @@ void	free_all(t_g *g)
 	free(g->m.we_texture);
 }
 
-void	draw_minimap(t_g *g);
 int	mouseTracking(t_g *g);
 void	drawMiniPlayer(t_g *g, double x, double y, double width, double height);
 
@@ -356,7 +357,7 @@ void    draw_map(t_g *g)
 		//mlx_string_put(g->mlx, g->win, W_W / 2, W_H / 2, 0x000000, "Portes fermees");
 		g->affCheck = 0;
 	}
-	draw_minimap(g, 0, 0);
+	draw_minimap(g);
 	pistol_anim(g);
 	create_crosshair(g->img, g->cross);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
@@ -417,195 +418,6 @@ void	recuStartPos(t_g *g)
 			x += SIZE;
 		}
 		y += SIZE;
-	}
-}
-
-void	drawMinisol(t_g *g, int x, int y, int width, int height)
-{
-	int	to_go;
-	int	to_g;
-	int	i;
-	(void)g;
-
-	i = x;
-	to_go = x + width;
-	to_g = y + height;
-	int j = y;
-	while (j < to_g)
-	{
-		i = x;
-		while (i < to_go)
-		{
-			 pp(&g->img, i, j, 0x8ebbde);
-			i++;
-		}
-		j++;
-	}
-}
-
-void	drawMiniWall(t_g *g, double x, double y, double width, double height)
-{
-	double	to_go;
-	double	to_g;
-	double	i;
-	(void)g;
-
-	i = x;
-	to_go = x + width;
-	to_g = y + height;
-	double	j = y;
-	while (j < to_g)
-	{
-		i = x;
-		while (i < to_go)
-		{
-			 pp(&g->img, i, j, 0x4c5057);
-			i++;
-		}
-		j++;
-	}
-}
-
-void	drawMinibreak(t_g *g, double x, double y, double width, double height)
-{
-	double	to_go;
-	double	to_g;
-	double	i;
-	(void)g;
-
-	i = x;
-	to_go = x + width;
-	to_g = y + height;
-	double	j = y;
-	while (j < to_g)
-	{
-		i = x;
-		while (i < to_go)
-		{
-			 pp(&g->img, i, j, 0x61063);
-			i++;
-		}
-		j++;
-	}
-}
-
-void	drawMiniPorte(t_g *g, double x, double y, double width, double height)
-{
-	double	to_go;
-	double	to_g;
-	double	i;
-	(void)g;
-
-	i = x;
-	to_go = x + width;
-	to_g = y + height;
-	double	j = y;
-	while (j < to_g)
-	{
-		i = x;
-		while (i < to_go)
-		{
-			 pp(&g->img, i, j, 0x610000);
-			i++;
-		}
-		j++;
-	}
-}
-
-void	drawMiniButton(t_g *g, double x, double y, double width, double height)
-{
-	double	to_go;
-	double	to_g;
-	double	i;
-	(void)g;
-
-	i = x;
-	to_go = x + width;
-	to_g = y + height;
-	double	j = y;
-	while (j < to_g)
-	{
-		i = x;
-		while (i < to_go)
-		{
-			 pp(&g->img, i, j, 0x045213);
-			i++;
-		}
-		j++;
-	}
-}
-
-void	drawMiniPlayer(t_g *g, double x, double y, double width, double height)
-{
-	double	i;
-	double	j;
-	double	to_go;
-	double	to_g;
-
-	to_go = x + width;
-	to_g = y + height;
-	i = y;
-	while (i < to_g)
-	{
-		j = x;
-		while (j < to_go)
-		{
-			 pp(&g->img, i, j, 0x000000);
-			j++;
-		}
-		i++;
-	}
-}
-
-int	tablen(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void	draw_minimap(t_g *g)
-{
-	int	i;
-	int	j;
-	double	width;
-	double	height;
-	double	x;
-	double	y;
-
-	int	len = tablen(g->m.map) - 1;
-	if (len > 15)
-		return ;
-	height = (len);
-	width = (len);
-	y = 0;
-	i = -1;
-	while (g->m.map[++i + 1])
-	{
-		j = -1;
-		x = 0;
-		while (g->m.map[i][++j])
-		{
-			if (j == (int)g->c.x / SIZE && i == (int)g->c.y / SIZE)
-				drawMiniPlayer(g, (int)y, (int)x , width, height);
-			else if (g->m.map[i][j] == '1')
-				drawMiniWall(g, x, y, width, height);
-			else if (g->m.map[i][j] == 'P' && !g->activateButton)
-				drawMiniPorte(g, x, y, width, height);
-			else if (g->m.map[i][j] == 'H')
-				drawMinibreak(g, x, y, width, height);
-			else if (g->m.map[i][j] == 'B')
-				drawMiniButton(g, x, y, width, height);
-			else if (g->m.map[i][j] == '0' || g->m.map[i][j] == 'N' || g->m.map[i][j] == 'S'
-				|| g->m.map[i][j] == 'E' || g->m.map[i][j] == 'W'
-				|| (g->m.map[i][j]== 'P' && g->activateButton) || g->m.map[i][j] == 'X')
-				drawMinisol(g, x, y, width, height);
-			x += width;
-		}
-		y += height;
 	}
 }
 

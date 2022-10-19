@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 15:35:25 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:30:54 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ double	ray_calculator_while(t_g *g, double angle, double d);
 /*          Drawing                                                           */
 
 void	draw_player(t_g *g, t_data *img, t_data *player);
+void	draw_minimap(t_g *g);
+void	drawminibutton(t_g *g, double x, double y, double width);
+void	drawminiporte(t_g *g, double x, double y, double width);
+void	drawminibreak(t_g *g, double x, double y, double width);
+void	drawminiwall(t_g *g, double x, double y, double width);
+void	drawminisol(t_g *g, int x, int y, int width);
 
 /* pistol_anim.c */
 
