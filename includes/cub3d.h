@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 16:30:54 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:25:25 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@
 
 int	ft_parsing(t_g *g);
 void	free_m(t_g *g);
+void	init_struct_g(t_g *g, int ac, char **av);
+void	init_struct_m(t_m *m);
+void	recustartpos(t_g *g);
+void	initWallTextures_2(t_data ouest, t_g *g);
+void	initWallTextures(t_data nord, t_data sud, t_data est, t_g *g);
+void	initBonusTextures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g);
+void	initBonusTextures_2(t_data b, t_data bc, t_data d, t_g *g);
+void	initBonusTextures_3(t_data cross, t_data img, t_g *g);
+void	initBonusTextures_4(t_data w_1, t_data w_2, t_data exit, t_g *g);
+int	creatergb(t_g *g);
+int	creatergbsol(t_g *g);
+void	recuprgb(t_g *g);
 
 /* ext_check.c */
 char	*ft_strstr(char *str, char *to_find);
@@ -103,6 +115,14 @@ void	drawminiporte(t_g *g, double x, double y, double width);
 void	drawminibreak(t_g *g, double x, double y, double width);
 void	drawminiwall(t_g *g, double x, double y, double width);
 void	drawminisol(t_g *g, int x, int y, int width);
+void	pp(t_data *data, double x, double y, int color);
+int	gp(int x, int y, t_data i);
+void	drawrow1(t_g *g, t_data *img, double i, double d);
+void	draw_row(t_g *g, t_data *img, double y, double height);
+void	displaypix(t_g *g, double y, double j, double ciel);
+int	mousetracking(t_g *g);
+void	afftime(t_g *g);
+void	create_crosshair(t_data img, t_data h);
 
 /* pistol_anim.c */
 
@@ -113,6 +133,8 @@ void	pistol_anim(t_g *g);
 
 void	pp(t_data *data, double x, double y, int color);
 int	get_pixel_2(int x, int y, t_data *i);
+void	checkposexit(t_g *g);
+int	ft_key_cross(t_g *g);
 
 /* str_tools.c */
 int	ft_strlen(char *str);

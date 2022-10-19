@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:36:27 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 16:31:24 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:00:19 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	draw_minimap(t_g *g)
 				drawminiplayer(g, (int)g->ymap, (int)g->xmap, len);
 			else if (g->m.map[i][j] == '1')
 				drawminiwall(g, g->xmap, g->ymap, len);
-			draw_minimap_2(g, i, j, len);
+			else
+				draw_minimap_2(g, i, j, len);
 			g->xmap += len;
 		}
 		g->ymap += len;

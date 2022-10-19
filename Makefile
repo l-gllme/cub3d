@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/19 16:31:02 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/19 17:27:04 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,22 @@ FILES	=	cub3d.c \
 		game/keyDetection.c \
 		game/MiniMap.c \
 		game/MiniMap_2.c \
+		game/DisplayPix.c \
+		game/DisplayPix_2.c \
+		game/TimeMouse.c \
+		game/StartPosition.c \
+		game/crosshair.c \
+		tools/Pixel.c \
+		tools/free.c \
+		tools/rgb.c \
 		tools/errors.c \
 		tools/ft_atoi.c \
 		tools/ft_itoa.c \
 		tools/str_tools.c \
 		tools/gnl/get_next_line.c \
 		tools/gnl/get_next_line_utils.c \
+		init/struct.c \
+		init/Textures.c \
 
 S_PATH	=	srcs/
 O_PATH	=	objs/
