@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 13:33:21 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:33:10 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,51 +413,6 @@ void	create_crosshair(t_data img, t_data h)
 	}
 }
 
-
-void	create_hand_img_r(t_data img, t_data h)
-{
-	int	i = -1;
-	int	j = -1;
-	int	i_w;
-	int	pos = 0;
-
-	i_w = (h.line_length / 4) * 2;
-	while (++j < i_w)
-	{
-		i = -1;
-		while (++i < 400)
-		{
-			pos = h.line_length - ((i / 2) * 4) + h.line_length * (j / 2);
-			if (h.addr[pos+3] == 0)
-			{
-				 pp(&img, i + (W_W / 2 - i_w) , j + (W_H - 400), get_pixel_2(h.line_length - i /2, j /2, &h));
-			}
-		}
-	}
-}
-
-void	create_hand_img(t_data img, t_data h)
-{
-	int	i = -1;
-	int	j = -1;
-	int	i_w;
-	int	pos = 0;
-
-	i_w = (h.line_length / 4) * 2;
-	while (++j < i_w)
-	{
-		i = -1;
-		while (++i < 400)
-		{
-			pos = (i / 2) * 4 + h.line_length * (j / 2);
-			if (h.addr[pos+3] == 0)
-			{
-				 pp(&img, i + (W_W / 2) , j + (W_H - 400), get_pixel_2(i /2, j /2, &h));
-			}
-		}
-	}
-}
-
 void    draw_map(t_g *g)
 {
 
@@ -473,70 +428,7 @@ void    draw_map(t_g *g)
 		g->affCheck = 0;
 	}
 	draw_minimap(g);
-	if (g->key_RC == 0 && g->anim == 0 && g->key_LC == 0)
-		create_hand_img(g->img, g->hand_1);
-	else if (g->key_RC == 0 && g->anim == 0 && g->key_LC == 1)
-	{
-		create_hand_img(g->img, g->hand_1);
-		create_hand_img_r(g->img, g->hand_1);
-	}
-	else if ((g->key_RC == 1 || g->button_left == 1) && (g->anim == 0 || g->anim == 16))
-	{
-		if (ray_calculator(g, g->angle, g->c.x, g->c.y))
-		{
-			if (g->w_1check)
-				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = 'G';
-			if (g->w_2check)
-				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = '0';
-		}
-		g->anim += 1;
-	}
-	if (g->anim < 4 && g->anim != 0 && g->key_LC == 1)
-	{
-		create_hand_img(g->img, g->hand_2);
-		create_hand_img_r(g->img, g->hand_2);
-		g->anim++;
-	}
-	else if (g->anim < 8 && g->anim != 0 && g->key_LC == 1)
-	{
-		create_hand_img(g->img, g->hand_3);
-		create_hand_img_r(g->img, g->hand_3);
-		g->anim++;
-	}
-	else if (g->anim < 12 && g->anim != 0 && g->key_LC == 1)
-	{
-		create_hand_img(g->img, g->hand_4);
-		create_hand_img_r(g->img, g->hand_4);
-		g->anim++;
-	}
-	else if (g->anim < 16 && g->anim != 0 && g->key_LC == 1)
-	{
-		create_hand_img(g->img, g->hand_5);
-		create_hand_img_r(g->img, g->hand_5);
-		g->anim++;
-	}
-	else if (g->anim < 4 && g->anim != 0 && g->key_LC == 0)
-	{
-		create_hand_img(g->img, g->hand_2);
-		g->anim++;
-	}
-	else if (g->anim < 8 && g->anim != 0 && g->key_LC == 0)
-	{
-		create_hand_img(g->img, g->hand_3);
-		g->anim++;
-	}
-	else if (g->anim < 12 && g->anim != 0 && g->key_LC == 0)
-	{
-		create_hand_img(g->img, g->hand_4);
-		g->anim++;
-	}
-	else if (g->anim < 16 && g->anim != 0 && g->key_LC == 0)
-	{
-		create_hand_img(g->img, g->hand_5);
-		g->anim++;
-	}
-	if (g->anim == 16)
-		g->anim = 0;
+	pistol_anim(g);
 	create_crosshair(g->img, g->cross);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
 	affTime(g);

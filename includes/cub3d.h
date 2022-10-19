@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 14:16:23 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:32:48 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,15 @@ double	ray_calculator_while(t_g *g, double angle, double d);
 
 void	draw_player(t_g *g, t_data *img, t_data *player);
 
+/* pistol_anim.c */
+
+void	pistol_anim(t_g *g);
+
 /* ************************************************************************** */
 /*          Tools                                                             */
+
+void	pp(t_data *data, double x, double y, int color);
+int	get_pixel_2(int x, int y, t_data *i);
 
 /* str_tools.c */
 int	ft_strlen(char *str);
