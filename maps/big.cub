@@ -1,10 +1,10 @@
-NO imgs/N.xpm
-SO imgs/S.xpm
-EA imgs/E.xpm
-WE imgs/O.xpm
+NO imgs/1.xpm
+SO imgs/2.xpm
+EA imgs/3.xpm
+WE imgs/4.xpm
 
-F 220,100,0
-C 225,30,0
+C 10,100,200
+F 60,60,60
 
         1111111111111111111111111
         1000000000110000000000001
