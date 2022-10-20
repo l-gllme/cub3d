@@ -6,7 +6,7 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/19 23:27:27 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/20 13:52:16 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,11 +52,13 @@ FILES	=	cub3d.c \
 
 S_PATH	=	srcs/
 O_PATH	=	objs/
+O_PATHM	=	objsm/
 I_PATH	=	includes/
 L_PATH	=	minilibx/
 
 SRCS	=	${addprefix ${S_PATH}, ${FILES}}
 OBJS	=	${addprefix ${O_PATH}, ${FILES:.c=.o}}
+OBJSM	=	${addprefix ${O_PATHM}, ${FILES:.c=.o}}
 
 NAME	=	cub3d
 
@@ -64,6 +66,7 @@ CC	=	cc
 
 RM	=	rm -rf
 
+CFLAGSM	=	-Wall -Wextra -Werror -g3 -D MOUSE_ON=1
 CFLAGS	=	-Wall -Wextra -Werror -g3
 LFLAGS	=	-lmlx_Linux -lXext -lX11
 
@@ -76,9 +79,21 @@ ${NAME}:	minilibx/libmlx_Linux.a ${OBJS}
 		@echo ""
 		@echo "${SGREEN}${ITALIC}Compilation is completed !${S} 🎉"
 
+mouse:		minilibx/libmlx_Linux.a ${OBJSM}
+		@${CC} ${OBJSM} ${CFLAGSM} -L ${L_PATH} ${LFLAGS} -o ${NAME} -lm -pthread -I ${I_PATH}
+		@echo ""
+		@echo "${PURPLE}Building${S} ${IGREY}$@${S} 🔨"
+		@echo ""
+		@echo "${SGREEN}${ITALIC}Compilation is completed !${S} 🎉"
+
 ${O_PATH}%.o:	${S_PATH}%.c
 		@mkdir -p ${dir $@}
 		@${CC} ${CFLAGS} -c $< -o $@ -I ${I_PATH}
+		@echo "${CYAN}Compiling${S} ${IGREY}$<${S} ${YELLOW}➡️  ${S}${SBLUE}$@${S}"
+
+${O_PATHM}%.o:	${S_PATH}%.c
+		@mkdir -p ${dir $@}
+		@${CC} ${CFLAGSM} -c $< -o $@ -I ${I_PATH}
 		@echo "${CYAN}Compiling${S} ${IGREY}$<${S} ${YELLOW}➡️  ${S}${SBLUE}$@${S}"
 
 minilibx/libmlx_Linux.a:
@@ -89,7 +104,7 @@ lclean:
 		@make clean -C minilibx
 
 clean:
-		@${RM} ${O_PATH}
+		@${RM} ${O_PATH} ${RM} ${O_PATHM}
 		@echo "${SRED}Removing${S} ${IGREY}${O_PATH}${S} 🗑️"
 
 fclean:		lclean clean

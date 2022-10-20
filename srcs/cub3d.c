@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:42:06 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 18:46:03 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:14:04 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	start(t_g *g)
 {
 	checkposexit(g);
 	ft_move(g);
-	mousetracking(g);
+	if (MOUSE_ON)
+		mousetracking(g);
 	return (0);
 }
 
@@ -57,6 +58,7 @@ int	main(int ac, char **av)
 	t_m	m;
 	t_g	g;
 
+	printf("test = %d\n", MOUSE_ON);
 	if (ac != 2)
 		return (ft_errors(2), -1);
 	firstinit(&g, &m, ac, av);

@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 17:05:36 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 17:07:06 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:15:28 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	mousetracking(t_g *g)
 
 	x = 0;
 	y = 0;
+	/*mlx_mouse_hide(g->mlx, g->win);*/
 	mlx_mouse_get_pos(g->mlx, g->win, &x, &y);
 	if (x > W_W / 2)
 	{
