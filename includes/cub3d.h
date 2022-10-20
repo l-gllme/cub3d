@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/20 11:34:07 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:46:04 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,6 @@ void	ft_errors(int choice);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 void	draw_map(t_g *g);
-void	free_all(t_g *g);
+void	free_all(t_g *g, int n, int e);
 
 #endif
