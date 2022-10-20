@@ -19,11 +19,11 @@ void	restore_struct(t_g *g, double angle, double x, double y)
 	g->w_1check = 0;
 	g->w_2check = 0;
 	g->exitcheck = 0;
-	g->key_E = 0;
-	g->cosA = cos(angle);
-	g->sinA = sin(angle);
-	g->tmpX = g->c.x;
-	g->tmpY = g->c.y;
+	g->key_e = 0;
+	g->cosa = cos(angle);
+	g->sina = sin(angle);
+	g->tmpx = g->c.x;
+	g->tmpy = g->c.y;
 	(void)x;
 	(void)y;
 }
@@ -35,21 +35,21 @@ void	ray_dichotomie(t_g *g, int i)
 
 	while (i < 10)
 	{
-		newx = (g->tmpX + g->xOld) / 2;
-		newy = (g->tmpY + g->yOld) / 2;
+		newx = (g->tmpx + g->xold) / 2;
+		newy = (g->tmpy + g->yold) / 2;
 		if (g->m.map[(int)newy / SIZE][(int)newx / SIZE] == '1'
 			|| (g->m.map[(int)newy / SIZE][(int)newx / SIZE] == 'P'
-			&& !g->activateButton)
+			&& !g->activatebutton)
 			|| g->m.map[(int)newy / SIZE][(int)newx / SIZE] == 'B'
 			|| g->m.map[(int)newy / SIZE][(int)newx / SIZE] == 'M')
 		{
-			g->tmpX = newx;
-			g->tmpY = newy;
+			g->tmpx = newx;
+			g->tmpy = newy;
 		}
 		else
 		{
-			g->yOld = newy;
-			g->xOld = newx;
+			g->yold = newy;
+			g->xold = newx;
 		}
 		i++;
 	}
@@ -101,13 +101,13 @@ double	ray_calculator(t_g *g, double angle, double x, double y)
 	d = 0;
 	d = ray_calculator_while(g, angle, d);
 	ray_dichotomie(g, 0);
-	d = sqrt(pow((g->tmpX - g->c.x), 2) + pow((g->tmpY - g->c.y), 2));
+	d = sqrt(pow((g->tmpx - g->c.x), 2) + pow((g->tmpy - g->c.y), 2));
 	if (g->button)
-		g->DistButton = d;
-	g->dirX = g->tmpX;
-	g->dirY = g->tmpY;
-	xtest = fmod(g->tmpX, SIZEF);
-	ytest = fmod(g->tmpY, SIZEF);
+		g->distbutton = d;
+	g->dirx = g->tmpx;
+	g->diry = g->tmpy;
+	xtest = fmod(g->tmpx, SIZEF);
+	ytest = fmod(g->tmpy, SIZEF);
 	if (xtest <= SIZE / 2)
 		found_wall(g, xtest, ytest);
 	else

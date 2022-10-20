@@ -23,12 +23,12 @@ int	mousetracking(t_g *g)
 	if (x > W_W / 2)
 	{
 		ft_keypress(R, g);
-		g->mouseR = 1;
+		g->mouser = 1;
 	}
 	if (x < W_W / 2)
 	{
 		ft_keypress(L, g);
-		g->mouseL = 1;
+		g->mousel = 1;
 	}
 	mlx_mouse_move(g->mlx, g->win, W_W / 2, W_W / 2);
 	return (0);
@@ -46,7 +46,7 @@ long long	get_time(void)
 
 long long	ft_currenttime(t_g *g)
 {
-	return ((get_time() - g->startTime));
+	return ((get_time() - g->starttime));
 }
 
 void	afftime(t_g *g)
@@ -55,10 +55,10 @@ void	afftime(t_g *g)
 	u_int64_t	time;
 	double		frame;
 
-	time = get_time() - g->startTime;
-	frame = (time - g->oldTime) / 1000.0;
+	time = get_time() - g->starttime;
+	frame = (time - g->oldtime) / 1000.0;
 	temp = ft_itoa((int)(1 / frame));
-	g->oldTime = time;
+	g->oldtime = time;
 	mlx_string_put(g->mlx, g->win, W_W - 50, 25, 0x444444, temp);
 	mlx_string_put(g->mlx, g->win, W_W - 35, 25, 0x444444, "FPS");
 	free(temp);

@@ -17,39 +17,39 @@ void	init_struct_rgb(t_rgb *rgb, char **recup_gnl, int i, int j)
 	int	c;
 
 	c = recup_malloc(recup_gnl, i, j);
-	rgb->recup_R = malloc(sizeof(char) * (c + 1));
+	rgb->recup_r = malloc(sizeof(char) * (c + 1));
 	c = recup_malloc(recup_gnl, i, j + c + 1);
-	rgb->recup_G = malloc(sizeof(char) * (c + 1));
+	rgb->recup_g = malloc(sizeof(char) * (c + 1));
 	c = recup_malloc(recup_gnl, i, j + c + 1);
-	rgb->recup_B = malloc(sizeof(char) * (c + 5));
+	rgb->recup_b = malloc(sizeof(char) * (c + 5));
 }
 
 void	ft_free_struct_rgb(t_rgb *rgb)
 {
-	if (rgb->recup_R)
+	if (rgb->recup_r)
 	{
-		free(rgb->recup_R);
-		rgb->recup_R = NULL;
+		free(rgb->recup_r);
+		rgb->recup_r = NULL;
 	}
-	if (rgb->recup_G)
+	if (rgb->recup_g)
 	{
-		free(rgb->recup_G);
-		rgb->recup_G = NULL;
+		free(rgb->recup_g);
+		rgb->recup_g = NULL;
 	}
-	if (rgb->recup_B)
+	if (rgb->recup_b)
 	{
-		free(rgb->recup_B);
-		rgb->recup_B = NULL;
+		free(rgb->recup_b);
+		rgb->recup_b = NULL;
 	}
 }
 
 int	check_rgb_value_2(t_rgb *rgb)
 {
-	if (ft_strlen(rgb->recup_R) > 3)
+	if (ft_strlen(rgb->recup_r) > 3)
 		return (0);
-	if (ft_strlen(rgb->recup_G) > 3)
+	if (ft_strlen(rgb->recup_g) > 3)
 		return (0);
-	if (ft_strlen(rgb->recup_B) > 3)
+	if (ft_strlen(rgb->recup_b) > 3)
 		return (0);
 	return (1);
 }

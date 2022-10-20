@@ -51,7 +51,7 @@ void	draw_minimap_2(t_g *g, int i, int j, int len)
 
 	x = g->xmap;
 	y = g->ymap;
-	if (g->m.map[i][j] == 'P' && !g->activateButton)
+	if (g->m.map[i][j] == 'P' && !g->activatebutton)
 		drawminiporte(g, x, y, len);
 	else if (g->m.map[i][j] == 'H')
 		drawminibreak(g, x, y, len);
@@ -60,7 +60,7 @@ void	draw_minimap_2(t_g *g, int i, int j, int len)
 	else if (g->m.map[i][j] == '0' || g->m.map[i][j] == 'N'
 		|| g->m.map[i][j] == 'S'
 		|| g->m.map[i][j] == 'E' || g->m.map[i][j] == 'W'
-		|| (g->m.map[i][j] == 'P' && g->activateButton)
+		|| (g->m.map[i][j] == 'P' && g->activatebutton)
 		|| g->m.map[i][j] == 'X')
 		drawminisol(g, x, y, len);
 }

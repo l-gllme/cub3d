@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:35:02 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/06/15 13:03:55 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:34:24 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-#include "cub3d.h"
+# include "cub3d.h"
 
 # define BUFFER_SIZE 1024
 

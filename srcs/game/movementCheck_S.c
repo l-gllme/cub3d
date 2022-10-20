@@ -19,7 +19,7 @@ int	check_next_pos_s_2(t_g *g, double angle)
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE]
 		[(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'P'
-		&& !g->activateButton)
+		&& !g->activatebutton)
 		return (0);
 	if (g->m.map[(int)(g->c.y + (int)(cos(angle) * C_SPEED)) / SIZE]
 		[(int)(g->c.x - (int)(sin(angle) * C_SPEED)) / SIZE] == 'B')

@@ -14,24 +14,24 @@
 
 void	init_struct_g_2(t_g *g)
 {
-	g->key_O = 0;
-	g->key_R = 0;
-	g->key_L = 0;
-	g->key_E = 0;
-	g->key_LC = 0;
-	g->key_RC = 0;
-	g->DistButton = 999;
-	g->startTime = 0;
-	g->oldTime = 0;
-	g->mouseR = 0;
-	g->mouseL = 0;
-	g->FOVP = FOV * PI / 180;
-	g->FOVD2 = (FOV / 2) * PI / 180;
+	g->key_o = 0;
+	g->key_r = 0;
+	g->key_l = 0;
+	g->key_e = 0;
+	g->key_lc = 0;
+	g->key_rc = 0;
+	g->distbutton = 999;
+	g->starttime = 0;
+	g->oldtime = 0;
+	g->mouser = 0;
+	g->mousel = 0;
+	g->fovp = FOV * PI / 180;
+	g->fovd2 = (FOV / 2) * PI / 180;
 	g->angle = 0;
-	g->tmpX = 0;
-	g->tmpY = 0;
-	g->xOld = 0;
-	g->yOld = 0;
+	g->tmpx = 0;
+	g->tmpy = 0;
+	g->xold = 0;
+	g->yold = 0;
 	g->xmap = 0;
 	g->ymap = 0;
 }
@@ -43,13 +43,12 @@ void	init_struct_g(t_g *g, int ac, char **av)
 	g->count = 0;
 	g->i = 0;
 	g->anim = 0;
-	g->activateButton = 0;
-	g->affCheck = 0;
-	g->mouseHide = 1;
-	g->key_W = 0;
-	g->key_A = 0;
-	g->key_S = 0;
-	g->key_D = 0;
+	g->activatebutton = 0;
+	g->affcheck = 0;
+	g->key_w = 0;
+	g->key_a = 0;
+	g->key_s = 0;
+	g->key_d = 0;
 	init_struct_g_2(g);
 }
 

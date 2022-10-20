@@ -14,12 +14,12 @@
 
 int	ray_calculator_while_3(t_g *g)
 {
-	if (g->m.map[(int)g->tmpY / SIZE][(int)g->tmpX / SIZE] == 'G')
+	if (g->m.map[(int)g->tmpy / SIZE][(int)g->tmpx / SIZE] == 'G')
 	{
 		g->w_2check = 1;
 		return (0);
 	}
-	if (g->m.map[(int)g->tmpY / SIZE][(int)g->tmpX / SIZE] == 'X')
+	if (g->m.map[(int)g->tmpy / SIZE][(int)g->tmpx / SIZE] == 'X')
 	{
 		g->exitcheck = 1;
 		return (0);
@@ -29,22 +29,22 @@ int	ray_calculator_while_3(t_g *g)
 
 int	ray_calculator_while_2(t_g *g)
 {
-	if (g->m.map[(int)g->tmpY / SIZE][(int)g->tmpX / SIZE] == '1')
+	if (g->m.map[(int)g->tmpy / SIZE][(int)g->tmpx / SIZE] == '1')
 		return (0);
-	if (g->m.map[(int)g->tmpY / SIZE][(int)g->tmpX / SIZE] == 'M')
+	if (g->m.map[(int)g->tmpy / SIZE][(int)g->tmpx / SIZE] == 'M')
 		return (0);
-	if (g->m.map[(int)g->tmpY / SIZE][(int)g->tmpX / SIZE] == 'P'
-		&& !g->activateButton)
+	if (g->m.map[(int)g->tmpy / SIZE][(int)g->tmpx / SIZE] == 'P'
+		&& !g->activatebutton)
 	{
 		g->door = 1;
 		return (0);
 	}
-	if (g->m.map[(int)g->tmpY / SIZE][(int)g->tmpX / SIZE] == 'B')
+	if (g->m.map[(int)g->tmpy / SIZE][(int)g->tmpx / SIZE] == 'B')
 	{
 		g->button = 1;
 		return (0);
 	}
-	if (g->m.map[(int)g->tmpY / SIZE][(int)g->tmpX / SIZE] == 'H')
+	if (g->m.map[(int)g->tmpy / SIZE][(int)g->tmpx / SIZE] == 'H')
 	{
 		g->w_1check = 1;
 		return (0);
@@ -58,24 +58,24 @@ double	ray_calculator_while(t_g *g, double angle, double d)
 {
 	while (1)
 	{
-		g->xOld = g->tmpX;
-		g->yOld = g->tmpY;
-		g->tmpY -= g->cosA;
-		g->tmpX += g->sinA;
+		g->xold = g->tmpx;
+		g->yold = g->tmpy;
+		g->tmpy -= g->cosa;
+		g->tmpx += g->sina;
 		d += 1;
-		if ((int)g->tmpX / SIZE != (int)g->xOld / SIZE
-			&& (int)g->tmpY / SIZE != (int)g->yOld / SIZE)
+		if ((int)g->tmpx / SIZE != (int)g->xold / SIZE
+			&& (int)g->tmpy / SIZE != (int)g->yold / SIZE)
 		{
 			if (angle >= 45 * PI / 180 && angle < 135 * PI / 180)
-				g->tmpX = g->xOld;
+				g->tmpx = g->xold;
 			else if (angle >= 135 * PI / 180 && angle < 225 * PI * 180)
-				g->tmpY = g->yOld;
+				g->tmpy = g->yold;
 			else if (angle >= 225 * PI / 180 && angle < 315 * PI / 180)
-				g->tmpX = g->xOld;
+				g->tmpx = g->xold;
 			else if (angle >= 315 * PI / 180 && angle < 360 * PI / 180)
-				g->tmpY = g->yOld;
+				g->tmpy = g->yold;
 			else if (angle >= 0 * PI / 180 && angle < 45 * PI / 180)
-				g->tmpY = g->yOld;
+				g->tmpy = g->yold;
 		}
 		if (!ray_calculator_while_2(g))
 			break ;

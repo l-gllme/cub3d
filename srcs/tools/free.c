@@ -6,18 +6,25 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 17:25:58 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 17:26:27 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:36:22 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_2(t_g *g)
+{
+	if (g->hand_5.img)
+		mlx_destroy_image(g->mlx, g->hand_5.img);
+}
+
 
 void	free_all(t_g *g)
 {
 	int	i;
 
 	i = -1;
-	mlx_destroy_image(g->mlx, g->ouest.img);
+	/*mlx_destroy_image(g->mlx, g->ouest.img);
 	mlx_destroy_image(g->mlx, g->nord.img);
 	mlx_destroy_image(g->mlx, g->sud.img);
 	mlx_destroy_image(g->mlx, g->est.img);
@@ -28,7 +35,8 @@ void	free_all(t_g *g)
 	mlx_destroy_image(g->mlx, g->hand_2.img);
 	mlx_destroy_image(g->mlx, g->hand_3.img);
 	mlx_destroy_image(g->mlx, g->cross.img);
-	mlx_destroy_image(g->mlx, g->img.img);
+	mlx_destroy_image(g->mlx, g->img.img);*/
+	free_2(g);
 	mlx_destroy_window(g->mlx, g->win);
 	mlx_destroy_display(g->mlx);
 	free(g->mlx);

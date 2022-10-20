@@ -37,7 +37,7 @@ void	firstinit(t_g *g, t_m *m, int ac, char **av)
 	g->w_1check = 0;
 	g->button_left = 0;
 	g->button_right = 0;
-	g->S_M = SPEED;
+	g->s_m = SPEED;
 }
 
 void	secondinit(t_g *g)

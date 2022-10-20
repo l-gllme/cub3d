@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 17:14:37 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 18:57:19 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:34:45 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ void	init_bonus_textures(t_data hand_1, t_data hand_2, t_data hand_3, t_g *g)
 	t_data	hand_5;
 
 	if (!open_img_200(g, &hand_1, "imgs/hand_1.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_200(g, &hand_2, "imgs/hand_2.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_200(g, &hand_3, "imgs/hand_3.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_200(g, &hand_4, "imgs/hand_4.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_200(g, &hand_5, "imgs/hand_5.xpm"))
-		exit(0);
+		free_all(g);
 	g->hand_1 = hand_1;
 	g->hand_2 = hand_2;
 	g->hand_3 = hand_3;
@@ -71,17 +71,17 @@ void	init_bonus_textures_2(t_data b, t_data bc, t_data d, t_g *g)
 	t_data	exit1;
 
 	if (!open_img_64(g, &d, "imgs/D.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_64(g, &b, "imgs/B.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_64(g, &bc, "imgs/BC.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_64(g, &w_1, "imgs/w_1.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_64(g, &w_2, "imgs/w_2.xpm"))
-		exit(0);
+		free_all(g);
 	if (!open_img_64(g, &exit1, "imgs/Exit.xpm"))
-		exit(0);
+		free_all(g);
 	g->b = b;
 	g->bc = bc;
 	g->d = d;

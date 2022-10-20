@@ -41,43 +41,43 @@ double	rotate(t_g *g, char dir)
 
 void	ft_move_3(t_g *g)
 {
-	if (g->key_R)
+	if (g->key_r)
 		g->angle = rotate(g, 'r');
-	if (g->key_L)
+	if (g->key_l)
 		g->angle = rotate(g, 'l');
-	if (g->mouseR)
+	if (g->mouser)
 	{
 		ft_keyrelease(R, g);
-		g->mouseR = 0;
+		g->mouser = 0;
 	}
-	if (g->mouseL)
+	if (g->mousel)
 	{
 		ft_keyrelease(L, g);
-		g->mouseL = 0;
+		g->mousel = 0;
 	}
 }
 
 void	ft_move_2(t_g *g)
 {
-	if (g->key_W && check_next_pos_w(g, g->angle))
+	if (g->key_w && check_next_pos_w(g, g->angle))
 	{
-		g->c.x = g->c.x + sin(g->angle) * g->S_M;
-		g->c.y = g->c.y - cos(g->angle) * g->S_M;
+		g->c.x = g->c.x + sin(g->angle) * g->s_m;
+		g->c.y = g->c.y - cos(g->angle) * g->s_m;
 	}
-	else if (g->key_A && check_next_pos_a(g, g->angle))
+	else if (g->key_a && check_next_pos_a(g, g->angle))
 	{
-		g->c.x = g->c.x - cos(g->angle) * g->S_M;
-		g->c.y = g->c.y - sin(g->angle) * g->S_M;
+		g->c.x = g->c.x - cos(g->angle) * g->s_m;
+		g->c.y = g->c.y - sin(g->angle) * g->s_m;
 	}
-	else if (g->key_S && check_next_pos_s(g, g->angle))
+	else if (g->key_s && check_next_pos_s(g, g->angle))
 	{
-		g->c.x = g->c.x - sin(g->angle) * g->S_M;
-		g->c.y = g->c.y + cos(g->angle) * g->S_M;
+		g->c.x = g->c.x - sin(g->angle) * g->s_m;
+		g->c.y = g->c.y + cos(g->angle) * g->s_m;
 	}
-	else if (g->key_D && check_next_pos_d(g, g->angle))
+	else if (g->key_d && check_next_pos_d(g, g->angle))
 	{
-		g->c.x = g->c.x + cos(g->angle) * g->S_M;
-		g->c.y = g->c.y + sin(g->angle) * g->S_M;
+		g->c.x = g->c.x + cos(g->angle) * g->s_m;
+		g->c.y = g->c.y + sin(g->angle) * g->s_m;
 	}
 }
 
@@ -90,17 +90,17 @@ int	ft_move(t_g *g)
 		g->angle = rotate(g, 'p');
 		first = 1;
 	}
-	if (g->key_E && g->DistButton < 60.0 && g->activateButton == 0)
+	if (g->key_e && g->distbutton < 60.0 && g->activatebutton == 0)
 	{
-		g->affCheck = 1;
-		g->activateButton = 1;
-		g->key_E = 0;
+		g->affcheck = 1;
+		g->activatebutton = 1;
+		g->key_e = 0;
 	}
-	else if (g->key_E && g->DistButton < 60.0 && g->activateButton == 1)
+	else if (g->key_e && g->distbutton < 60.0 && g->activatebutton == 1)
 	{
-		g->affCheck = 1;
-		g->activateButton = 0;
-		g->key_E = 0;
+		g->affcheck = 1;
+		g->activatebutton = 0;
+		g->key_e = 0;
 	}
 	ft_move_2(g);
 	ft_move_3(g);

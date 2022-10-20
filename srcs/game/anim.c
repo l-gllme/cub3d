@@ -60,37 +60,37 @@ static void	create_hand_img(t_data img, t_data h, int i, int j)
 
 static void	single_pistol(t_g *g)
 {
-	if (g->anim < 16 && g->anim != 0 && g->key_LC == 1)
+	if (g->anim < 16 && g->anim != 0 && g->key_lc == 1)
 	{
 		create_hand_img(g->img, g->hand_5, -1, -1);
 		create_hand_img_r(g->img, g->hand_5, -1, -1);
 	}
-	else if (g->anim < 4 && g->anim != 0 && g->key_LC == 0)
+	else if (g->anim < 4 && g->anim != 0 && g->key_lc == 0)
 		create_hand_img(g->img, g->hand_2, -1, -1);
-	else if (g->anim < 8 && g->anim != 0 && g->key_LC == 0)
+	else if (g->anim < 8 && g->anim != 0 && g->key_lc == 0)
 		create_hand_img(g->img, g->hand_3, -1, -1);
-	else if (g->anim < 12 && g->anim != 0 && g->key_LC == 0)
+	else if (g->anim < 12 && g->anim != 0 && g->key_lc == 0)
 		create_hand_img(g->img, g->hand_4, -1, -1);
-	else if (g->anim < 16 && g->anim != 0 && g->key_LC == 0)
+	else if (g->anim < 16 && g->anim != 0 && g->key_lc == 0)
 		create_hand_img(g->img, g->hand_5, -1, -1);
 	g->anim++;
 }
 
 static void	akimbo(t_g *g)
 {
-	if (g->anim < 4 && g->anim != 0 && g->key_LC == 1)
+	if (g->anim < 4 && g->anim != 0 && g->key_lc == 1)
 	{
 		create_hand_img(g->img, g->hand_2, -1, -1);
 		create_hand_img_r(g->img, g->hand_2, -1, -1);
 		g->anim++;
 	}
-	else if (g->anim < 8 && g->anim != 0 && g->key_LC == 1)
+	else if (g->anim < 8 && g->anim != 0 && g->key_lc == 1)
 	{
 		create_hand_img(g->img, g->hand_3, -1, -1);
 		create_hand_img_r(g->img, g->hand_3, -1, -1);
 		g->anim++;
 	}
-	else if (g->anim < 12 && g->anim != 0 && g->key_LC == 1)
+	else if (g->anim < 12 && g->anim != 0 && g->key_lc == 1)
 	{
 		create_hand_img(g->img, g->hand_4, -1, -1);
 		create_hand_img_r(g->img, g->hand_4, -1, -1);
@@ -102,24 +102,24 @@ static void	akimbo(t_g *g)
 
 void	pistol_anim(t_g *g)
 {
-	if (g->key_RC == 0 && g->anim == 0 && g->key_LC == 0)
+	if (g->key_rc == 0 && g->anim == 0 && g->key_lc == 0)
 		create_hand_img(g->img, g->hand_1, -1, -1);
-	else if (g->key_RC == 0 && g->anim == 0 && g->key_LC == 1)
+	else if (g->key_rc == 0 && g->anim == 0 && g->key_lc == 1)
 	{
 		create_hand_img(g->img, g->hand_1, -1, -1);
 		create_hand_img_r(g->img, g->hand_1, -1, -1);
 	}
-	else if ((g->key_RC == 1 || g->button_left == 1)
+	else if ((g->key_rc == 1 || g->button_left == 1)
 		&& (g->anim == 0 || g->anim == 16))
 	{
 		if (ray_calculator(g, g->angle, g->c.x, g->c.y))
 		{
-			if (g->w_1check && !g->key_LC)
-				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = 'G';
-			if (g->w_1check && g->key_LC)
-				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = '0';
+			if (g->w_1check && !g->key_lc)
+				g->m.map[(int)g->diry / SIZE][(int)g->dirx / SIZE] = 'G';
+			if (g->w_1check && g->key_lc)
+				g->m.map[(int)g->diry / SIZE][(int)g->dirx / SIZE] = '0';
 			if (g->w_2check)
-				g->m.map[(int)g->dirY / SIZE][(int)g->dirX / SIZE] = '0';
+				g->m.map[(int)g->diry / SIZE][(int)g->dirx / SIZE] = '0';
 		}
 		g->anim += 1;
 	}

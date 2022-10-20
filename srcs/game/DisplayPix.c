@@ -18,7 +18,7 @@ void	draw_row(t_g *g, t_data *img, double y, double height)
 	double	ciel;
 	double	floor1;
 
-	g->ActuHeight = height;
+	g->actuheight = height;
 	ciel = (W_H / 2) - (height / 2);
 	floor1 = (W_H / 2) + (height / 2);
 	j = -1;
@@ -44,8 +44,8 @@ void	drawrow1(t_g *g, t_data *img, double i, double d)
 	height = 0.0;
 	while (i < W_W)
 	{
-		d = (double)((g->FOVP / (W_W - 1) * i)
-				+ (double)((double)g->angle - (double)g->FOVD2));
+		d = (double)((g->fovp / (W_W - 1) * i)
+				+ (double)((double)g->angle - (double)g->fovd2));
 		if (d < 0)
 			d += 360 * PI / 180;
 		fix = g->angle - d;
@@ -53,7 +53,7 @@ void	drawrow1(t_g *g, t_data *img, double i, double d)
 			fix += pi;
 		else if (fix > pi)
 			fix -= pi;
-		g->rayAngle = d;
+		g->rayangle = d;
 		walldist = ray_calculator(g, d, g->c.x, g->c.y) * cos(fix);
 		height = 55000 / walldist;
 		draw_row(g, img, i, height);
