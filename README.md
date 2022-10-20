@@ -1,5 +1,7 @@
 ## Cub3d
 
+![image](https://user-images.githubusercontent.com/94530285/197015108-50058177-dac4-4494-ad0b-a7bba2ca912d.png)
+
 ### Parsing
 
 Fichier .cub -> proteger l'extension + open en directory
@@ -28,3 +30,10 @@ C 100,100,0 (RGB)
 Proteger les textures !
 
 ### Raycasting
+
+Determiner en fonction de l'orientation et de la position du joueur sur la map,
+la distance en ce dernier et le mur, faire ca pour tous les rayons compris dans le FOV.
+
+Calculer la hauteur du mur en fonction de la distance du joueur.
+
+Afficher en fonction de la hauteur calculer le ciel puis le mur et le sol.
