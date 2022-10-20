@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 17:14:37 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/20 13:48:54 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:36:17 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	open_img_64(t_g *g, t_data *img, char *path)
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
 	if (i_h != 64 || i_w != 64)
+	{
+		mlx_destroy_image(g->mlx, img->img);
 		return (0);
+	}
 	return (1);
 }
 
@@ -38,7 +41,10 @@ int	open_img_200(t_g *g, t_data *img, char *path)
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
 	if (i_h != 200 || i_w != 200)
+	{
+		mlx_destroy_image(g->mlx, img->img);
 		return (0);
+	}
 	return (1);
 }
 

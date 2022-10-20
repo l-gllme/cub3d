@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:22:24 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/20 13:47:29 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:36:57 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	checkposexit(t_g *g)
 		end.img = mlx_xpm_file_to_image(g->mlx, "imgs/END.xpm", &i_w, &i_h);
 		if (!end.img || i_w != 1000 || i_h != 700)
 		{
+			mlx_destroy_image(g->mlx, end.img);
 			free_all(g, 100, 1);
 			exit (0);
 		}
