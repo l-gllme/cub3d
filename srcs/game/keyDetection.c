@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:30:45 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 15:35:35 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:47:48 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_keypress(int key, t_g *g)
 {
 	if (key == ESC)
 	{
-		free_all(g);
+		free_all(g, 100, 0);
 		printf("ESC PRESSED");
 		exit(0);
 	}

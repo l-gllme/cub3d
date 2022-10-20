@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:17:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/19 16:53:13 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:40:51 by lguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ static int	pars_error(char **recup_gnl, t_g *g)
 	return (1);
 }
 
+static void	f_p(t_g *g)
+{
+	free(g->m.no_texture);
+	free(g->m.so_texture);
+	free(g->m.ea_texture);
+	free(g->m.we_texture);
+}
+
 int	ft_parsing(t_g *g)
 {
 	char	**recup_gnl;
@@ -68,7 +76,7 @@ int	ft_parsing(t_g *g)
 		return (0);
 	recup_i_for_map(recup_gnl, g);
 	if (g->count > 6 || !check_open_asset(&g->m))
-		return (free_char_tab(recup_gnl), ft_errors(6),
+		return (free_char_tab(recup_gnl), f_p(g), ft_errors(6),
 			ft_putstr_fd("too much elemets/bad assets\n", 2), 0);
 	if (!recup_map(recup_gnl, g))
 		return (0);

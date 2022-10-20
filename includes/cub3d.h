@@ -189,6 +189,6 @@ void	ft_errors(int choice);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 void	draw_map(t_g *g);
-void	free_all(t_g *g);
+void	free_all(t_g *g, int n, int e);
 
 #endif
