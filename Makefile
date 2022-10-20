@@ -6,12 +6,12 @@
 #    By: lguillau <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 15:11:31 by lguillau          #+#    #+#              #
-#    Updated: 2022/10/20 13:52:16 by jtaravel         ###   ########.fr        #
+#    Updated: 2022/10/20 15:25:55 by jtaravel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FILES	=	cub3d.c \
-		CheckExit.c \
+		game/CheckExit.c \
 		parsing/ext_check.c \
 		parsing/parsing.c \
 		parsing/map_verif.c \

@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:22 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/20 12:42:15 by jtaravel         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:20:29 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@
 # define R_SPEED 4.0
 # define INF 10000000
 
-#ifndef MOUSE_ON
+# ifndef MOUSE_ON
 
-# define MOUSE_ON 0
+#  define MOUSE_ON 0
 
-#endif
+# endif
 
 /* ************************************************************************** */
 /*          Parsing                                                           */

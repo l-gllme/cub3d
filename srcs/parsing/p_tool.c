@@ -6,7 +6,7 @@
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:42:42 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 16:43:43 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:18:09 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,19 @@ int	check_open_asset(t_m *m)
 {
 	if (open("imgs", O_DIRECTORY) < 0)
 		return (0);
+	if (!m->no_texture)
+		return (0);
 	if (open(m->no_texture + 1, O_RDONLY) < 0)
+		return (0);
+	if (!m->so_texture)
 		return (0);
 	if (open(m->so_texture + 1, O_RDONLY) < 0)
 		return (0);
+	if (!m->ea_texture)
+		return (0);
 	if (open(m->ea_texture + 1, O_RDONLY) < 0)
+		return (0);
+	if (!m->we_texture)
 		return (0);
 	if (open(m->we_texture + 1, O_RDONLY) < 0)
 		return (0);

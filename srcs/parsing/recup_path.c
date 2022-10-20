@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   recup_dir.c                                        :+:      :+:    :+:   */
+/*   recup_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:30:44 by lguillau          #+#    #+#             */
-/*   Updated: 2022/10/19 16:32:43 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:02:51 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	recup_no(char **recup_gnl, int i, int j, t_g *g)
 
 	k = j;
 	c = 0;
-	while (recup_gnl[i][j] != '\n')
+	while (recup_gnl[i][j] && recup_gnl[i][j] != '\n')
 	{
 		j++;
 		c++;
@@ -46,7 +46,7 @@ int	recup_ea(char **recup_gnl, int i, int j, t_g *g)
 
 	k = j;
 	c = 0;
-	while (recup_gnl[i][j] != '\n')
+	while (recup_gnl[i][j] && recup_gnl[i][j] != '\n')
 	{
 		j++;
 		c++;
@@ -73,7 +73,7 @@ int	recup_we(char **recup_gnl, int i, int j, t_g *g)
 
 	k = j;
 	c = 0;
-	while (recup_gnl[i][j] != '\n')
+	while (recup_gnl[i][j] && recup_gnl[i][j] != '\n')
 	{
 		j++;
 		c++;

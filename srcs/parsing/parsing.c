@@ -6,7 +6,7 @@
 /*   By: jtaravel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:17:29 by jtaravel          #+#    #+#             */
-/*   Updated: 2022/10/20 13:40:51 by lguillau         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:21:24 by jtaravel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ int	recup_map(char **recup_gnl, t_g *g)
 
 	c = 0;
 	k = g->i;
-	while (recup_gnl[++k])
+	while (recup_gnl[k] && recup_gnl[++k])
 		c++;
 	g->m.map = malloc(sizeof(char *) * (c + 2));
 	if (!g->m.map)
 		return (0);
 	k = g->i;
-	while (recup_gnl[k + 1] && recup_gnl[++k][0] == '\n')
+	while (recup_gnl[k] && recup_gnl[k + 1] && recup_gnl[++k][0] == '\n')
 		g->i = k;
 	k = g->i;
 	c = 0;
-	while (recup_gnl[++k])
+	while (recup_gnl[k] && recup_gnl[++k])
 	{
 		g->m.map[c] = ft_strdup(recup_gnl[k]);
 		c++;
@@ -82,7 +82,6 @@ int	ft_parsing(t_g *g)
 		return (0);
 	if (!map_verif(&g->m))
 		return (free_m(g), free_char_tab(recup_gnl), 0);
-	print_info(g);
 	free_char_tab(recup_gnl);
 	complete_map(g);
 	return (1);
